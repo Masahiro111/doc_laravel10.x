@@ -460,9 +460,9 @@ switch ステートメントは、`@switch`、`@case`、`@break`、`@default`、
 ```
 
 <a name="additional-attributes"></a>
-### 追加の属性
+### その他の属性
 
-便宜上、「@checked」ディレクティブを使用して、特定の HTML チェックボックス入力が「チェックされている」かどうかを簡単に示すことができます。 このディレクティブは、指定された条件が「true」と評価された場合に「checked」をエコーします。
+`@checked` ディレクティブを使用すると、指定した HTMLの チェックボックス入力が「checked」かどうかを簡単に判定できます。このディレクティブは、引数内で指定された条件が `true` と評価された場合に `checked` をエコー出力します。
 
 ```blade
 <input type="checkbox"
@@ -471,7 +471,7 @@ switch ステートメントは、`@switch`、`@case`、`@break`、`@default`、
         @checked(old('active', $user->active)) />
 ```
 
-同様に、`@selected` ディレクティブを使用して、特定の選択オプションを「選択」する必要があるかどうかを示すことができます。
+同様に、`@selected` ディレクティブを使用して、指定のセレクトオプションが 「selected」 であるかを判定し、`true` と評価された場合に `selected` をエコー出力します。
 
 ```blade
 <select name="version">
@@ -483,13 +483,13 @@ switch ステートメントは、`@switch`、`@case`、`@break`、`@default`、
 </select>
 ```
 
-さらに、`@disabled` ディレクティブを使用して、特定の要素を「無効」にするかどうかを示すことができます。
+さらに、`@disabled` ディレクティブを使用して、特定の要素が「disabled」にするかどうかを示すことができます。
 
 ```blade
 <button type="submit" @disabled($errors->isNotEmpty())>Submit</button>
 ```
 
-さらに、`@readonly` ディレクティブを使用して、特定の要素を「読み取り専用」にするかどうかを示すことができます。
+さらに、`@readonly` ディレクティブを使用して、特定の要素を「readonly」にするかどうかを示すことができます。
 
 ```blade
 <input type="email"
@@ -498,7 +498,7 @@ switch ステートメントは、`@switch`、`@case`、`@break`、`@default`、
         @readonly($user->isNotAdmin()) />
 ```
 
-さらに、`@required` ディレクティブを使用して、特定の要素を「必須」にするかどうかを示すことができます。
+さらに、`@required` ディレクティブを使用して、特定の要素を「required」にするかどうかを示すことができます。
 
 ```blade
 <input type="text"
@@ -507,13 +507,13 @@ switch ステートメントは、`@switch`、`@case`、`@break`、`@default`、
         @required($user->isAdmin()) />
 ```
 
-<a name="含む-サブビュー"></a>
-### サブビューを含む
+<a name="include-subviews"></a>
+### サブビューの読み込み
 
 > **Note**  
-> `@include` ディレクティブは自由に使用できますが、Blade [components](#components) は同様の機能を提供し、データや属性のバインディングなど、`@include` ディレクティブよりも優れたいくつかの利点を提供します。
+> `@include` ディレクティブは自由に使用できますが、Blade [コンポーネント](#components) は同様の機能を提供しながら、データや属性のバインディングなど、`@include` ディレクティブよりも優れたいくつかの利点があります。
 
-Blade の `@include` ディレクティブを使用すると、別のビュー内から Blade ビューを含めることができます。 親ビューで使用できるすべての変数は、組み込まれたビューでも使用できるようになります。
+Blade の `@include` ディレクティブを使用すると、別のビュー内から Blade ビューを読み込めます。親ビューで使用できるすべての変数は、読み込まれたビューでも使用できるようになります。
 
 ```blade
 <div>
@@ -525,7 +525,7 @@ Blade の `@include` ディレクティブを使用すると、別のビュー�
 </div>
 ```
 
-含まれるビューは親ビューで使用可能なすべてのデータを継承しますが、含まれるビューで使用できるようにする必要がある追加データの配列を渡すこともできます。
+読み込むビューは親ビューで使用できるすべてのデータを継承しますが、読み込むビューで利用できる追加データの配列を渡すこともできます。
 
 ```blade
 @include('view.name', ['status' => 'complete'])
@@ -557,7 +557,7 @@ Blade の `@include` ディレクティブを使用すると、別のビュー�
 <a name="rendering-views-for-collections"></a>
 #### コレクションのビューのレンダリング
 
-Blade の `@each` ディレクティブを使用して、ループとインクルードを 1 行に結合できます。
+Blade の `@each` ディレクティブを使用して、ループと読み込みをコード１行で書くことが可能です。
 
 ```blade
 @each('view.name', $jobs, 'job')
