@@ -531,13 +531,13 @@ Blade の `@include` ディレクティブを使用すると、別のビュー�
 @include('view.name', ['status' => 'complete'])
 ```
 
-存在しないビューを「@include」しようとすると、Laravel はエラーをスローします。 存在するかどうかわからないビューを含めたい場合は、`@includeIf` ディレクティブを使用する必要があります。
+存在しないビューを `@include` しようとすると、Laravel はエラーをスローします。存在するかどうかわからないビューを含めたい場合は、`@includeIf` ディレクティブを使用する必要があります。
 
 ```blade
 @includeIf('view.name', ['status' => 'complete'])
 ```
 
-指定されたブール式が「true」または「false」に評価された場合にビューを「@include」したい場合は、「@includeWhen」および「@includeUnless」ディレクティブを使用できます。
+指定した論理値 `true` または `false` と評価された場合に、ビューを `@include` したい際は、`@includeWhen` および `@includeUnless` ディレクティブを使用できます。
 
 ```blade
 @includeWhen($boolean, 'view.name', ['status' => 'complete'])
@@ -545,14 +545,14 @@ Blade の `@include` ディレクティブを使用すると、別のビュー�
 @includeUnless($boolean, 'view.name', ['status' => 'complete'])
 ```
 
-指定されたビューの配列から存在する最初のビューを含めるには、`includeFirst` ディレクティブを使用できます。
+指定したビューの配列から、存在する最初のビューを含めるには、`includeFirst` ディレクティブを使用します。
 
 ```blade
 @includeFirst(['custom.admin', 'admin'], ['status' => 'complete'])
 ```
 
 > **Warning**  
-> ブレード ビューでは `__DIR__` および `__FILE__` 定数を使用しないでください。これらは、キャッシュされコンパイルされたビューの場所を参照するためです。
+> Blade ビューでは `__DIR__` および `__FILE__` 定数を使用しないでください。キャッシュされコンパイルされたビューの場所を参照するためです。
 
 <a name="rendering-views-for-collections"></a>
 #### コレクションのビューのレンダリング
@@ -563,21 +563,21 @@ Blade の `@each` ディレクティブを使用して、ループと読み込�
 @each('view.name', $jobs, 'job')
 ```
 
-`@each` ディレクティブの最初の引数は、配列またはコレクション内の各要素に対してレンダリングするビューです。 2 番目の引数は反復処理する配列またはコレクションで、3 番目の引数はビュー内の現在の反復に割り当てられる変数名です。 したがって、たとえば、「ジョブ」の配列を反復処理している場合、通常はビュー内の「ジョブ」変数として各ジョブにアクセスする必要があります。 現在の反復の配列キーは、ビュー内の `key` 変数として使用できます。
+`@each` ディレクティブの第１引数は、配列またはコレクション内の各要素に対してレンダリングするビューです。第２引数は反復処理する配列またはコレクションで、第３引数はビュー内の現在の反復に割り当てられる変数名です。したがって、たとえば、`jobs` の配列を反復処理している場合、通常はビュー内の `job` 変数として各ジョブにアクセスする必要があります。現在の反復の配列キーは、ビュー内の `key` 変数として使用できます。
 
-`@each` ディレクティブに 4 番目の引数を渡すこともできます。 この引数は、指定された配列が空の場合にレンダリングされるビューを決定します。
+`@each` ディレクティブに第４引数を渡すこともできます。この引数は、指定された配列が空の場合にレンダリングされるビューを決定します。
 
 ```blade
 @each('view.name', $jobs, 'job', 'view.empty')
 ```
 
 > **Warning**  
-> `@each` を介してレンダリングされたビューは、親ビューから変数を継承しません。 子ビューでこれらの変数が必要な場合は、代わりに `@foreach` および `@include` ディレクティブを使用する必要があります。
+> `@each` を介してレンダリングされたビューは、親ビューから変数を継承しません。子ビューでこれらの変数が必要な場合は、代わりに `@foreach` および `@include` ディレクティブを使用する必要があります。
 
 <a name="the-once-directive"></a>
 ### `@once` ディレクティブ
 
-`@once` ディレクティブを使用すると、レンダリング サイクルごとに 1 回だけ評価されるテンプレートの一部を定義できます。 これは、[stacks](#stacks) を使用して、特定の JavaScript をページのヘッダーにプッシュする場合に便利です。 たとえば、ループ内で特定の [コンポーネント](#components) をレンダリングする場合、コンポーネントが初めてレンダリングされるときにのみ JavaScript をヘッダーにプッシュしたい場合があります。
+`@once` ディレクティブを使用すると、レンダリングサイクルごとに１回だけ評価されるテンプレートの一部を定義できます。これは、[stacks](#stacks) を使用して、特定の JavaScript をページのヘッダに組み入れる場合に便利です。たとえば、ループ内で特定の [コンポーネント](#components) をレンダリングする場合、コンポーネントが初めてレンダリングされるときにのみ JavaScript をヘッダに組み入れしたい場合があります。
 
 ```blade
 @once
@@ -589,7 +589,7 @@ Blade の `@each` ディレクティブを使用して、ループと読み込�
 @endonce
 ```
 
-`@once` ディレクティブは、`@push` または `@prepend` ディレクティブと組み合わせて使用されることが多いため、便宜上、`@pushOnce` および `@prependOnce` ディレクティブを利用できます。
+`@once` ディレクティブは、`@push` や `@prepend` ディレクティブと組み合わせて使用されることが多いため、使いやすいように `@pushOnce` および `@prependOnce` ディレクティブを利用すると良いでしょう。
 
 ```blade
 @pushOnce('scripts')
@@ -600,9 +600,9 @@ Blade の `@each` ディレクティブを使用して、ループと読み込�
 ```
 
 <a name="raw-php"></a>
-### 生の PHP
+### 素の PHP
 
-状況によっては、PHP コードをビューに埋め込むと便利です。 Blade の `@php` ディレクティブを使用して、テンプレート内のプレーン PHP のブロックを実行できます。
+状況によっては、PHP コードをビューに埋め込むと便利です。Blade の `@php` ディレクティブを使用して、テンプレート内のプレーン PHP のブロックを実行できます。
 
 ```blade
 @php
@@ -610,7 +610,7 @@ Blade の `@each` ディレクティブを使用して、ループと読み込�
 @endphp
 ```
 
-単一の PHP ステートメントのみを記述する必要がある場合は、そのステートメントを `@php` ディレクティブ内に含めることができます。
+PHP 文 １つのみを記述する場合は、`@php` ディレクティブ内に含めることができます。
 
 ```blade
 @php($counter = 1)
@@ -619,7 +619,7 @@ Blade の `@each` ディレクティブを使用して、ループと読み込�
 <a name="comments"></a>
 ### コメント
 
-Blade では、ビュー内にコメントを定義することもできます。 ただし、HTML コメントとは異なり、Blade コメントはアプリケーションから返される HTML には含まれません。
+Blade では、ビュー内にコメントを定義することもできます。ただし、HTML コメントとは異なり、Blade コメントはアプリケーションから返される HTML には含まれません。
 
 ```blade
 {{-- This comment will not be present in the rendered HTML --}}
@@ -628,15 +628,15 @@ Blade では、ビュー内にコメントを定義することもできます�
 <a name="components"></a>
 ## コンポーネント
 
-コンポーネントとスロットは、セクション、レイアウト、インクルードに同様の利点をもたらします。 ただし、コンポーネントとスロットのメンタル モデルの方が理解しやすいと感じる人もいるかもしれません。 コンポーネントを作成するには、クラスベースのコンポーネントと匿名コンポーネントの 2 つのアプローチがあります。
+コンポーネントとスロットは、セクション、レイアウト、インクルードに同様の利点をもたらします。ただし、コンポーネントとスロットのメンタルモデルの方が理解しやすいと感じる人もいるかもしれません。コンポーネントを作成するには、クラスベースのコンポーネントと匿名コンポーネントの２つのアプローチがあります。
 
-クラスベースのコンポーネントを作成するには、「make:component」Artisan コマンドを使用できます。 コンポーネントの使用方法を説明するために、単純な「Alert」コンポーネントを作成します。 `make:component` コマンドは、コンポーネントを `app/View/Components` ディレクトリに配置します。
+クラスベースのコンポーネントを作成するには、`make:component` Artisan コマンドを使用します。ここで単純な `Alert` コンポーネントを作成しましょう。`make:component` コマンドは、コンポーネントを `app/View/Components` ディレクトリに配置します。
 
 ```shell
 php artisan make:component Alert
 ```
 
-`make:component` コマンドは、コンポーネントのビュー テンプレートも作成します。 ビューは「resources/views/components」ディレクトリに配置されます。 独自のアプリケーション用のコンポーネントを作成する場合、コンポーネントは「app/View/Components」ディレクトリおよび「resources/views/components」ディレクトリ内で自動的に検出されるため、通常は追加のコンポーネント登録は必要ありません。
+`make:component` コマンドは、コンポーネントのビューテンプレートも作成します。ビューは `resources/views/components` ディレクトリに配置されます。独自のアプリケーション用のコンポーネントを作成する場合、コンポーネントは `app/View/Components` ディレクトリおよび `resources/views/components` ディレクトリ内で自動的に検出されるため、通常は追加のコンポーネント登録は必要ありません。
 
 サブディレクトリ内にコンポーネントを作成することもできます。
 
@@ -644,22 +644,22 @@ php artisan make:component Alert
 php artisan make:component Forms/Input
 ```
 
-上記のコマンドは、「app/View/Components/Forms」ディレクトリに「Input」コンポーネントを作成し、ビューは「resources/views/components/forms」ディレクトリに配置されます。
+上記のコマンドは、`app/View/Components/Forms` ディレクトリに `Input` コンポーネントを作成し、ビューは `resources/views/components/forms` ディレクトリに配置されます。
 
-匿名コンポーネント (Blade テンプレートのみでクラスを持たないコンポーネント) を作成したい場合は、`make:component` コマンドを呼び出すときに `--view` フラグを使用できます。
+匿名コンポーネント (Blade テンプレートのみでクラスを持たないコンポーネント) を作成したい場合は、`make:component` コマンドを呼び出すときに `--view` フラグを使用します。
 
 ```shell
 php artisan make:component forms.input --view
 ```
 
-上記のコマンドは、`resources/views/components/forms/input.blade.php` に Blade ファイルを作成します。これは、`<x-forms.input />` を介してコンポーネントとしてレンダリングできます。
+上記のコマンドは、`resources/views/components/forms/input.blade.php` に Blade ファイルを作成します。これは、`<x-forms.input />` という記述によって、コンポーネントとしてレンダリングされます。
 
 <a name="manually-registering-package-components"></a>
 #### パッケージコンポーネントの手動登録
 
-独自のアプリケーションのコンポーネントを作成する場合、コンポーネントは `app/View/Components` ディレクトリおよび `resources/views/components` ディレクトリ内で自動的に検出されます。
+独自のアプリケーションのコンポーネントを作成する場合、コンポーネントは `app/View/Components` ディレクトリと `resources/views/components` ディレクトリ内で自動的に検出されます。
 
-ただし、Blade コンポーネントを利用するパッケージを構築している場合は、コンポーネント クラスとその HTML タグ エイリアスを手動で登録する必要があります。 通常、コンポーネントはパッケージのサービスプロバイダーの「boot」メソッドに登録する必要があります。
+ただし、Blade コンポーネントを利用するパッケージを構築している場合は、コンポーネントクラスとその HTML タグ エイリアスを手動で登録する必要があります。 通常、コンポーネントはパッケージのサービスプロバイダの`boot`メソッドに登録する必要があります。
 
     use Illuminate\Support\Facades\Blade;
 
@@ -671,13 +671,13 @@ php artisan make:component forms.input --view
         Blade::component('package-alert', Alert::class);
     }
 
-コンポーネントが登録されると、そのタグ エイリアスを使用してレンダリングできます。
+コンポーネントを登録すると、タグエイリアスを使用してレンダリングできます。
 
 ```blade
 <x-package-alert/>
 ```
 
-あるいは、慣例に従って `componentNamespace` メソッドを使用してコンポーネント クラスを自動ロードすることもできます。 たとえば、「Nightshade」パッケージには、「Package\Views\Components」名前空間内に存在する「Calendar」コンポーネントと「ColorPicker」コンポーネントが含まれる場合があります。
+あるいは、規約により `componentNamespace` メソッドを使用してコンポーネントクラスを自動ロードすることもできます。たとえば、`Nightshade` パッケージには、`Package\Views\Components` 名前空間内に存在する `Calendar` コンポーネントと `ColorPicker` コンポーネントが含まれているとします。
 
     use Illuminate\Support\Facades\Blade;
 
@@ -689,14 +689,14 @@ php artisan make:component forms.input --view
         Blade::componentNamespace('Nightshade\\Views\\Components', 'nightshade');
     }
 
-これにより、ベンダー名前空間で「package-name::」構文を使用してパッケージ コンポーネントを使用できるようになります。
+これにより、ベンダー名前空間で `package-name::` 構文を使用してパッケージコンポーネントを使用できるようになります。
 
 ```blade
 <x-nightshade::calendar />
 <x-nightshade::color-picker />
 ```
 
-Blade は、コンポーネント名をパスカル文字に変換することで、このコンポーネントにリンクされているクラスを自動的に検出します。 サブディレクトリは、「ドット」表記を使用してサポートされています。
+Blade は、コンポーネント名をパスカル文字に変換することで、このコンポーネントにリンクされているクラスを自動的に検出します。サブディレクトリもサポートしており「ドット」表記を使用します。
 
 <a name="rendering-components"></a>
 ### レンダリングコンポーネント
