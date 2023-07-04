@@ -823,9 +823,9 @@ Alpine.js などの一部の JavaScript フレームワークもコロン接頭�
 ```
 
 <a name="component-methods"></a>
-#### コンポーネントのメソッド
+#### コンポーネントメソッド
 
-コンポーネント テンプレートで使用できるパブリック変数に加えて、コンポーネント上の任意のパブリック メソッドを呼び出すことができます。 たとえば、「isSelected」メソッドを持つコンポーネントを想像してください。
+コンポーネントテンプレートで使用できるパブリック変数に加えて、コンポーネント上の任意のパブリックメソッドを呼び出すことができます。たとえば、`isSelected`メソッドを持つコンポーネントを想像してください。
 
     /**
      * Determine if the given option is the currently selected option.
@@ -835,7 +835,7 @@ Alpine.js などの一部の JavaScript フレームワークもコロン接頭�
         return $option === $this->selected;
     }
 
-メソッドの名前に一致する変数を呼び出すことで、コンポーネント テンプレートからこのメソッドを実行できます。
+メソッドの名前に一致する変数を呼び出すことで、コンポーネントテンプレートからこのメソッドを実行できます。
 
 ```blade
 <option {{ $isSelected($value) ? 'selected' : '' }} value="{{ $value }}">
