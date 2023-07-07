@@ -970,7 +970,7 @@ public function __construct(
 </div>
 ```
 
-他の属性をコンポーネントにマージする必要がある場合は、「merge」メソッドを「class」メソッドに連鎖させることができます。
+他の属性をコンポーネントにマージする必要がある場合は、`merge` メソッドを `class` メソッドにチェーンさせることができます。
 
 ```blade
 <button {{ $attributes->class(['p-4'])->merge(['type' => 'button']) }}>
@@ -979,12 +979,12 @@ public function __construct(
 ```
 
 > **Note**  
-> マージされた属性を受け取るべきでない他の HTML 要素のクラスを条件付きでコンパイルする必要がある場合は、[`@class` ディレクティブ](#conditional-classes) を使用できます。
+> マージした属性を受け取るべきでない他の HTML 要素のクラスを条件付きでコンパイルする必要がある場合は、[`@class` ディレクティブ](#conditional-classes) を使用してください。
 
 <a name="non-class-attribute-merging"></a>
-#### 非クラス属性の結合
+#### 非クラス属性のマージ
 
-「class」属性ではない属性をマージする場合、「merge」メソッドに指定された値は属性の「デフォルト」値とみなされます。 ただし、「class」属性とは異なり、これらの属性は挿入された属性値とマージされません。 代わりに、上書きされます。 たとえば、「ボタン」コンポーネントの実装は次のようになります。
+`class` 属性ではない属性をマージする場合、`merge` メソッドに指定された値は属性の「デフォルト」値とみなされます。ただし、`class` 属性とは異なり、これらの属性は挿入された属性値とマージされません。代わりに、上書きされます。たとえば、`button` コンポーネントの実装は次のようになります。
 
 ```blade
 <button {{ $attributes->merge(['type' => 'button']) }}>
@@ -992,7 +992,7 @@ public function __construct(
 </button>
 ```
 
-カスタム `type` を使用してボタン コンポーネントをレンダリングするには、コンポーネントを使用するときにそれを指定できます。 タイプが指定されていない場合は、`button` タイプが使用されます。
+カスタム `type` を指定してボタンコンポーネントをレンダリングするには、コンポーネントを使用するときにそれを指定できます。タイプが指定されていない場合は、`button` タイプが使用されます。
 
 ```blade
 <x-button type="submit">
@@ -1000,7 +1000,7 @@ public function __construct(
 </x-button>
 ```
 
-この例の「button」コンポーネントのレンダリングされた HTML は次のようになります。
+この例の `button` コンポーネントのレンダリングされた HTML は次のようになります。
 
 ```blade
 <button type="submit">
@@ -1008,7 +1008,7 @@ public function __construct(
 </button>
 ```
 
-「class」以外の属性にそのデフォルト値と注入された値を結合させたい場合は、「prepends」メソッドを使用できます。 この例では、`data-controller` 属性は常に `profile-controller` で始まり、追加で挿入された `data-controller` 値はこのデフォルト値の後に配置されます。
+`class` 以外の属性にデフォルト値と挿入された値を結合させたい場合は、`prepends` メソッドを使用します。この例では、`data-controller` 属性は常に `profile-controller` で始まり、追加で挿入された `data-controller` 値はデフォルト値の後に配置されます。
 
 ```blade
 <div {{ $attributes->merge(['data-controller' => $attributes->prepends('profile-controller')]) }}>
@@ -1019,13 +1019,13 @@ public function __construct(
 <a name="filtering-attributes"></a>
 #### 属性の取得とフィルタリング
 
-`filter` メソッドを使用して属性をフィルタリングできます。 このメソッドは、属性バッグに属性を保持したい場合に `true` を返すクロージャを受け入れます。
+`filter` メソッドを使用して属性をフィルタリングできます。このメソッドは、属性バッグへ属性を保持したい際に `true` を返すクロージャを引数に取ります。
 
 ```blade
 {{ $attributes->filter(fn (string $value, string $key) => $key == 'foo') }}
 ```
 
-便宜上、「whereStartsWith」メソッドを使用して、キーが指定された文字列で始まるすべての属性を取得できます。
+`whereStartsWith` メソッドを使用して、キーが指定された文字列で始まるすべての属性を取得できます。
 
 ```blade
 {{ $attributes->whereStartsWith('wire:model') }}
@@ -1043,7 +1043,7 @@ public function __construct(
 {{ $attributes->whereStartsWith('wire:model')->first() }}
 ```
 
-コンポーネントに属性が存在するかどうかを確認したい場合は、`has` メソッドを使用できます。 このメソッドは、属性名を唯一の引数として受け入れ、属性が存在するかどうかを示すブール値を返します。
+コンポーネントに属性が存在するかどうかを確認したい場合は、`has` メソッドを使用します。このメソッドは、属性名を唯一の引数として受け入れ、属性が存在するかどうかを示す論理値を返します。
 
 ```blade
 @if ($attributes->has('class'))
