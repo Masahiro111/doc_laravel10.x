@@ -1122,7 +1122,7 @@ public function __construct(
 <a name="scoped-slots"></a>
 #### スコープ付きスロット
 
-Vue などの JavaScript フレームワークを使用したことがある場合は、スロット内のコンポーネントからデータまたはメソッドにアクセスできる「スコープ スロット」に精通しているかもしれません。 コンポーネント上でパブリックメソッドまたはプロパティを定義し、`$component` 変数を介してスロット内のコンポーネントにアクセスすることで、Laravel でも同様の動作を実現できます。 この例では、「x-alert」コンポーネントのコンポーネント クラスにパブリックの「formatAlert」メソッドが定義されていると仮定します。
+Vue などの JavaScript フレームワークを使用したことがある場合は、スロット内のコンポーネントからデータまたはメソッドにアクセスできる「スコープ付きスロット」に慣れているかもしれません。コンポーネント上でパブリックメソッドまたはプロパティを定義し、`$component` 変数を介してスロット内のコンポーネントにアクセスすることで、Laravel でも同様の動作を実現できます。この例では、`x-alert`コンポーネントのコンポーネントクラスにパブリックの `formatAlert` メソッドが定義されていると仮定します。
 
 ```blade
 <x-alert>
@@ -1153,7 +1153,7 @@ Blade コンポーネントと同様に、CSS クラス名などのスロット�
 </x-card>
 ```
 
-スロット属性を操作するには、スロットの変数の「attributes」プロパティにアクセスします。 属性を操作する方法の詳細については、[コンポーネント属性](#component-attributes) に関するドキュメントを参照してください。
+スロット属性を操作するには、スロットの変数の `attributes` プロパティにアクセスします。属性を操作する方法の詳細については、[コンポーネント属性](#component-attributes) に関するドキュメントを参照してください。
 
 ```blade
 @props([
@@ -1177,7 +1177,7 @@ Blade コンポーネントと同様に、CSS クラス名などのスロット�
 <a name="inline-component-views"></a>
 ### インラインコンポーネントビュー
 
-非常に小さなコンポーネントの場合、コンポーネント クラスとコンポーネントのビュー テンプレートの両方を管理するのが面倒に感じる場合があります。 このため、コンポーネントのマークアップを「render」メソッドから直接返すことができます。
+非常に小さなコンポーネントの場合、コンポーネントのクラスとビューテンプレート、両方を管理するのが面倒に感じる場合があります。このため、コンポーネントのマークアップを `render` メソッドから直接返すことができます。
 
     /**
      * Get the view / contents that represent the component.
@@ -1192,9 +1192,9 @@ Blade コンポーネントと同様に、CSS クラス名などのスロット�
     }
 
 <a name="generate-inline-view-components"></a>
-#### インライン ビュー コンポーネントの生成
+#### インラインビューコンポーネントの生成
 
-インライン ビューをレンダリングするコンポーネントを作成するには、`make:component` コマンドを実行するときに `inline` オプションを使用できます。
+インラインビューをレンダリングするコンポーネントを作成するには、`make:component` コマンドを実行するときに `inline` オプションを使用できます。
 
 ```shell
 php artisan make:component Alert --inline
@@ -1203,21 +1203,21 @@ php artisan make:component Alert --inline
 <a name="dynamic-components"></a>
 ### 動的コンポーネント
 
-コンポーネントをレンダリングする必要があるが、実行時までどのコンポーネントをレンダリングすべきかわからない場合があります。 この状況では、Laravel の組み込み `dynamic-component` コンポーネントを使用して、実行時の値または変数に基づいてコンポーネントをレンダリングできます。
+コンポーネントをレンダリングする必要があるが、実行時までどのコンポーネントをレンダリングすべきかわからない場合があります。この状況では、Laravel の組み込みコンポーネントの `dynamic-component` を使用して、実行時の値または変数に基づいてコンポーネントをレンダリングできます。
 
 ```blade
 <x-dynamic-component :component="$componentName" class="mt-4" />
 ```
 
 <a name="manually-registering-components"></a>
-### コンポーネントを手動で登録する
+### コンポーネントを手動で登録
 
 > **Warning**  
-> コンポーネントの手動登録に関する次のドキュメントは、主にビューコンポーネントを含む Laravel パッケージを作成している人に適用されます。 パッケージを作成していない場合、コンポーネントのドキュメントのこの部分は関係ない可能性があります。
+> コンポーネントの手動登録に関する以下のドキュメントは、主にビューコンポーネントを含む Laravel パッケージの開発者に当てはまります。パッケージを作成していない場合、この部分のドキュメントは関係ないかもしれません。
 
 独自のアプリケーションのコンポーネントを作成する場合、コンポーネントは `app/View/Components` ディレクトリおよび `resources/views/components` ディレクトリ内で自動的に検出されます。
 
-ただし、Blade コンポーネントを利用するパッケージを構築する場合、またはコンポーネントを従来とは異なるディレクトリに配置する場合は、Laravel がコンポーネントの場所を認識できるように、コンポーネント クラスとその HTML タグのエイリアスを手動で登録する必要があります。 通常、コンポーネントはパッケージのサービスプロバイダーの「boot」メソッドに登録する必要があります。
+ただし、Blade コンポーネントを利用するパッケージを構築する場合、またはコンポーネントを従来とは異なるディレクトリに配置する場合は、Laravel がコンポーネントの場所を認識できるように、コンポーネントクラスとその HTML タグのエイリアスを手動で登録する必要があります。通常、コンポーネントはパッケージのサービスプロバイダの `boot` メソッドに登録する必要があります。
 
     use Illuminate\Support\Facades\Blade;
     use VendorPackage\View\Components\AlertComponent;
@@ -1230,7 +1230,7 @@ php artisan make:component Alert --inline
         Blade::component('package-alert', AlertComponent::class);
     }
 
-コンポーネントが登録されると、そのタグ エイリアスを使用してレンダリングできます。
+コンポーネントを登録すると、そのタグエイリアスを使用してレンダリングできます。
 
 ```blade
 <x-package-alert/>
@@ -1238,7 +1238,7 @@ php artisan make:component Alert --inline
 
 #### パッケージコンポーネントの自動ロード
 
-あるいは、慣例に従って `componentNamespace` メソッドを使用してコンポーネント クラスを自動ロードすることもできます。 たとえば、「Nightshade」パッケージには、「Package\Views\Components」名前空間内に存在する「Calendar」コンポーネントと「ColorPicker」コンポーネントが含まれる場合があります。
+規約に従って `componentNamespace` メソッドを使用してコンポーネントクラスを自動ロードすることもできます。たとえば、`Nightshade` パッケージには、`Package\Views\Components` 名前空間内に存在する `Calendar` コンポーネントと `ColorPicker` コンポーネントが含まれているとしましょう。
 
     use Illuminate\Support\Facades\Blade;
 
@@ -1250,14 +1250,14 @@ php artisan make:component Alert --inline
         Blade::componentNamespace('Nightshade\\Views\\Components', 'nightshade');
     }
 
-これにより、ベンダー名前空間で「package-name::」構文を使用してパッケージ コンポーネントを使用できるようになります。
+これにより、ベンダー名前空間で `package-name::` 構文を利用でき、パッケージコンポーネントを使用できるようになります。
 
 ```blade
 <x-nightshade::calendar />
 <x-nightshade::color-picker />
 ```
 
-Blade は、コンポーネント名をパスカル文字に変換することで、このコンポーネントにリンクされているクラスを自動的に検出します。 サブディレクトリは、「ドット」表記を使用してサポートされています。
+Blade は、コンポーネント名をパスカルケースに変換することで、このコンポーネントにリンクされているクラスを自動的に検出します。サブディレクトリは、「ドット」表記をサポートしています。
 
 <a name="anonymous-components"></a>
 ## 匿名コンポーネント
