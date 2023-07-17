@@ -1590,7 +1590,7 @@ HTML フォームでは `PUT`、`PATCH`、`DELETE` リクエストを作成で�
     class="@error('email') is-invalid @else is-valid @enderror">
 ```
 
-[特定のエラー バッグの名前](/docs/{{version}}/validation#named-error-bags) を `@error` ディレクティブの 2 番目のパラメーターとして渡して、複数のエラー バッグを含むページ上の検証エラー メッセージを取得できます。 フォーム:
+[特定のエラーバッグの名前](/docs/{{version}}/validation#named-error-bags) を `@error` ディレクティブの第２引数に渡して、複数のフォームのエラーバッグを含むページ上のバリデーションエラーメッセージを取得できます。
 
 ```blade
 <!-- /resources/views/auth.blade.php -->
@@ -1609,7 +1609,7 @@ HTML フォームでは `PUT`、`PATCH`、`DELETE` リクエストを作成で�
 <a name="stacks"></a>
 ## スタック
 
-Blade を使用すると、別のビューまたはレイアウトの別の場所にレンダリングできる名前付きスタックにプッシュできます。 これは、子ビューで必要な JavaScript ライブラリを指定する場合に特に役立ちます。
+Blade を使用すると、別のビューまたはレイアウトの別の場所にレンダリングできる名前付きスタックにプッシュできます。これは、子ビューで必要な JavaScript ライブラリを指定する場合に特に役立ちます。
 
 ```blade
 @push('scripts')
