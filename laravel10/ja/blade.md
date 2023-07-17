@@ -1536,7 +1536,7 @@ Blade は、コンポーネント名をパスカルケースに変換するこ�
 <a name="csrf-field"></a>
 ### CSRF フィールド
 
-アプリケーションで HTML フォームを定義するときは常に、[CSRF 保護](/docs/{{version}}/csrf) ミドルウェアがリクエストを検証できるように、フォームに非表示の CSRF トークン フィールドを含める必要があります。 `@csrf` Blade ディレクティブを使用してトークン フィールドを生成できます。
+アプリケーションで HTML フォームを定義するときは常に、[CSRF 保護](/docs/{{version}}/csrf) ミドルウェアがリクエストをバリデートできるように、フォームに非表示の CSRF トークンフィールドを含める必要があります。`@csrf` Blade ディレクティブを使用してトークンフィールドを生成できます。
 
 ```blade
 <form method="POST" action="/profile">
@@ -1549,7 +1549,7 @@ Blade は、コンポーネント名をパスカルケースに変換するこ�
 <a name="method-field"></a>
 ### Method フィールド
 
-HTML フォームでは `PUT`、`PATCH`、または `DELETE` リクエストを作成できないため、これらの HTTP 動詞を偽装するには、非表示の `_method` フィールドを追加する必要があります。 `@method` Blade ディレクティブを使用すると、このフィールドを作成できます。
+HTML フォームでは `PUT`、`PATCH`、`DELETE` リクエストを作成できないため、これらの HTTP 動詞を偽装するには、`_method` 隠しフィールドを追加する必要があります。`@method` Blade ディレクティブを使用すると、このフィールドを作成できます。
 
 ```blade
 <form action="/foo/bar" method="POST">
@@ -1562,7 +1562,7 @@ HTML フォームでは `PUT`、`PATCH`、または `DELETE` リクエストを�
 <a name="validation-errors"></a>
 ### バリデーションエラー
 
-`@error` ディレクティブを使用すると、特定の属性に [検証エラー メッセージ](/docs/{{version}}/validation#quick-displaying-the-validation-errors) が存在するかどうかをすばやく確認できます。 `@error` ディレクティブ内で、`$message` 変数をエコーしてエラー メッセージを表示できます。
+`@error` ディレクティブを使用すると、特定の属性に [バリデーションエラーメッセージ](/docs/{{version}}/validation#quick-displaying-the-validation-errors) が存在するかどうかをすばやく確認できます。`@error` ディレクティブ内で、`$message` 変数をエコーしてエラーメッセージを表示できます。
 
 ```blade
 <!-- /resources/views/post/create.blade.php -->
@@ -1578,7 +1578,7 @@ HTML フォームでは `PUT`、`PATCH`、または `DELETE` リクエストを�
 @enderror
 ```
 
-`@error` ディレクティブは "if" ステートメントにコンパイルされるため、属性にエラーがない場合は `@else` ディレクティブを使用してコンテンツをレンダリングできます。
+`@error` ディレクティブは "if" 文にコンパイルされるため、属性にエラーがない場合は `@else` ディレクティブを使用してコンテンツをレンダリングできます。
 
 ```blade
 <!-- /resources/views/auth.blade.php -->
