@@ -1617,7 +1617,7 @@ Blade を使用すると、別のビューまたはレイアウトの別の場�
 @endpush
 ```
 
-If you would like to `@push` content if a given boolean expression evaluates to `true`, you may use the `@pushIf` directive:
+指定された論理式が `true` と評価された場合にコンテンツを `@push` したい場合は、`@pushIf` ディレクティブを使用します。
 
 ```blade
 @pushIf($shouldPush, 'scripts')
