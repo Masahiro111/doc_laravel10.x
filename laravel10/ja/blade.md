@@ -38,7 +38,7 @@
     - [Method フィールド](#method-field)
     - [バリデーションエラー](#validation-errors)
 - [スタック](#stacks)
-- [サービスの注入](#service-injection)
+- [サービス注入](#service-injection)
 - [インライン Blade  テンプレートのレンダリング](#rendering-inline-blade-templates)
 - [Blade フラグメントのレンダリング](#rendering-blade-fragments)
 - [Blade の拡張](#extending-blade)
@@ -1650,9 +1650,10 @@ Blade を使用すると、別のビューまたはレイアウトの別の場�
 ```
 
 <a name="service-injection"></a>
-## サービスの注入
+## サービス注入
 
-`@inject` ディレクティブは、Laravel [サービスコンテナ](/docs/{{version}}/container) からサービスを取得するために使用できます。 `@inject` に渡される最初の引数はサービスが配置される変数の名前であり、2 番目の引数は解決したいサービスのクラス名またはインターフェイス名です。
+`@inject` ディレクティブは、Laravel [サービスコンテナ](/docs/{{version}}/container) からサービスを取得するために使用します。`@inject` に渡す第１引数はサービスが配置される変数の名前であり、第２
+引数は解決したいサービスのクラス名またはインターフェイス名です。
 
 ```blade
 @inject('metrics', 'App\Services\MetricsService')
@@ -1665,7 +1666,7 @@ Blade を使用すると、別のビューまたはレイアウトの別の場�
 <a name="rendering-inline-blade-templates"></a>
 ## インライン Blade テンプレートのレンダリング
 
-場合によっては、生の Blade テンプレート文字列を有効な HTML に変換する必要があるかもしれません。 これは、`Blade`ファサードによって提供される`render`メソッドを使用して実行できます。 `render`メソッドは、Blade テンプレート文字列と、テンプレートに提供するオプションのデータ配列を受け入れます。
+素の Blade テンプレート文字列を有効な HTML に変換する必要がある場合は、`Blade` ファサードによって提供される `render` メソッドを使用して実行できます。`render` メソッドは、Blade テンプレート文字列と、テンプレートに提供するオプションのデータ配列を受け取ります。
 
 ```php
 use Illuminate\Support\Facades\Blade;
@@ -1673,7 +1674,7 @@ use Illuminate\Support\Facades\Blade;
 return Blade::render('Hello, {{ $name }}', ['name' => 'Julian Bashir']);
 ```
 
-Laravel は、インライン Blade テンプレートを`storage/framework/views`ディレクトリに書き込むことによってレンダリングします。 Blade テンプレートのレンダリング後に Laravel にこれらの一時ファイルを削除させたい場合は、メソッドに `deleteCachedView` 引数を指定できます。
+Laravel は、インライン Blade テンプレートを `storage/framework/views` ディレクトリに書き込むことによってレンダリングします。Blade テンプレートのレンダリング後に Laravel にこれらの一時ファイルを削除させたい場合は、メソッドに `deleteCachedView` 引数を指定してください。
 
 ```php
 return Blade::render(
@@ -1686,7 +1687,7 @@ return Blade::render(
 <a name="rendering-blade-fragments"></a>
 ## Blade フラグメントのレンダリング
 
-[Turbo](https://turbo.hotwired.dev/) や [htmx](https://htmx.org/) などのフロントエンド フレームワークを使用する場合、Blade テンプレートの一部のみを返す必要がある場合があります。 HTTP 応答。 Bladeの`フラグメント`を使用すると、まさにそれが可能になります。 まず、Blade テンプレートの一部を `@fragment` および `@endfragment` ディレクティブ内に配置します。
+[Turbo](https://turbo.hotwired.dev/) や [htmx](https://htmx.org/) などのフロントエンドフレームワークを使用する場合、HTTP レスポンス内から Blade テンプレートの一部のみを返す必要がある場合があります。Bladeの「フラグメント」を使用すると、まさにそれが可能になります。まず、Blade テンプレートの一部を `@fragment` ディレクティブと `@endfragment` ディレクティブの間に配置します。
 
 ```blade
 @fragment('user-list')
@@ -1698,20 +1699,20 @@ return Blade::render(
 @endfragment
 ```
 
-次に、このテンプレートを利用するビューをレンダリングするときに、`fragment`メソッドを呼び出して、指定されたフラグメントのみが送信 HTTP 応答に含まれるように指定できます。
+次に、このテンプレートを利用するビューをレンダリングする際、`fragment` メソッドを呼び出して、指定されたフラグメントのみが送信 HTTP レスポンスに含まれるように指定します。
 
 ```php
 return view('dashboard', ['users' => $users])->fragment('user-list');
 ```
 
-`fragmentIf` メソッドを使用すると、指定された条件に基づいて条件付きでビューのフラグメントを返すことができます。 それ以外の場合は、ビュー全体が返されます。
+`fragmentIf` メソッドを使用すると、指定された条件に基づいて条件付きでビューのフラグメントを返すことができます。それ以外の場合は、ビュー全体が返されます。
 
 ```php
 return view('dashboard', ['users' => $users])
     ->fragmentIf($request->hasHeader('HX-Request'), 'user-list');
 ```
 
-`fragments` メソッドと `fragmentsIf` メソッドを使用すると、応答で複数のビュー フラグメントを返すことができます。 フラグメントは連結されます。
+`fragments` メソッドと `fragmentsIf` メソッドを使用すると、レスポンスで複数のビューフラグメントを返すことができます。フラグメントは１つに連結されます。
 
 ```php
 view('dashboard', ['users' => $users])
@@ -1727,7 +1728,7 @@ view('dashboard', ['users' => $users])
 <a name="extending-blade"></a>
 ## Blade の拡張
 
-Blade では、`directive`メソッドを使用して独自のカスタム ディレクティブを定義できます。 Blade コンパイラはカスタム ディレクティブを検出すると、ディレクティブに含まれる式を使用して提供されたコールバックを呼び出します。
+Blade では、`directive` メソッドを使用して独自のカスタムディレクティブを定義できます。Blade コンパイラはカスタムディレクティブを検出すると、ディレクティブに含まれる式を使用して、提供されたコールバックを呼び出します。
 
 次の例では、指定された `$var` をフォーマットする `@datetime($var)` ディレクティブを作成します。これは、`DateTime` のインスタンスである必要があります。
 
@@ -1759,19 +1760,19 @@ Blade では、`directive`メソッドを使用して独自のカスタム デ�
         }
     }
 
-ご覧のとおり、ディレクティブに渡される式に`format`メソッドを連鎖させます。 したがって、この例では、このディレクティブによって生成される最終的な PHP は次のようになります。
+ご覧のとおり、ディレクティブに渡される式に `format` メソッドをチェーンさせます。この例で生成される最終的な PHP は次のようになります。
 
     <?php echo ($var)->format('m/d/Y H:i'); ?>
 
-> **Warning**  
-> Blade ディレクティブのロジックを更新した後、キャッシュされた Blade ビューをすべて削除する必要があります。 キャッシュされたBlade ビューは、`view:clear`アーティザン コマンドを使用して削除できます。
+> **Warning**
+> Blade ディレクティブのロジックを更新した後、キャッシュ済み Blade ビューをすべて削除する必要があります。キャッシュ済み Blade ビューは、`view:clear` Artisan コマンドを使用して削除できます。
 
 <a name="custom-echo-handlers"></a>
 ### カスタム Echo ハンドラ
 
-Blade を使用してオブジェクトを`エコー`しようとすると、オブジェクトの __toString メソッドが呼び出されます。 [`__toString`](https://www.php.net/manual/en/ language.oop5.magic.php#object.tostring) メソッドは、PHP の組み込み`マジック メソッド`の 1 つです。 ただし、対話しているクラスがサードパーティのライブラリに属している場合など、特定のクラスの __toString メソッドを制御できない場合があります。
+Blade を使用してオブジェクトを「エコー」しようとすると、オブジェクトの `__toString` メソッドが呼び出されます。[`__toString`](https://www.php.net/manual/en/ language.oop5.magic.php#object.tostring) メソッドは、PHP 組み込みの「マジックメソッド」の１つです。ただし、操作するクラスがサードパーティのライブラリに属している場合など、特定のクラスの `__toString` メソッドを制御できない場合があります。
 
-このような場合、Blade では、その特定の種類のオブジェクトにカスタム エコー ハンドラーを登録できます。 これを実現するには、Blade の`stringable`メソッドを呼び出す必要があります。 `stringable` メソッドはクロージャを受け入れます。 このクロージャは、レンダリングを担当するオブジェクトのタイプをタイプヒントする必要があります。 通常、`stringable`メソッドは、アプリケーションの`AppServiceProvider`クラスの`boot`メソッド内で呼び出す必要があります。
+このような場合、Blade では、その特定のタイプのオブジェクトにカスタムエコーハンドラを登録できます。これを実現するには、Blade の `stringable` メソッドを呼び出します。`stringable` メソッドはクロージャを引数に受け取ります。このクロージャは、レンダリングを担当するオブジェクトのタイプをタイプヒントする必要があります。通常、`stringable` メソッドは、アプリケーションの `AppServiceProvider` クラスの `boot` メソッド内で呼び出す必要があります。
 
     use Illuminate\Support\Facades\Blade;
     use Money\Money;
@@ -1786,7 +1787,7 @@ Blade を使用してオブジェクトを`エコー`しようとすると、オ
         });
     }
 
-カスタム エコー ハンドラーを定義したら、Blade テンプレート内のオブジェクトをエコーするだけです。
+カスタムエコーハンドラを定義したら、Blade テンプレート内のオブジェクトをエコーするだけです。
 
 ```blade
 Cost: {{ $money }}
@@ -1795,7 +1796,7 @@ Cost: {{ $money }}
 <a name="custom-if-statements"></a>
 ### カスタム If 文
 
-カスタム ディレクティブのプログラミングは、単純なカスタム条件文を定義する場合、必要以上に複雑になる場合があります。 そのため、Blade は、クロージャを使用してカスタム条件ディレクティブを迅速に定義できる `Blade::if` メソッドを提供します。 たとえば、アプリケーションに設定されたデフォルトの`ディスク`をチェックするカスタム条件を定義してみましょう。 これは、`AppServiceProvider` の `boot` メソッドで行うことができます。
+カスタムディレクティブのプログラミングは、単純なカスタム条件文を定義する場合、必要以上に複雑になる場合があります。そのため、Blade は、クロージャを使用してカスタム条件ディレクティブを迅速に定義できる `Blade::if` メソッドを提供します。たとえば、アプリケーションに設定されたデフォルトの「ディスク」をチェックするカスタム条件を定義してみましょう。これは、`AppServiceProvider` の `boot` メソッドで行います。
 
     use Illuminate\Support\Facades\Blade;
 
@@ -1809,7 +1810,7 @@ Cost: {{ $money }}
         });
     }
 
-カスタム条件を定義したら、それをテンプレート内で使用できます。
+カスタム条件を定義すると、テンプレート内で使用できます。
 
 ```blade
 @disk('local')
