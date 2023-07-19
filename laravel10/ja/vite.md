@@ -30,26 +30,26 @@
   - [開発サーバー URL の修正](#correcting-dev-server-urls)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-[Vite](https://vitejs.dev) is a modern frontend build tool that provides an extremely fast development environment and bundles your code for production. When building applications with Laravel, you will typically use Vite to bundle your application's CSS and JavaScript files into production ready assets.
+[Vite](https://vitejs.dev) は、非常に高速な開発環境を提供し、実稼働用のコードを構築する最新のフロントエンドビルドツールです。Laravel でアプリケーションを構築する場合、通常は Vite を使用して、アプリケーションの CSS ファイルと JavaScript ファイルを本番環境に対応したアセットにバンドルします。
 
-Laravel integrates seamlessly with Vite by providing an official plugin and Blade directive to load your assets for development and production.
+Laravel は、開発および本番用にアセットをロードするための公式プラグインと Blade ディレクティブを提供することで、Vite とシームレスに統合します。
 
 > **Note**  
-> Are you running Laravel Mix? Vite has replaced Laravel Mix in new Laravel installations. For Mix documentation, please visit the [Laravel Mix](https://laravel-mix.com/) website. If you would like to switch to Vite, please see our [migration guide](https://github.com/laravel/vite-plugin/blob/main/UPGRADE.md#migrating-from-laravel-mix-to-vite).
+> Laravel Mix を実行していますか？新しい Laravel のインストールでは Laravel Mix を Vite に置き換えました。Mix のドキュメントについては、[Laravel Mix](https://laravel-mix.com/) の Web サイトをご覧ください。Vite に切り替えたい場合は、[移行ガイド](https://github.com/laravel/vite-plugin/blob/main/UPGRADE.md#migrated-from-laravel-mix-to-vite) をご覧ください。
 
 <a name="vite-or-mix"></a>
-#### Choosing Between Vite And Laravel Mix
+#### Vite と Laravel Mix の選択
 
-Before transitioning to Vite, new Laravel applications utilized [Mix](https://laravel-mix.com/), which is powered by [webpack](https://webpack.js.org/), when bundling assets. Vite focuses on providing a faster and more productive experience when building rich JavaScript applications. If you are developing a Single Page Application (SPA), including those developed with tools like [Inertia](https://inertiajs.com), Vite will be the perfect fit.
+Vite に移行する前、新しい Laravel アプリケーションはアセットをバンドルするときに [webpack](https://webpack.js.org/) を利用した [Mix](https://laravel-mix.com/) を利用していました。Vite は、リッチな JavaScript アプリケーションを構築する際に、より高速で生産性の高いエクスペリエンスを提供することに重点を置いています。[Inertia](https://inertiajs.com) などのツールで開発されたものを含め、シングル ページ アプリケーション (SPA) を開発している場合は、Vite が最適です。
 
-Vite also works well with traditional server-side rendered applications with JavaScript "sprinkles", including those using [Livewire](https://laravel-livewire.com). However, it lacks some features that Laravel Mix supports, such as the ability to copy arbitrary assets into the build that are not referenced directly in your JavaScript application.
+Vite は、[Livewire](https://laravel-livewire.com) を使用するアプリケーションなど、JavaScript の「スプリンクル（トッピングのようなもの）」を使用した従来のサーバーサイドでレンダリングされたアプリケーションでも適切に動作します。ただし、JavaScript アプリケーションで直接参照されない任意のアセットをビルドにコピーする機能など、Laravel Mix がサポートするいくつかの機能が欠けています。
 
-<a name="migrating-back-to-mix"></a>
-#### Migrating Back To Mix
+<a name="migration-back-to-mix"></a>
+#### Mix に戻す
 
-Have you started a new Laravel application using our Vite scaffolding but need to move back to Laravel Mix and webpack? No problem. Please consult our [official guide on migrating from Vite to Mix](https://github.com/laravel/vite-plugin/blob/main/UPGRADE.md#migrating-from-vite-to-laravel-mix).
+Vite のスキャフォールディングを使用して新しい Laravel アプリケーションを開始しましたが、Laravel Mix と webpack に戻す際は、[Vite から Mix への移行に関する公式ガイド](https://github.com/laravel/vite-plugin/blob/main/UPGRADE.md#migrated-from-vite-to-laravel-mix) を参照してください。
 
 <a name="installation"></a>
 ## Installation & Setup
