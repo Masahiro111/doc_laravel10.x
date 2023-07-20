@@ -174,9 +174,9 @@ export default defineConfig({
 システムの信頼できる証明書を生成できない場合は、[`@vitejs/plugin-basic-ssl` プラグイン](https://github.com/vitejs/vite-plugin-basic-ssl) をインストールして設定してください。信頼できない証明書を使用する場合、`npm run dev` コマンドの実行時にコンソールの「Local」リンクをたどって、ブラウザで Vite の開発サーバーに対する証明書の警告を受け入れる必要があります。
 
 <a name="loading-your-scripts-and-styles"></a>
-### Loading Your Scripts And Styles
+### スクリプトとスタイルの読み込み
 
-With your Vite entry points configured, you only need reference them in a `@vite()` Blade directive that you add to the `<head>` of your application's root template:
+Vite エントリポイントを設定したら、アプリケーションのルートテンプレートの `<head>` に `@vite()` Blade ディレクティブを追加するだけで、JS と CSS を参照できるようになります。
 
 ```blade
 <!doctype html>
@@ -187,7 +187,7 @@ With your Vite entry points configured, you only need reference them in a `@vite
 </head>
 ```
 
-If you're importing your CSS via JavaScript, you only need to include the JavaScript entry point:
+JavaScript 経由で CSS をインポートする場合、 JavaScript エントリポイントのみを記述するだけです。
 
 ```blade
 <!doctype html>
@@ -198,9 +198,9 @@ If you're importing your CSS via JavaScript, you only need to include the JavaSc
 </head>
 ```
 
-The `@vite` directive will automatically detect the Vite development server and inject the Vite client to enable Hot Module Replacement. In build mode, the directive will load your compiled and versioned assets, including any imported CSS.
+`@vite` ディレクティブは、Vite 開発サーバーを自動的に検出し、Vite クライアントを注入してホットモジュール置換を有効にします。このディレクティブは、ビルドモードでインポートされた CSS を含むコンパイルおよびバージョン管理されたアセットを読み込みます。
 
-If needed, you may also specify the build path of your compiled assets when invoking the `@vite` directive:
+必要に応じて、`@vite` ディレクティブを呼び出すときに、コンパイル済みアセットのビルドパスを指定することもできます。
 
 ```blade
 <!doctype html>
