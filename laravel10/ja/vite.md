@@ -212,11 +212,11 @@ JavaScript 経由で CSS をインポートする場合、 JavaScript エント�
 ```
 
 <a name="running-vite"></a>
-## Running Vite
+## Vite の実行
 
-There are two ways you can run Vite. You may run the development server via the `dev` command, which is useful while developing locally. The development server will automatically detect changes to your files and instantly reflect them in any open browser windows.
+Vite を実行するには２つの方法があります。`dev` コマンドで開発サーバを起動できます。これは、ローカルで開発するときに便利です。開発サーバはファイルへの変更を自動的に検出し、開いているブラウザウィンドウに即座に変更を反映します。
 
-Or, running the `build` command will version and bundle your application's assets and get them ready for you to deploy to production:
+または、`build` コマンドを実行すると、アプリケーションのアセットがバージョン管理されてバンドルされ、本番環境にデプロイできるように準備されます。
 
 ```shell
 # Run the Vite development server...
@@ -227,12 +227,12 @@ npm run build
 ```
 
 <a name="working-with-scripts"></a>
-## Working With JavaScript
+## JavaScript の操作
 
 <a name="aliases"></a>
-### Aliases
+### エイリアス
 
-By default, The Laravel plugin provides a common alias to help you hit the ground running and conveniently import your application's assets:
+デフォルトでは、Laravel プラグインは、アプリケーションのアセットを簡単にインポートできるようにするための共通のエイリアスを提供します。
 
 ```js
 {
@@ -240,7 +240,7 @@ By default, The Laravel plugin provides a common alias to help you hit the groun
 }
 ```
 
-You may overwrite the `'@'` alias by adding your own to the `vite.config.js` configuration file:
+独自のエイリアスを `vite.config.js` 設定ファイルに追加することで、`'@'` エイリアスを上書きできます。
 
 ```js
 import { defineConfig } from 'vite';
@@ -259,15 +259,15 @@ export default defineConfig({
 ```
 
 <a name="vue"></a>
-### Vue
+### ビュー
 
-If you would like to build your front-end using the [Vue](https://vuejs.org/) framework, then you will also need to install the `@vitejs/plugin-vue` plugin:
+[Vue](https://vuejs.org/) フレームワークを使用してフロントエンドを構築したい場合は、`@vitejs/plugin-vue` プラグインもインストールする必要があります。
 
 ```sh
 npm install --save-dev @vitejs/plugin-vue
 ```
 
-You may then include the plugin in your `vite.config.js` configuration file. There are a few additional options you will need when using the Vue plugin with Laravel:
+それから、プラグインを `vite.config.js` 設定ファイルに含めることができます。Laravel で Vue プラグインを使用する場合、必要となる追加オプションがいくつかあります。
 
 ```js
 import { defineConfig } from 'vite';
