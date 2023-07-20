@@ -49,25 +49,25 @@ Vite は、[Livewire](https://laravel-livewire.com) を使用するアプリケ�
 <a name="migration-back-to-mix"></a>
 #### Mix に戻す
 
-Vite のスキャフォールディングを使用して新しい Laravel アプリケーションを開始しましたが、Laravel Mix と webpack に戻す際は、[Vite から Mix への移行に関する公式ガイド](https://github.com/laravel/vite-plugin/blob/main/UPGRADE.md#migrated-from-vite-to-laravel-mix) を参照してください。
+Vite のスカフォールドを使用して新しい Laravel アプリケーションを開始しましたが、Laravel Mix と webpack に戻す際は、[Vite から Mix への移行に関する公式ガイド](https://github.com/laravel/vite-plugin/blob/main/UPGRADE.md#migrated-from-vite-to-laravel-mix) を参照してください。
 
 <a name="installation"></a>
-## Installation & Setup
+## インストールとセットアップ
 
-> **Note**  
-> The following documentation discusses how to manually install and configure the Laravel Vite plugin. However, Laravel's [starter kits](/docs/{{version}}/starter-kits) already include all of this scaffolding and are the fastest way to get started with Laravel and Vite.
+> **Note**
+> 以下のドキュメントでは、Laravel Vite プラグインを手動でインストールして構成する方法について説明します。ただし、Laravel の [スターター キット](/docs/{{version}}/starter-kits) にはこのスカフォールドがすべて含まれており、Laravel と Vite を始めるための最も早い方法です。
 
 <a name="installing-node"></a>
-### Installing Node
+### NNode のインストール
 
-You must ensure that Node.js (16+) and NPM are installed before running Vite and the Laravel plugin:
+Vite と Laravel プラグインを実行する前に、Node.js (１６以降) と NPM がインストールされていることを確認する必要があります。
 
 ```sh
 node -v
 npm -v
 ```
 
-You can easily install the latest version of Node and NPM using simple graphical installers from [the official Node website](https://nodejs.org/en/download/). Or, if you are using [Laravel Sail](https://laravel.com/docs/{{version}}/sail), you may invoke Node and NPM through Sail:
+[Node 公式 Web サイト](https://nodejs.org/en/download/) からシンプルなグラフィカルインストーラを使用して、Node と NPM の最新バージョンを簡単にインストールできます。または、[Laravel Sail](https://laravel.com/docs/{{version}}/sail) を使用している場合は、Sail を通じて Node と NPM を呼び出すことができます。
 
 ```sh
 ./vendor/bin/sail node -v
@@ -75,20 +75,20 @@ You can easily install the latest version of Node and NPM using simple graphical
 ```
 
 <a name="installing-vite-and-laravel-plugin"></a>
-### Installing Vite And The Laravel Plugin
+### Vite と Laravel プラグインのインストール
 
-Within a fresh installation of Laravel, you will find a `package.json` file in the root of your application's directory structure. The default `package.json` file already includes everything you need to get started using Vite and the Laravel plugin. You may install your application's frontend dependencies via NPM:
+Laravel を新規インストールすると、アプリケーションのディレクトリ構造のルートに `package.json` ファイルができます。デフォルトの `package.json` ファイルには、Vite と Laravel プラグインの利用するために必要なものがすべて含まれています。NPM 経由でアプリケーションのフロントエンド依存関係をインストールできます。
 
 ```sh
 npm install
 ```
 
-<a name="configuring-vite"></a>
-### Configuring Vite
+<a name="cconfiguring-vite"></a>
+### Vite の設定
 
-Vite is configured via a `vite.config.js` file in the root of your project. You are free to customize this file based on your needs, and you may also install any other plugins your application requires, such as `@vitejs/plugin-vue` or `@vitejs/plugin-react`.
+Vite は、プロジェクトのルートにある `vite.config.js` ファイルを介して設定します。このファイルは必要に応じて自由にカスタマイズできます。また、アプリケーションに必要な他のプラグイン (`@vitejs/plugin-vue` や `@vitejs/plugin-react` など) をインストールすることもできます。
 
-The Laravel Vite plugin requires you to specify the entry points for your application. These may be JavaScript or CSS files, and include preprocessed languages such as TypeScript, JSX, TSX, and Sass.
+Laravel Vite プラグインでは、アプリケーションのエントリポイントを指定する必要があります。これらは JavaScript または CSS ファイルであり、TypeScript、JSX、TSX、Sass などのプリプロセス言語が含まれます。
 
 ```js
 import { defineConfig } from 'vite';
@@ -104,7 +104,7 @@ export default defineConfig({
 });
 ```
 
-If you are building an SPA, including applications built using Inertia, Vite works best without CSS entry points:
+Inertia を使用して構築されたアプリケーションを含む SPA を構築している場合、Vite は CSS エントリポイントなしで最適に動作します。
 
 ```js
 import { defineConfig } from 'vite';
@@ -120,21 +120,21 @@ export default defineConfig({
 });
 ```
 
-Instead, you should import your CSS via JavaScript. Typically, this would be done in your application's `resources/js/app.js` file:
+代わりに、JavaScript 経由で CSS をインポートする必要があります。通常、これはアプリケーションの `resources/js/app.js` ファイルで行われます。
 
 ```js
 import './bootstrap';
 import '../css/app.css'; // [tl! add]
 ```
 
-The Laravel plugin also supports multiple entry points and advanced configuration options such as [SSR entry points](#ssr).
+Laravel プラグインは、複数のエントリポイントと、[SSR エントリポイント](#ssr) などの高度な構成オプションもサポートしています。
 
 <a name="working-with-a-secure-development-server"></a>
-#### Working With A Secure Development Server
+#### セキュアな開発サーバーの使用
 
-If your local development web server is serving your application via HTTPS, you may run into issues connecting to the Vite development server.
+ローカル開発 Web サーバーが HTTPS 経由でアプリケーションを提供している場合、Vite 開発サーバーへの接続で問題が発生する可能性があります。
 
-If you are using [Laravel Valet](/docs/{{version}}/valet) for local development and have run the [secure command](/docs/{{version}}/valet#securing-sites) against your application, you may configure the Vite development server to automatically use Valet's generated TLS certificates:
+ローカル開発に [Laravel Valet](/docs/{{version}}/valet) を使用しており、アプリケーションで [secure コマンド](/docs/{{version}}/valet#securing-sites) を実行した場合 、Valet が生成した TLS 証明書を Vite 開発サーバーで自動的に使用するように設定できます。
 
 ```js
 import { defineConfig } from 'vite';
@@ -150,7 +150,7 @@ export default defineConfig({
 });
 ```
 
-When using another web server, you should generate a trusted certificate and manually configure Vite to use the generated certificates:
+別の Web サーバーを使用する場合は、信頼できる証明書を生成し、生成された証明書を使用するように Vite を手動で設定する必要があります。
 
 ```js
 // ...
@@ -171,7 +171,7 @@ export default defineConfig({
 });
 ```
 
-If you are unable to generate a trusted certificate for your system, you may install and configure the [`@vitejs/plugin-basic-ssl` plugin](https://github.com/vitejs/vite-plugin-basic-ssl). When using untrusted certificates, you will need to accept the certificate warning for Vite's development server in your browser by following the "Local" link in your console when running the `npm run dev` command.
+システムの信頼できる証明書を生成できない場合は、[`@vitejs/plugin-basic-ssl` プラグイン](https://github.com/vitejs/vite-plugin-basic-ssl) をインストールして設定してください。信頼できない証明書を使用する場合、`npm run dev` コマンドの実行時にコンソールの「Local」リンクをたどって、ブラウザで Vite の開発サーバーに対する証明書の警告を受け入れる必要があります。
 
 <a name="loading-your-scripts-and-styles"></a>
 ### Loading Your Scripts And Styles
