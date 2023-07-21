@@ -299,19 +299,19 @@ export default defineConfig({
 });
 ```
 
-> **Note**  
-> Laravel's [starter kits](/docs/{{version}}/starter-kits) already include the proper Laravel, Vue, and Vite configuration. Check out [Laravel Breeze](/docs/{{version}}/starter-kits#breeze-and-inertia) for the fastest way to get started with Laravel, Vue, and Vite.
+> **Note**
+> Laravel の [スターター キット](/docs/{{version}}/starter-kits) には、すでに適切な Laravel、Vue、Vite の構成が含まれています。Laravel、Vue、Vite を最速で始める方法については、[Laravel Breeze](/docs/{{version}}/starter-kits#breeze-and-inertia) をご確認ください。
 
 <a name="react"></a>
 ### React
 
-If you would like to build your front-end using the [React](https://reactjs.org/) framework, then you will also need to install the `@vitejs/plugin-react` plugin:
+[React](https://reactjs.org/) フレームワークを使用してフロントエンドを構築したい場合は、`@vitejs/plugin-react` プラグインもインストールする必要があります。
 
 ```sh
 npm install --save-dev @vitejs/plugin-react
 ```
 
-You may then include the plugin in your `vite.config.js` configuration file:
+次に、プラグインを `vite.config.js` 設定ファイルにインクルードしてください。
 
 ```js
 import { defineConfig } from 'vite';
@@ -326,24 +326,24 @@ export default defineConfig({
 });
 ```
 
-You will need to ensure that any files containing JSX have a `.jsx` or `.tsx` extension, remembering to update your entry point, if required, as [shown above](#configuring-vite).
+JSX を含むすべてのファイルに `.jsx` または `.tsx` 拡張子が付いていることを確認し、必要に応じて [上記のように](#cconfiguring-vite) エントリポイントの更新を忘れないでください。
 
-You will also need to include the additional `@viteReactRefresh` Blade directive alongside your existing `@vite` directive.
+また、既存の `@vite` ディレクティブに加えて、追加の `@viteReactRefresh` Blade ディレクティブをインクルードする必要もあります。
 
 ```blade
 @viteReactRefresh
 @vite('resources/js/app.jsx')
 ```
 
-The `@viteReactRefresh` directive must be called before the `@vite` directive.
+`@viteReactRefresh` ディレクティブは、`@vite` ディレクティブの前に呼び出す必要があります。
 
-> **Note**  
-> Laravel's [starter kits](/docs/{{version}}/starter-kits) already include the proper Laravel, React, and Vite configuration. Check out [Laravel Breeze](/docs/{{version}}/starter-kits#breeze-and-inertia) for the fastest way to get started with Laravel, React, and Vite.
+> **Note**
+> Laravel の [スターター キット](/docs/{{version}}/starter-kits) には、すでに適切な Laravel、React、Vite の構成が含まれています。 Laravel、React、Vite を最も早く使い始める方法については、[Laravel Breeze](/docs/{{version}}/starter-kits#breeze-and-inertia) をご確認ください。
 
 <a name="inertia"></a>
 ### Inertia
 
-The Laravel Vite plugin provides a convenient `resolvePageComponent` function to help you resolve your Inertia page components. Below is an example of the helper in use with Vue 3; however, you may also utilize the function in other frameworks such as React:
+Laravel Vite プラグインは、Inertia ページコンポーネントの解決に役立つ便利な `resolvePageComponent` 関数を提供します。 以下は、Vue 3 で使用されるヘルパの例です。ただし、この関数は React などの他のフレームワークでも利用できます。
 
 ```js
 import { createApp, h } from 'vue';
