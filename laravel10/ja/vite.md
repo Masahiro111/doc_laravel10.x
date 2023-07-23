@@ -360,17 +360,17 @@ createInertiaApp({
 });
 ```
 
-> **Note**  
-> Laravel's [starter kits](/docs/{{version}}/starter-kits) already include the proper Laravel, Inertia, and Vite configuration. Check out [Laravel Breeze](/docs/{{version}}/starter-kits#breeze-and-inertia) for the fastest way to get started with Laravel, Inertia, and Vite.
+> **Note**
+> Laravel の [スターター キット](/docs/{{version}}/starter-kits) には、適切な Laravel、Inertia、Vite の構成がすでに含まれています。Laravel、Inertia、Vite を最も早く使い始める方法については、[Laravel Breeze](/docs/{{version}}/starter-kits#breeze-and-inertia) をご確認ください。
 
 <a name="url-processing"></a>
-### URL Processing
+### URL処理
 
-When using Vite and referencing assets in your application's HTML, CSS, or JS, there are a couple of caveats to consider. First, if you reference assets with an absolute path, Vite will not include the asset in the build; therefore, you should ensure that the asset is available in your public directory.
+Vite を使用し、アプリケーションの HTML、CSS、または JS でアセットを参照する場合、考慮すべき注意事項がいくつかあります。まず、絶対パスでアセットを参照すると、Vite はビルドにアセットを含めません。したがって、アセットがパブリックディレクトリで利用可能であることを確認する必要があります。
 
-When referencing relative asset paths, you should remember that the paths are relative to the file where they are referenced. Any assets referenced via a relative path will be re-written, versioned, and bundled by Vite.
+相対パスで参照する場合、参照先のファイルに対する相対パスであることに注意してください。相対パス経由で参照されるアセットはすべて、Vite によって書き換えられ、バージョン管理され、バンドルされます。
 
-Consider the following project structure:
+以下のプロジェクト構造を考えてみましょう。
 
 ```nothing
 public/
@@ -383,7 +383,7 @@ resources/
     abigail.png
 ```
 
-The following example demonstrates how Vite will treat relative and absolute URLs:
+以下の例は、Vite が相対 URL と絶対 URL をどのように扱うかを示しています。
 
 ```html
 <!-- This asset is not handled by Vite and will not be included in the build -->
@@ -394,9 +394,9 @@ The following example demonstrates how Vite will treat relative and absolute URL
 ```
 
 <a name="working-with-stylesheets"></a>
-## Working With Stylesheets
+## スタイルシートの操作
 
-You can learn more about Vite's CSS support within the [Vite documentation](https://vitejs.dev/guide/features.html#css). If you are using PostCSS plugins such as [Tailwind](https://tailwindcss.com), you may create a `postcss.config.js` file in the root of your project and Vite will automatically apply it:
+Vite の CSS サポートについて詳しくは、[Vite ドキュメント](https://vitejs.dev/guide/features.html#css) をご覧ください。[Tailwind](https://tailwindcss.com) など PostCSS プラグインを使用している場合、プロジェクトのルートに `postcss.config.js` ファイルを作成すると、Vite がそれを自動的に適用します。
 
 ```js
 module.exports = {
@@ -408,7 +408,7 @@ module.exports = {
 ```
 
 > **Note**
-> Laravel's [starter kits](/docs/{{version}}/starter-kits) already include the proper Tailwind, PostCSS, and Vite configuration. Or, if you would like to use Tailwind and Laravel without using one of our starter kits, check out [Tailwind's installation guide for Laravel](https://tailwindcss.com/docs/guides/laravel).
+> Laravel の [スターター キット](/docs/{{version}}/starter-kits) には、適切な Tailwind、PostCSS、Vite の構成がすでに含まれています。スターター キットを使用せずに Tailwind と Laravel を使用したい場合は、[Tailwind の Laravel インストール ガイド](https://tailwindcss.com/docs/guides/laravel) をご確認ください。
 
 <a name="working-with-blade-and-routes"></a>
 ## Working With Blade & Routes
