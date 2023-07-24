@@ -411,14 +411,14 @@ module.exports = {
 > Laravel の [スターター キット](/docs/{{version}}/starter-kits) には、適切な Tailwind、PostCSS、Vite の構成がすでに含まれています。スターター キットを使用せずに Tailwind と Laravel を使用したい場合は、[Tailwind の Laravel インストール ガイド](https://tailwindcss.com/docs/guides/laravel) をご確認ください。
 
 <a name="working-with-blade-and-routes"></a>
-## Working With Blade & Routes
+## Blade とルートの操作
 
 <a name="blade-processing-static-assets"></a>
-### Processing Static Assets With Vite
+### Vite による静的アセット処理
 
-When referencing assets in your JavaScript or CSS, Vite automatically processes and versions them. In addition, when building Blade based applications, Vite can also process and version static assets that you reference solely in Blade templates.
+JavaScript や CSS のアセットを参照すると、Vite はそれらを自動的に処理してバージョン付けします。さらに、Blade ベースのアプリケーションを構築する場合、Vite は Blade テンプレート内でのみ参照する静的アセットを処理、およびバージョン管理することもできます。
 
-However, in order to accomplish this, you need to make Vite aware of your assets by importing the static assets into the application's entry point. For example, if you want to process and version all images stored in `resources/images` and all fonts stored in `resources/fonts`, you should add the following in your application's `resources/js/app.js` entry point:
+これを実現するには、静的アセットをアプリケーションのエントリポイントにインポートして、Vite にアセットを認識させる必要があります。たとえば、`resources/images` に保存されているすべての画像と、`resources/fonts` に保存されているすべてのフォントを処理してバージョン管理したい場合は、アプリケーションのエントリポイント `resources/js/app.js` に次の行を追加する必要があります。
 
 ```js
 import.meta.glob([
@@ -427,16 +427,16 @@ import.meta.glob([
 ]);
 ```
 
-These assets will now be processed by Vite when running `npm run build`. You can then reference these assets in Blade templates using the `Vite::asset` method, which will return the versioned URL for a given asset:
+これらのアセットは、`npm run build` の実行時に Vite によって処理されるようになります。その後、`Vite::asset` メソッドを使用して、Blade テンプレートでこれらのアセットを参照できます。これにより、特定のアセットのバージョン管理された URL が返されます。
 
 ```blade
 <img src="{{ Vite::asset('resources/images/logo.png') }}">
 ```
 
 <a name="blade-refreshing-on-save"></a>
-### Refreshing On Save
+### 保存時の再描写
 
-When your application is built using traditional server-side rendering with Blade, Vite can improve your development workflow by automatically refreshing the browser when you make changes to view files in your application. To get started, you can simply specify the `refresh` option as `true`.
+Blade での従来のサーバサイドレンダリングを使用してアプリケーションが構築されている場合、Vite はアプリケーション内のビューファイルを変更した際、ブラウザが自動的に更新されることで、開発ワークフローを改善します。この設定は `refresh` オプションを `true` に指定するだけです。
 
 ```js
 import { defineConfig } from 'vite';
@@ -452,7 +452,7 @@ export default defineConfig({
 });
 ```
 
-When the `refresh` option is `true`, saving files in the following directories will trigger the browser to perform a full page refresh while you are running `npm run dev`:
+`refresh` オプションが `true` の場合、以下のディレクトリにファイルを保存すると、`npm run dev` の実行中にブラウザがページ全体を更新します。
 
 - `app/View/Components/**`
 - `lang/**`
@@ -460,9 +460,9 @@ When the `refresh` option is `true`, saving files in the following directories w
 - `resources/views/**`
 - `routes/**`
 
-Watching the `routes/**` directory is useful if you are utilizing [Ziggy](https://github.com/tighten/ziggy) to generate route links within your application's frontend.
+[Ziggy](https://github.com/tighten/ziggy) を利用してアプリケーションのフロントエンドにルートリンクを生成する場合、`routes/**` ディレクトリを監視すると便利です。
 
-If these default paths do not suit your needs, you can specify your own list of paths to watch:
+これらのデフォルトのパスがニーズに合わない場合は、監視するパスの独自のリストを指定できます。
 
 ```js
 import { defineConfig } from 'vite';
@@ -478,7 +478,7 @@ export default defineConfig({
 });
 ```
 
-Under the hood, the Laravel Vite plugin uses the [`vite-plugin-full-reload`](https://github.com/ElMassimo/vite-plugin-full-reload) package, which offers some advanced configuration options to fine-tune this feature's behavior. If you need this level of customization, you may provide a `config` definition:
+Laravel Vite プラグイン内部では、[`vite-plugin-full-reload`](https://github.com/ElMassimo/vite-plugin-full-reload) パッケージを使用しており、この機能の動作を調整するための高度な設定オプションが提供されます。このレベルのカスタマイズが必要な場合は、`config` 定義を指定してください。
 
 ```js
 import { defineConfig } from 'vite';
@@ -498,9 +498,9 @@ export default defineConfig({
 ```
 
 <a name="blade-aliases"></a>
-### Aliases
+### エイリアス
 
-It is common in JavaScript applications to [create aliases](#aliases) to regularly referenced directories. But, you may also create aliases to use in Blade by using the `macro` method on the `Illuminate\Support\Facades\Vite` class. Typically, "macros" should be defined within the `boot` method of a [service provider](/docs/{{version}}/providers):
+JavaScript アプリケーションでは、定期的に参照されるディレクトリに [エイリアスを作成](#aliases) するのが一般的です。ただし、`Illuminate\Support\Facades\Vite` クラスの `macro` メソッドを使用して、Blade で使用するエイリアスを作成することもできます。 通常、「マクロ」は [サービスプロバイダ](/docs/{{version}}/providers) の `boot` メソッド内で定義する必要があります。
 
     /**
      * Bootstrap any application services.
@@ -510,31 +510,31 @@ It is common in JavaScript applications to [create aliases](#aliases) to regular
         Vite::macro('image', fn (string $asset) => $this->asset("resources/images/{$asset}"));
     }
 
-Once a macro has been defined, it can be invoked within your templates. For example, we can use the `image` macro defined above to reference an asset located at `resources/images/logo.png`:
+マクロを定義すると、テンプレート内でマクロを呼び出せます。たとえば、上記で定義した `image` マクロを使用して、`resources/images/logo.png` にあるアセットを参照してみましょう。
 
 ```blade
 <img src="{{ Vite::image('logo.png') }}" alt="Laravel Logo">
 ```
 
 <a name="custom-base-urls"></a>
-## Custom Base URLs
+## ベース URL のカスタマイズ
 
-If your Vite compiled assets are deployed to a domain separate from your application, such as via a CDN, you must specify the `ASSET_URL` environment variable within your application's `.env` file:
+Vite でコンパイルをしたアセットが CDN 経由など、アプリケーションとは別のドメインにデプロイされている場合は、アプリケーションの `.env` ファイル内で `ASSET_URL` 環境変数を指定する必要があります。
 
 ```env
 ASSET_URL=https://cdn.example.com
 ```
 
-After configuring the asset URL, all re-written URLs to your assets will be prefixed with the configured value:
+アセット URL を設定すると、書き換える URL の先頭に、設定した値が付きます。
 
 ```nothing
 https://cdn.example.com/build/assets/app.9dce8d17.js
 ```
 
-Remember that [absolute URLs are not re-written by Vite](#url-processing), so they will not be prefixed.
+[絶対 URL は Vite によって書き換えられない](#url-processing) ため、プレフィックスは付加されないことに注意してください。
 
 <a name="environment-variables"></a>
-## Environment Variables
+＃＃ 環境変数
 
 You may inject environment variables into your JavaScript by prefixing them with `VITE_` in your application's `.env` file:
 
