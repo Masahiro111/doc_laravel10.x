@@ -18,7 +18,7 @@
   - [Vite による静的アセット処理](#blade-processing-static-assets)
   - [保存時の再描画](#blade-refreshing-on-save)
   - [エイリアス](#blade-aliases)
-- [ベース URL のカスタム](#custom-base-urls)
+- [ベース URL のカスタマイズ](#custom-base-urls)
 - [環境変数](#environment-variables)
 - [テスト時に Vite を無効化](#disabling-vite-in-tests)
 - [サーバーサイドレンダリング (SSR)](#ssr)
@@ -536,24 +536,24 @@ https://cdn.example.com/build/assets/app.9dce8d17.js
 <a name="environment-variables"></a>
 ＃＃ 環境変数
 
-You may inject environment variables into your JavaScript by prefixing them with `VITE_` in your application's `.env` file:
+アプリケーションの `.env` ファイル内で環境変数の先頭に `VITE_` を付けることで、JavaScript に環境変数を挿入できます。
 
 ```env
 VITE_SENTRY_DSN_PUBLIC=http://example.com
 ```
 
-You may access injected environment variables via the `import.meta.env` object:
+挿入された環境変数には、`import.meta.env` オブジェクト経由でアクセスできます。
 
 ```js
 import.meta.env.VITE_SENTRY_DSN_PUBLIC
 ```
 
 <a name="disabling-vite-in-tests"></a>
-## Disabling Vite In Tests
+## Vite In テストを無効にする
 
-Laravel's Vite integration will attempt to resolve your assets while running your tests, which requires you to either run the Vite development server or build your assets.
+Laravel の Vite 統合では、テストの実行中にアセットの解決が試行されるため、Vite 開発サーバーを実行するか、アセットをビルドする必要があります。
 
-If you would prefer to mock Vite during testing, you may call the `withoutVite` method, which is is available for any tests that extend Laravel's `TestCase` class:
+テスト中に Vite をモックしたい場合は、Laravel の `TestCase` クラスを拡張するあらゆるテストで利用できる `withoutVite` メソッドを呼び出すことができます。
 
 ```php
 use Tests\TestCase;
@@ -569,7 +569,7 @@ class ExampleTest extends TestCase
 }
 ```
 
-If you would like to disable Vite for all tests, you may call the `withoutVite` method from the `setUp` method on your base `TestCase` class:
+すべてのテストで Vite を無効にしたい場合は、ベースの `TestCase` クラスの `setUp` メソッドから `withoutVite` メソッドを呼び出します。
 
 ```php
 <?php
@@ -592,9 +592,9 @@ abstract class TestCase extends BaseTestCase
 ```
 
 <a name="ssr"></a>
-## Server-Side Rendering (SSR)
+## サーバーサイド レンダリング (SSR)
 
-The Laravel Vite plugin makes it painless to set up server-side rendering with Vite. To get started, create an SSR entry point at `resources/js/ssr.js` and specify the entry point by passing a configuration option to the Laravel plugin:
+Laravel Vite プラグインを使用すると、Vite でのサーバー側レンダリングのセットアップが簡単になります。 まず、`resources/js/ssr.js` に SSR エントリ ポイントを作成し、構成オプションを Laravel プラグインに渡すことでエントリ ポイントを指定します。
 
 ```js
 import { defineConfig } from 'vite';
@@ -610,7 +610,7 @@ export default defineConfig({
 });
 ```
 
-To ensure you don't forget to rebuild the SSR entry point, we recommend augmenting the "build" script in your application's `package.json` to create your SSR build:
+SSR エントリ ポイントの再構築を忘れないようにするために、アプリケーションの「package.json」内の「build」スクリプトを拡張して SSR ビルドを作成することをお勧めします。
 
 ```json
 "scripts": {
@@ -620,23 +620,23 @@ To ensure you don't forget to rebuild the SSR entry point, we recommend augmenti
 }
 ```
 
-Then, to build and start the SSR server, you may run the following commands:
+次に、SSR サーバーを構築して起動するには、次のコマンドを実行します。
 
 ```sh
 npm run build
 node bootstrap/ssr/ssr.mjs
 ```
 
-> **Note**  
-> Laravel's [starter kits](/docs/{{version}}/starter-kits) already include the proper Laravel, Inertia SSR, and Vite configuration. Check out [Laravel Breeze](/docs/{{version}}/starter-kits#breeze-and-inertia) for the fastest way to get started with Laravel, Inertia SSR, and Vite.
+> **注意**
+> Laravel の [スターター キット](/docs/{{version}}/starter-kits) には、適切な Laravel、Inertia SSR、および Vite 構成がすでに含まれています。 Laravel、Inertia SSR、Vite を最も早く使い始める方法については、[Laravel Breeze](/docs/{{version}}/starter-kits#breeze-and-inertia) をチェックしてください。
 
 <a name="script-and-style-attributes"></a>
-## Script & Style Tag Attributes
+## スクリプトとスタイルのタグ属性
 
 <a name="content-security-policy-csp-nonce"></a>
-### Content Security Policy (CSP) Nonce
+### コンテンツ セキュリティ ポリシー (CSP) ナンス
 
-If you wish to include a [`nonce` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) on your script and style tags as part of your [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP), you may generate or specify a nonce using the `useCspNonce` method within a custom [middleware](/docs/{{version}}/middleware):
+[コンテンツ セキュリティ] の一部としてスクリプトとスタイル タグに [`nonce` 属性](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) を含めたい場合 ポリシー](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)、カスタム [ミドルウェア](/docs/{ {バージョン}}/ミドルウェア):
 
 ```php
 <?php
@@ -666,30 +666,30 @@ class AddContentSecurityPolicyHeaders
 }
 ```
 
-After invoking the `useCspNonce` method, Laravel will automatically include the `nonce` attributes on all generated script and style tags.
+`useCspNonce` メソッドを呼び出した後、Laravel は生成されたすべてのスクリプトタグとスタイルタグに `nonce` 属性を自動的に含めます。
 
-If you need to specify the nonce elsewhere, including the [Ziggy `@route` directive](https://github.com/tighten/ziggy#using-routes-with-a-content-security-policy) included with Laravel's [starter kits](/docs/{{version}}/starter-kits), you may retrieve it using the `cspNonce` method:
+Laravel の [ スターター キット](/docs/{{version}}/starter-kits)、`cspNonce` メソッドを使用して取得できます。
 
 ```blade
 @routes(nonce: Vite::cspNonce())
 ```
 
-If you already have a nonce that you would like to instruct Laravel to use, you may pass the nonce to the `useCspNonce` method:
+Laravel に使用を指示したい nonce がすでにある場合は、その nonce を `useCspNonce` メソッドに渡すことができます。
 
 ```php
 Vite::useCspNonce($nonce);
 ```
 
 <a name="subresource-integrity-sri"></a>
-### Subresource Integrity (SRI)
+### サブリソース整合性 (SRI)
 
-If your Vite manifest includes `integrity` hashes for your assets, Laravel will automatically add the `integrity` attribute on any script and style tags it generates in order to enforce [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity). By default, Vite does not include the `integrity` hash in its manifest, but you may enable it by installing the [`vite-plugin-manifest-sri`](https://www.npmjs.com/package/vite-plugin-manifest-sri) NPM plugin:
+Vite マニフェストにアセットの `integrity` ハッシュが含まれている場合、Laravel は [サブリソースの整合性](https://developer.mozilla.org/en) を強制するために、生成するスクリプトとスタイル タグに `integrity` 属性を自動的に追加します。 -US/docs/Web/Security/Subresource_Integrity)。 デフォルトでは、Vite のマニフェストには「integrity」ハッシュが含まれていませんが、[`vite-plugin-manifest-sri`](https://www.npmjs.com/package/vite-) をインストールすることで有効にすることができます。 plugin-manifest-sri) NPM プラグイン:
 
 ```shell
 npm install --save-dev vite-plugin-manifest-sri
 ```
 
-You may then enable this plugin in your `vite.config.js` file:
+その後、「vite.config.js」ファイルでこのプラグインを有効にすることができます。
 
 ```js
 import { defineConfig } from 'vite';
@@ -706,7 +706,7 @@ export default defineConfig({
 });
 ```
 
-If required, you may also customize the manifest key where the integrity hash can be found:
+必要に応じて、整合性ハッシュが見つかるマニフェスト キーをカスタマイズすることもできます。
 
 ```php
 use Illuminate\Support\Facades\Vite;
@@ -714,16 +714,16 @@ use Illuminate\Support\Facades\Vite;
 Vite::useIntegrityKey('custom-integrity-key');
 ```
 
-If you would like to disable this auto-detection completely, you may pass `false` to the `useIntegrityKey` method:
+この自動検出を完全に無効にしたい場合は、`useIntegrityKey` メソッドに `false` を渡します。
 
 ```php
 Vite::useIntegrityKey(false);
 ```
 
 <a name="arbitrary-attributes"></a>
-### Arbitrary Attributes
+### 任意の属性
 
-If you need to include additional attributes on your script and style tags, such as the [`data-turbo-track`](https://turbo.hotwired.dev/handbook/drive#reloading-when-assets-change) attribute, you may specify them via the `useScriptTagAttributes` and `useStyleTagAttributes` methods. Typically, this methods should be invoked from a [service provider](/docs/{{version}}/providers):
+[`data-turbo-track`](https://turbo.hotwired.dev/handbook/drive#reloading-when-assets-change) 属性など、スクリプトとスタイル タグに追加の属性を含める必要がある場合 、`useScriptTagAttributes` および `useStyleTagAttributes` メソッドを介して指定できます。 通常、このメソッドは [サービス プロバイダー](/docs/{{version}}/providers) から呼び出す必要があります。
 
 ```php
 use Illuminate\Support\Facades\Vite;
@@ -739,7 +739,7 @@ Vite::useStyleTagAttributes([
 ]);
 ```
 
-If you need to conditionally add attributes, you may pass a callback that will receive the asset source path, its URL, its manifest chunk, and the entire manifest:
+条件付きで属性を追加する必要がある場合は、アセットのソース パス、その URL、そのマニフェスト チャンク、およびマニフェスト全体を受け取るコールバックを渡すことができます。
 
 ```php
 use Illuminate\Support\Facades\Vite;
@@ -753,13 +753,13 @@ Vite::useStyleTagAttributes(fn (string $src, string $url, array|null $chunk, arr
 ]);
 ```
 
-> **Warning**  
-> The `$chunk` and `$manifest` arguments will be `null` while the Vite development server is running.
+> **警告**
+> Vite 開発サーバーの実行中、`$chunk` および `$manifest` 引数は `null` になります。
 
 <a name="advanced-customization"></a>
-## Advanced Customization
+## 高度なカスタマイズ
 
-Out of the box, Laravel's Vite plugin uses sensible conventions that should work for the majority of applications; however, sometimes you may need to customize Vite's behavior. To enable additional customization options, we offer the following methods and options which can be used in place of the `@vite` Blade directive:
+Laravel の Vite プラグインは、そのままの状態で、ほとんどのアプリケーションで機能する賢明な規則を使用しています。 ただし、Vite の動作をカスタマイズする必要がある場合があります。 追加のカスタマイズ オプションを有効にするために、`@vite` Blade ディレクティブの代わりに使用できる次のメソッドとオプションが提供されています。
 
 ```blade
 <!doctype html>
@@ -775,7 +775,7 @@ Out of the box, Laravel's Vite plugin uses sensible conventions that should work
 </head>
 ```
 
-Within the `vite.config.js` file, you should then specify the same configuration:
+`vite.config.js` ファイル内で、同じ設定を指定する必要があります。
 
 ```js
 import { defineConfig } from 'vite';
@@ -796,19 +796,19 @@ export default defineConfig({
 ```
 
 <a name="correcting-dev-server-urls"></a>
-### Correcting Dev Server URLs
+### 開発サーバーの URL を修正する
 
-Some plugins within the Vite ecosystem assume that URLs which begin with a forward-slash will always point to the Vite dev server. However, due to the nature of the Laravel integration, this is not the case.
+Vite エコシステム内の一部のプラグインは、スラッシュで始まる URL が常に Vite dev サーバーを指すことを前提としています。 ただし、Laravel 統合の性質により、これは当てはまりません。
 
-For example, the `vite-imagetools` plugin outputs URLs like the following while Vite is serving your assets:
+たとえば、「vite-imagetools」プラグインは、Vite がアセットを提供しているときに次のような URL を出力します。
 
 ```html
 <img src="/@imagetools/f0b2f404b13f052c604e632f2fb60381bf61a520">
 ```
 
-The `vite-imagetools` plugin is expecting that the output URL will be intercepted by Vite and the plugin may then handle all URLs that start with `/@imagetools`. If you are using plugins that are expecting this behaviour, you will need to manually correct the URLs. You can do this in your `vite.config.js` file by using the `transformOnServe` option. 
+`vite-imagetools` プラグインは、出力 URL が Vite によってインターセプトされることを期待しており、プラグインは `/@imagetools` で始まるすべての URL を処理できるようになります。 この動作を想定しているプラグインを使用している場合は、URL を手動で修正する必要があります。 これは、「vite.config.js」ファイルで「transformOnServe」オプションを使用して行うことができます。
 
-In this particular example, we will append the dev server URL to all occurrences of `/@imagetools` within the generated code:
+この特定の例では、生成されたコード内のすべての `/@imagetools` に開発サーバー URL を追加します。
 
 ```js
 import { defineConfig } from 'vite';
@@ -826,7 +826,7 @@ export default defineConfig({
 });
 ```
 
-Now, while Vite is serving Assets, it will output URLs that point to the Vite dev server:
+これで、Vite がアセットを提供している間、Vite 開発サーバーを指す URL が出力されます。
 
 ```html
 - <img src="/@imagetools/f0b2f404b13f052c604e632f2fb60381bf61a520"><!-- [tl! remove] -->
