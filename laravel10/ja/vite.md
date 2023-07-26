@@ -534,22 +534,22 @@ https://cdn.example.com/build/assets/app.9dce8d17.js
 [絶対 URL は Vite によって書き換えられない](#url-processing) ため、プレフィックスは付加されないことに注意してください。
 
 <a name="environment-variables"></a>
-＃＃ 環境変数
+## 環境変数
 
-アプリケーションの `.env` ファイル内で環境変数の先頭に `VITE_` を付けることで、JavaScript に環境変数を挿入できます。
+アプリケーションの `.env` ファイル内で環境変数の先頭に `VITE_` を付けることで、JavaScript に環境変数を注入できます。
 
 ```env
 VITE_SENTRY_DSN_PUBLIC=http://example.com
 ```
 
-挿入された環境変数には、`import.meta.env` オブジェクト経由でアクセスできます。
+注入された環境変数には、`import.meta.env` オブジェクト経由でアクセスできます。
 
 ```js
 import.meta.env.VITE_SENTRY_DSN_PUBLIC
 ```
 
 <a name="disabling-vite-in-tests"></a>
-## Vite In テストを無効にする
+## テスト時に Vite を無効化
 
 Laravel の Vite 統合では、テストの実行中にアセットの解決が試行されるため、Vite 開発サーバーを実行するか、アセットをビルドする必要があります。
 
@@ -592,9 +592,9 @@ abstract class TestCase extends BaseTestCase
 ```
 
 <a name="ssr"></a>
-## サーバーサイド レンダリング (SSR)
+## サーバーサイドレンダリング (SSR)
 
-Laravel Vite プラグインを使用すると、Vite でのサーバー側レンダリングのセットアップが簡単になります。 まず、`resources/js/ssr.js` に SSR エントリ ポイントを作成し、構成オプションを Laravel プラグインに渡すことでエントリ ポイントを指定します。
+Laravel Vite プラグインを使用すると、Vite でのサーバサイドレンダリングを簡単にセットアップできます。まず、`resources/js/ssr.js` に SSR エントリポイントを作成し、構成オプションを Laravel プラグインに渡すことでエントリポイントを指定します。
 
 ```js
 import { defineConfig } from 'vite';
@@ -610,7 +610,7 @@ export default defineConfig({
 });
 ```
 
-SSR エントリ ポイントの再構築を忘れないようにするために、アプリケーションの「package.json」内の「build」スクリプトを拡張して SSR ビルドを作成することをお勧めします。
+SSR エントリポイントの再構築を忘れないようにするために、アプリケーションの `package.json` 内の「build」スクリプトを拡張して SSR ビルドを作成することをお勧めします。
 
 ```json
 "scripts": {
@@ -620,23 +620,29 @@ SSR エントリ ポイントの再構築を忘れないようにするために
 }
 ```
 
-次に、SSR サーバーを構築して起動するには、次のコマンドを実行します。
+次に、SSR サーバを構築して起動するには、以下のコマンドを実行します。
 
 ```sh
 npm run build
 node bootstrap/ssr/ssr.mjs
 ```
 
-> **注意**
-> Laravel の [スターター キット](/docs/{{version}}/starter-kits) には、適切な Laravel、Inertia SSR、および Vite 構成がすでに含まれています。 Laravel、Inertia SSR、Vite を最も早く使い始める方法については、[Laravel Breeze](/docs/{{version}}/starter-kits#breeze-and-inertia) をチェックしてください。
+[Inertia で SSR](https://inertiajs.com/server-side-rendering) を使用している場合は、代わりに `inertia:start-ssr` Artisan コマンドを使用して SSR サーバを起動できます。
+
+```sh
+php artisan inertia:start-ssr
+```
+
+> **Note**
+> Laravel の [スターター キット](/docs/{{version}}/starter-kits) には、適切な Laravel、Inertia SSR、Vite 構成がすでに含まれています。Laravel、Inertia SSR、Vite を最も早く使い始める方法については、[Laravel Breeze](/docs/{{version}}/starter-kits#breeze-and-inertia) をチェックしてください。
 
 <a name="script-and-style-attributes"></a>
-## スクリプトとスタイルのタグ属性
+## Script と style タグ属性
 
 <a name="content-security-policy-csp-nonce"></a>
-### コンテンツ セキュリティ ポリシー (CSP) ナンス
+### コンテンツセキュリティポリシー (CSP) ノンス
 
-[コンテンツ セキュリティ] の一部としてスクリプトとスタイル タグに [`nonce` 属性](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) を含めたい場合 ポリシー](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)、カスタム [ミドルウェア](/docs/{ {バージョン}}/ミドルウェア):
+[コンテンツセキュリティポリシー](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) の一部としてスクリプトとスタイルタグに [`nonce` 属性](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) を含めたい場合、カスタム [ミドルウェア](/docs/{{version}}/middleware) の `useCspNonce` メソッドを使用して、ノンスを生成、指定できます。
 
 ```php
 <?php
@@ -666,22 +672,22 @@ class AddContentSecurityPolicyHeaders
 }
 ```
 
-`useCspNonce` メソッドを呼び出した後、Laravel は生成されたすべてのスクリプトタグとスタイルタグに `nonce` 属性を自動的に含めます。
+`useCspNonce` メソッドを呼び出した後、Laravel は生成されたすべての script タグと style タグに `nonce` 属性を自動的に含めます。
 
-Laravel の [ スターター キット](/docs/{{version}}/starter-kits)、`cspNonce` メソッドを使用して取得できます。
+Laravel の [スターターキット](/docs/{{version}}/starter-kits) に含まれる [Ziggy `@route` directive](https://github.com/tighten/ziggy#using-routes-with-a-content-security-policy) など、他の場所でノンスを指定する必要がある場合は、`cspNonce` メソッドを使用して取得できます。
 
 ```blade
 @routes(nonce: Vite::cspNonce())
 ```
 
-Laravel に使用を指示したい nonce がすでにある場合は、その nonce を `useCspNonce` メソッドに渡すことができます。
+Laravel に使用を指示したいノンスがすでにある場合は、そのノンスを `useCspNonce` メソッドに渡すことができます。
 
 ```php
 Vite::useCspNonce($nonce);
 ```
 
 <a name="subresource-integrity-sri"></a>
-### サブリソース整合性 (SRI)
+### サブリソース完全性 (SRI)
 
 Vite マニフェストにアセットの `integrity` ハッシュが含まれている場合、Laravel は [サブリソースの整合性](https://developer.mozilla.org/en) を強制するために、生成するスクリプトとスタイル タグに `integrity` 属性を自動的に追加します。 -US/docs/Web/Security/Subresource_Integrity)。 デフォルトでは、Vite のマニフェストには「integrity」ハッシュが含まれていませんが、[`vite-plugin-manifest-sri`](https://www.npmjs.com/package/vite-) をインストールすることで有効にすることができます。 plugin-manifest-sri) NPM プラグイン:
 
