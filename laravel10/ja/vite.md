@@ -24,7 +24,7 @@
 - [サーバーサイドレンダリング (SSR)](#ssr)
 - [Script と style タグ属性](#script-and-style-attributes)
   - [コンテンツセキュリティポリシー (CSP) ノンス](#content-security-policy-csp-nonce)
-  - [サブリソース整合性 (SRI)](#subresource-integrity-sri)
+  - [サブリソース完全性 (SRI)](#subresource-integrity-sri)
   - [任意の属性](#arbitrary-attributes)
 - [高度なカスタマイズ](#advanced-customization)
   - [開発サーバー URL の修正](#correcting-dev-server-urls)
@@ -689,13 +689,13 @@ Vite::useCspNonce($nonce);
 <a name="subresource-integrity-sri"></a>
 ### サブリソース完全性 (SRI)
 
-Vite マニフェストにアセットの `integrity` ハッシュが含まれている場合、Laravel は [サブリソースの整合性](https://developer.mozilla.org/en) を強制するために、生成するスクリプトとスタイル タグに `integrity` 属性を自動的に追加します。 -US/docs/Web/Security/Subresource_Integrity)。 デフォルトでは、Vite のマニフェストには「integrity」ハッシュが含まれていませんが、[`vite-plugin-manifest-sri`](https://www.npmjs.com/package/vite-) をインストールすることで有効にすることができます。 plugin-manifest-sri) NPM プラグイン:
+Vite マニフェストにアセットの `integrity` ハッシュが含まれている場合、Laravel は [サブリソースの完全性](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) を強制するために、生成するスクリプトとスタイルタグに `integrity` 属性を自動的に追加します。デフォルトで、Vite のマニフェストには `integrity` ハッシュが含まれていませんが、[`vite-plugin-manifest-sri`](https://www.npmjs.com/package/vite-plugin-manifest-sri) NPM プラグインをインストールすることで有効にすることができます。
 
 ```shell
 npm install --save-dev vite-plugin-manifest-sri
 ```
 
-その後、「vite.config.js」ファイルでこのプラグインを有効にすることができます。
+`vite.config.js` ファイルでこのプラグインを有効にすることができます。
 
 ```js
 import { defineConfig } from 'vite';
@@ -712,7 +712,7 @@ export default defineConfig({
 });
 ```
 
-必要に応じて、整合性ハッシュが見つかるマニフェスト キーをカスタマイズすることもできます。
+必要に応じて、完全性ハッシュを見つけることが可能なマニフェストキーをカスタマイズすることもできます。
 
 ```php
 use Illuminate\Support\Facades\Vite;
@@ -729,7 +729,7 @@ Vite::useIntegrityKey(false);
 <a name="arbitrary-attributes"></a>
 ### 任意の属性
 
-[`data-turbo-track`](https://turbo.hotwired.dev/handbook/drive#reloading-when-assets-change) 属性など、スクリプトとスタイル タグに追加の属性を含める必要がある場合 、`useScriptTagAttributes` および `useStyleTagAttributes` メソッドを介して指定できます。 通常、このメソッドは [サービス プロバイダー](/docs/{{version}}/providers) から呼び出す必要があります。
+[`data-turbo-track`](https://turbo.hotwired.dev/handbook/drive#reloading-when-assets-change) 属性など、スクリプトタグやスタイルタグに追加の属性を含める必要がある場合 、`useScriptTagAttributes` と `useStyleTagAttributes` メソッドで指定することが可能です。 通常、このメソッドは [サービスプロバイダ](/docs/{{version}}/providers) から呼び出す必要があります。
 
 ```php
 use Illuminate\Support\Facades\Vite;
@@ -745,7 +745,7 @@ Vite::useStyleTagAttributes([
 ]);
 ```
 
-条件付きで属性を追加する必要がある場合は、アセットのソース パス、その URL、そのマニフェスト チャンク、およびマニフェスト全体を受け取るコールバックを渡すことができます。
+条件付きで属性を追加する必要がある場合、アセットのソース パスとその URL、マニフェストのチャンク、マニフェスト全体を受け取るコールバックを渡すことができます。
 
 ```php
 use Illuminate\Support\Facades\Vite;
@@ -759,13 +759,13 @@ Vite::useStyleTagAttributes(fn (string $src, string $url, array|null $chunk, arr
 ]);
 ```
 
-> **警告**
+> **Warning**
 > Vite 開発サーバーの実行中、`$chunk` および `$manifest` 引数は `null` になります。
 
 <a name="advanced-customization"></a>
 ## 高度なカスタマイズ
 
-Laravel の Vite プラグインは、そのままの状態で、ほとんどのアプリケーションで機能する賢明な規則を使用しています。 ただし、Vite の動作をカスタマイズする必要がある場合があります。 追加のカスタマイズ オプションを有効にするために、`@vite` Blade ディレクティブの代わりに使用できる次のメソッドとオプションが提供されています。
+Laravel の Vite プラグインは、そのままの状態で、ほとんどのアプリケーションで機能する賢明な規則を使用しています。ただし、Vite の動作をカスタマイズする必要がある場合があります。 追加のカスタマイズオプションを有効にするために、`@vite` Blade ディレクティブの代わりに使用できる以下のメソッドとオプションが提供されています。
 
 ```blade
 <!doctype html>
@@ -781,7 +781,7 @@ Laravel の Vite プラグインは、そのままの状態で、ほとんどの
 </head>
 ```
 
-`vite.config.js` ファイル内で、同じ設定を指定する必要があります。
+`vite.config.js` ファイル内でも、同じ設定を指定する必要があります。
 
 ```js
 import { defineConfig } from 'vite';
