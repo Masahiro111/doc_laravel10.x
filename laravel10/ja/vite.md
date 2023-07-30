@@ -802,19 +802,19 @@ export default defineConfig({
 ```
 
 <a name="correcting-dev-server-urls"></a>
-### 開発サーバーの URL を修正する
+### 開発サーバー URL の修正
 
-Vite エコシステム内の一部のプラグインは、スラッシュで始まる URL が常に Vite dev サーバーを指すことを前提としています。 ただし、Laravel 統合の性質により、これは当てはまりません。
+Vite エコシステム内の一部のプラグインは、フォワードスラッシュで始まる URL が常に Vite 開発サーバを指すことを前提としています。 ただし、Laravel との統合の性質上、これは好ましくありません。
 
-たとえば、「vite-imagetools」プラグインは、Vite がアセットを提供しているときに次のような URL を出力します。
+たとえば、`vite-imagetools` プラグインは、Vite がアセットを配信しているときに以下のような URL を出力します。
 
 ```html
 <img src="/@imagetools/f0b2f404b13f052c604e632f2fb60381bf61a520">
 ```
 
-`vite-imagetools` プラグインは、出力 URL が Vite によってインターセプトされることを期待しており、プラグインは `/@imagetools` で始まるすべての URL を処理できるようになります。 この動作を想定しているプラグインを使用している場合は、URL を手動で修正する必要があります。 これは、「vite.config.js」ファイルで「transformOnServe」オプションを使用して行うことができます。
+`vite-imagetools` プラグインは、出力 URL が Vite によってインターセプトされ、プラグインが `/@imagetools` で始まるすべてのURLを処理することを期待しています。この動作を期待するプラグインを使用している場合、手動でURLを修正する必要があります。これは、`vite.config.js` ファイルの `transformOnServe` オプションで行うことができます。
 
-この特定の例では、生成されたコード内のすべての `/@imagetools` に開発サーバー URL を追加します。
+この例では、生成されたコード内のすべての `/@imagetools` の前に開発サーバの URL を追加します。
 
 ```js
 import { defineConfig } from 'vite';
@@ -832,7 +832,7 @@ export default defineConfig({
 });
 ```
 
-これで、Vite がアセットを提供している間、Vite 開発サーバーを指す URL が出力されます。
+これで、Vite がアセットを配信している間、Vite 開発サーバを指す URL が出力されます。
 
 ```html
 - <img src="/@imagetools/f0b2f404b13f052c604e632f2fb60381bf61a520"><!-- [tl! remove] -->
