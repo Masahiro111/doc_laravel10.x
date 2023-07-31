@@ -1,13 +1,13 @@
-# URL Generation
+# URL 生成
 
-- [Introduction](#introduction)
-- [The Basics](#the-basics)
-    - [Generating URLs](#generating-urls)
-    - [Accessing The Current URL](#accessing-the-current-url)
-- [URLs For Named Routes](#urls-for-named-routes)
-    - [Signed URLs](#signed-urls)
-- [URLs For Controller Actions](#urls-for-controller-actions)
-- [Default Values](#default-values)
+- [はじめに](#introduction)
+- [基礎](#the-basics)
+    - [URL の生成](#generate-urls)
+    - [現在の URL にアクセス](#accessing-the-current-url)
+- [名前付きルートの URL](#urls-for-named-routes)
+    - [署名付き URL](#signed-urls)
+- [コントローラアクションの URL](#urls-for-controller-actions)
+- [デフォルト値](#default-values)
 
 <a name="introduction"></a>
 ## Introduction
