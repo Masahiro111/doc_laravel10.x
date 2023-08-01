@@ -10,17 +10,17 @@
 - [デフォルト値](#default-values)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-Laravel provides several helpers to assist you in generating URLs for your application. These helpers are primarily helpful when building links in your templates and API responses, or when generating redirect responses to another part of your application.
+Laravel には、アプリケーションの URL の生成を支援するいくつかのヘルパが用意されています。これらのヘルパは主に、テンプレートや API レスポンスでリンクを構築するとき、またはアプリケーションの別の部分へのリダイレクトレスポンスを生成するときに役立ちます。
 
 <a name="the-basics"></a>
-## The Basics
+## 基礎
 
 <a name="generating-urls"></a>
-### Generating URLs
+### URL の生成
 
-The `url` helper may be used to generate arbitrary URLs for your application. The generated URL will automatically use the scheme (HTTP or HTTPS) and host from the current request being handled by the application:
+`url` ヘルパは、アプリケーションの任意の URL を生成するために使用されます。生成された URL は、アプリケーションによって処理されている現在のリクエストのスキーム (HTTP または HTTPS) とホストを自動的に使用します。
 
     $post = App\Models\Post::find(1);
 
