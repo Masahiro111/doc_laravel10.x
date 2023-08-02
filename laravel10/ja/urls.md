@@ -49,7 +49,7 @@ Laravel には、アプリケーションの URL の生成を支援するいく�
     echo URL::current();
 
 <a name="urls-for-named-routes"></a>
-## URLs For Named Routes
+## 名前付きルートの URL
 
 `route` ヘルパは、[名前付きルート](/docs/{{version}}/routing#named-routes) への URL を生成するために使用できます。名前付きルートを使用すると、ルート上で定義された実際の URL と結合せずに URL を生成できます。したがって、ルートの URL が変更された場合でも、`route` 関数の呼び出しを変更する必要はありません。たとえば、アプリケーションに次のように定義されたルートが含まれていると想像してください。
 
@@ -89,15 +89,15 @@ Laravel には、アプリケーションの URL の生成を支援するいく�
 <a name="signed-urls"></a>
 ### 署名付き URL
 
-Laravel allows you to easily create "signed" URLs to named routes. These URLs have a "signature" hash appended to the query string which allows Laravel to verify that the URL has not been modified since it was created. Signed URLs are especially useful for routes that are publicly accessible yet need a layer of protection against URL manipulation.
+Laravel は、名前付きルートへの「署名付き URL」を簡単に作成できます。これらの URL にはクエリ文字列に「署名」ハッシュが追加されており、これにより Laravel は URL が作成されてから変更されていないことを確認できます。署名付き URL は、公にアクセス可能でありながら、URL 操作に対する保護レイヤが必要なルートに特に役立ちます。
 
-For example, you might use signed URLs to implement a public "unsubscribe" link that is emailed to your customers. To create a signed URL to a named route, use the `signedRoute` method of the `URL` facade:
+たとえば、署名付き URL を使用して、顧客に電子メールで送信される公の「購読解除」リンクを実装できます。名前付きルートへの署名付き URL を作成するには、`URL` ファサードの `signedRoute` メソッドを使用します。
 
     use Illuminate\Support\Facades\URL;
 
     return URL::signedRoute('unsubscribe', ['user' => 1]);
 
-If you would like to generate a temporary signed route URL that expires after a specified amount of time, you may use the `temporarySignedRoute` method. When Laravel validates a temporary signed route URL, it will ensure that the expiration timestamp that is encoded into the signed URL has not elapsed:
+指定した時間が経過すると期限切れになる一時的な署名付きルート URL を生成したい場合は、`temporarySignedRoute` メソッドを使用できます。Laravel は、一時的な署名付きルート URL を検証するときに、署名付き URL にエンコードされている有効期限のタイムスタンプが経過していないことを確認します。
 
     use Illuminate\Support\Facades\URL;
 
@@ -106,9 +106,9 @@ If you would like to generate a temporary signed route URL that expires after a 
     );
 
 <a name="validating-signed-route-requests"></a>
-#### Validating Signed Route Requests
+#### 署名付きルートリクエストの検証
 
-To verify that an incoming request has a valid signature, you should call the `hasValidSignature` method on the incoming `Illuminate\Http\Request` instance:
+受信リクエストに有効な署名があることを確認するには、受信した `Illuminate\Http\Request` インスタンスで `hasValidSignature` メソッドを呼び出します。
 
     use Illuminate\Http\Request;
 
@@ -120,7 +120,7 @@ To verify that an incoming request has a valid signature, you should call the `h
         // ...
     })->name('unsubscribe');
 
-Sometimes, you may need to allow your application's frontend to append data to a signed URL, such as when performing client-side pagination. Therefore, you can specify request query parameters that should be ignored when validating a signed URL using the `hasValidSignatureWhileIgnoring` method. Remember, ignoring parameters allows anyone to modify those parameters on the request:
+クライアント側でページネーションを実行する場合など、アプリケーションのフロントエンドが署名付き URL にデータを追加できるようにする必要があります。その際は、`hasValidSignaturewhileIgnoring` メソッドを使用して署名付き URL を検証するときに無視するリクエストクエリパラメータを指定できます。パラメータの無視を許すと、誰でもリクエストでそれらのパラメータを変更できるようになることに注意してください。
 
     if (! $request->hasValidSignatureWhileIgnoring(['page', 'order'])) {
         abort(401);
