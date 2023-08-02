@@ -29,9 +29,9 @@ Laravel には、アプリケーションの URL の生成を支援するいく�
     // http://example.com/posts/1
 
 <a name="accessing-the-current-url"></a>
-### Accessing The Current URL
+### 現在の URL にアクセス
 
-If no path is provided to the `url` helper, an `Illuminate\Routing\UrlGenerator` instance is returned, allowing you to access information about the current URL:
+`url` ヘルパにパスが指定されていない場合は、`Illuminate\Routing\UrlGenerator` インスタンスが返され、現在の URL に関する情報にアクセスできます。
 
     // Get the current URL without the query string...
     echo url()->current();
@@ -42,7 +42,7 @@ If no path is provided to the `url` helper, an `Illuminate\Routing\UrlGenerator`
     // Get the full URL for the previous request...
     echo url()->previous();
 
-Each of these methods may also be accessed via the `URL` [facade](/docs/{{version}}/facades):
+これらの各メソッドには、`URL` [ファサード](/docs/{{version}}/facades) 経由でアクセスすることもできます。
 
     use Illuminate\Support\Facades\URL;
 
@@ -51,19 +51,19 @@ Each of these methods may also be accessed via the `URL` [facade](/docs/{{versio
 <a name="urls-for-named-routes"></a>
 ## URLs For Named Routes
 
-The `route` helper may be used to generate URLs to [named routes](/docs/{{version}}/routing#named-routes). Named routes allow you to generate URLs without being coupled to the actual URL defined on the route. Therefore, if the route's URL changes, no changes need to be made to your calls to the `route` function. For example, imagine your application contains a route defined like the following:
+`route` ヘルパは、[名前付きルート](/docs/{{version}}/routing#named-routes) への URL を生成するために使用できます。名前付きルートを使用すると、ルート上で定義された実際の URL と結合せずに URL を生成できます。したがって、ルートの URL が変更された場合でも、`route` 関数の呼び出しを変更する必要はありません。たとえば、アプリケーションに次のように定義されたルートが含まれていると想像してください。
 
     Route::get('/post/{post}', function (Post $post) {
         // ...
     })->name('post.show');
 
-To generate a URL to this route, you may use the `route` helper like so:
+このルートへの URL を生成するには、以下のように `route` ヘルパを使用します。
 
     echo route('post.show', ['post' => 1]);
 
     // http://example.com/post/1
 
-Of course, the `route` helper may also be used to generate URLs for routes with multiple parameters:
+もちろん、`route` ヘルパを使用して、複数のパラメータを持つルートの URL を生成することもできます。
 
     Route::get('/post/{post}/comment/{comment}', function (Post $post, Comment $comment) {
         // ...
@@ -73,21 +73,21 @@ Of course, the `route` helper may also be used to generate URLs for routes with 
 
     // http://example.com/post/1/comment/3
 
-Any additional array elements that do not correspond to the route's definition parameters will be added to the URL's query string:
+ルートの定義パラメータに対応しない追加の配列要素は、URL のクエリ文字列に追加されます。
 
     echo route('post.show', ['post' => 1, 'search' => 'rocket']);
 
     // http://example.com/post/1?search=rocket
 
 <a name="eloquent-models"></a>
-#### Eloquent Models
+#### Eloquent モデル
 
-You will often be generating URLs using the route key (typically the primary key) of [Eloquent models](/docs/{{version}}/eloquent). For this reason, you may pass Eloquent models as parameter values. The `route` helper will automatically extract the model's route key:
+多くの場合、[Eloquent モデル](/docs/{{version}}/eloquent) のルートキー (通常は主キー) を使用して URL を生成します。このため、パラメータ値として Eloquent モデルを渡すことができます。`route` ヘルパはモデルのルートキーを自動的に抽出します。
 
     echo route('post.show', ['post' => $post]);
 
 <a name="signed-urls"></a>
-### Signed URLs
+### 署名付き URL
 
 Laravel allows you to easily create "signed" URLs to named routes. These URLs have a "signature" hash appended to the query string which allows Laravel to verify that the URL has not been modified since it was created. Signed URLs are especially useful for routes that are publicly accessible yet need a layer of protection against URL manipulation.
 
