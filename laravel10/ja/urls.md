@@ -126,12 +126,12 @@ Laravel は、名前付きルートへの「署名付き URL」を簡単に作�
         abort(401);
     }
 
-Instead of validating signed URLs using the incoming request instance, you may assign the `Illuminate\Routing\Middleware\ValidateSignature` [middleware](/docs/{{version}}/middleware) to the route. If it is not already present, you may assign this middleware an alias in your HTTP kernel's `$middlewareAliases` array:
+受信リクエストインスタンスを使用して署名付き URL を検証する代わりに、`Illuminate\Routing\Middleware\ValidateSignature` [ミドルウェア](/docs/{{version}}/middleware) をルートに割り当てることができます。まだ割り当てていない場合、HTTP カーネルの `$middlewareAliases` 配列でこのミドルウェアにエイリアスを割り当ててください。
 
     /**
-     * The application's middleware aliases.
+     * アプリケーションのミドルウェアのエイリアス
      *
-     * Aliases may be used to conveniently assign middleware to routes and groups.
+     * エイリアスを使用すると、ミドルウェアをルートやグループに簡単に割り当てることができます
      *
      * @var array<string, class-string|string>
      */
@@ -139,16 +139,16 @@ Instead of validating signed URLs using the incoming request instance, you may a
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
     ];
 
-Once you have registered the middleware in your kernel, you may attach it to a route. If the incoming request does not have a valid signature, the middleware will automatically return a `403` HTTP response:
+カーネルにミドルウェアを登録したら、それをルートにアタッチできます。受信リクエストに有効な署名がない場合、ミドルウェアは自動的に `403` HTTP レスポンスを返します。
 
     Route::post('/unsubscribe/{user}', function (Request $request) {
         // ...
     })->name('unsubscribe')->middleware('signed');
 
 <a name="responding-to-invalid-signed-routes"></a>
-#### Responding To Invalid Signed Routes
+#### 無効な署名付きルートへのレスポンス
 
-When someone visits a signed URL that has expired, they will receive a generic error page for the `403` HTTP status code. However, you can customize this behavior by defining a custom "renderable" closure for the `InvalidSignatureException` exception in your exception handler. This closure should return an HTTP response:
+有効期限が切れた署名付き URL にアクセスすると、`403` HTTP ステータスコードの一般的なエラーページが表示されます。ただし、例外ハンドラで `InvalidSignatureException` 例外のカスタム「renderable」クロージャを定義することで、この動作をカスタマイズできます。このクロージャは HTTP レスポンスを返す必要があります。
 
     use Illuminate\Routing\Exceptions\InvalidSignatureException;
 
