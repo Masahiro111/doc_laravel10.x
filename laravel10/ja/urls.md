@@ -163,28 +163,28 @@ Laravel は、名前付きルートへの「署名付き URL」を簡単に作�
     }
 
 <a name="urls-for-controller-actions"></a>
-## URLs For Controller Actions
+## コントローラアクションの URL
 
-The `action` function generates a URL for the given controller action:
+`action` 関数は、指定されたコントローラアクションの URL を生成します。
 
     use App\Http\Controllers\HomeController;
 
     $url = action([HomeController::class, 'index']);
 
-If the controller method accepts route parameters, you may pass an associative array of route parameters as the second argument to the function:
+コントローラメソッドがルートパラメータを受け取る場合、関数の第２引数にルートパラメータの連想配列を渡すことができます。
 
     $url = action([UserController::class, 'profile'], ['id' => 1]);
 
 <a name="default-values"></a>
-## Default Values
+## デフォルト値
 
-For some applications, you may wish to specify request-wide default values for certain URL parameters. For example, imagine many of your routes define a `{locale}` parameter:
+一部のアプリケーションでは、特定の URL パラメータに対してリクエスト全体のデフォルト値を指定したい場合があります。たとえば、ルートの多くが `{locale}` パラメータを定義していると想像してください。
 
     Route::get('/{locale}/posts', function () {
         // ...
     })->name('post.index');
 
-It is cumbersome to always pass the `locale` every time you call the `route` helper. So, you may use the `URL::defaults` method to define a default value for this parameter that will always be applied during the current request. You may wish to call this method from a [route middleware](/docs/{{version}}/middleware#assigning-middleware-to-routes) so that you have access to the current request:
+`route` ヘルパを呼び出すたびに `locale` を渡すのは面倒です。したがって、`URL::defaults` メソッドを使用して、現在のリクエスト中に常に適用されるこのパラメータのデフォルト値を定義できます。現在のリクエストにアクセスできるように、[ルートミドルウェア](/docs/{{version}}/middleware#assigning-middleware-to-routes) からこのメソッドを呼び出すこともできます。
 
     <?php
 
@@ -210,7 +210,7 @@ It is cumbersome to always pass the `locale` every time you call the `route` hel
         }
     }
 
-Once the default value for the `locale` parameter has been set, you are no longer required to pass its value when generating URLs via the `route` helper.
+`locale` パラメータのデフォルト値を設定すると、`route` ヘルパ経由で URL を生成するときにその値を渡す必要はなくなります。
 
 <a name="url-defaults-middleware-priority"></a>
 #### URL Defaults & Middleware Priority
