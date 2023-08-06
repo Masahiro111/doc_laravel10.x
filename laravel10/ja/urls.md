@@ -213,11 +213,11 @@ Laravel は、名前付きルートへの「署名付き URL」を簡単に作�
 `locale` パラメータのデフォルト値を設定すると、`route` ヘルパ経由で URL を生成するときにその値を渡す必要はなくなります。
 
 <a name="url-defaults-middleware-priority"></a>
-#### URL Defaults & Middleware Priority
+#### URL のデフォルトとミドルウェアの優先順位
 
-Setting URL default values can interfere with Laravel's handling of implicit model bindings. Therefore, you should [prioritize your middleware](/docs/{{version}}/middleware#sorting-middleware) that set URL defaults to be executed before Laravel's own `SubstituteBindings` middleware. You can accomplish this by making sure your middleware occurs before the `SubstituteBindings` middleware within the `$middlewarePriority` property of your application's HTTP kernel.
+URL のデフォルト値を設定すると、Laravel による暗黙的なモデルバインディングの処理が妨げられる可能性があります。したがって、URL のデフォルトを Laravel 独自の `SubstituteBindings` ミドルウェアよりも前に実行するように設定するため [ミドルウェアを優先する](/docs/{{version}}/middleware#sorting-middleware) 必要があります。これを実現するには、アプリケーションの HTTP カーネルの `$middlewarePriority` プロパティ内の `SubstituteBindings` ミドルウェアよりも前にミドルウェアが存在するようにします。
 
-The `$middlewarePriority` property is defined in the base `Illuminate\Foundation\Http\Kernel` class. You may copy its definition from that class and overwrite it in your application's HTTP kernel in order to modify it:
+`$middlewarePriority` プロパティは、基本の `Illuminate\Foundation\Http\Kernel` クラスで定義されます。変更するには、そのクラスからその定義をコピーし、アプリケーションの HTTP カーネルで上書きします。
 
     /**
      * The priority-sorted list of middleware.
