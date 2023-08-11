@@ -1,38 +1,38 @@
-> [!warning] Livewire 3 is still in beta
-> While we attempt to keep breaking changes to a minimum, they are still possible while Livewire 3 remains in beta. Therefore, we recommend testing your application thoroughly before using Livewire 3 in production.
+> [!warning] Livewire 3 はまだベータ版です
+> 重大な変更を最小限に抑えるよう努めていますが、Livewire 3 がベータ版である間は変更が可能です。したがって、Livewire 3 を運用環境で使用する前に、アプリケーションを徹底的にテストすることをお勧めします。
 
-To begin your Livewire journey, we will create a simple "counter" component and render it in the browser. This example is a great way to experience Livewire for the first time as it demonstrates Livewire's _liveness_ in the simplest way possible.
+Livewire の旅を始めるために、単純な「カウンター」コンポーネントを作成し、ブラウザーでレンダリングします。この例は、可能な限り簡単な方法で Livewire のライブネスを示すため、Livewire を初めて体験するのに最適な方法です。
 
-## Prerequisites
+## 前提条件
 
-Before we start, make sure you have the following installed:
+始める前に、以下がインストールされていることを確認してください。
 
-- Laravel version 9 or later
-- PHP version 8.1 or later
+- Laravel バージョン 9 以降
+- PHP バージョン 8.1 以降
 
-## Install Livewire
+## Livewire をインストールする
 
-From the root directory of your Laravel app, run the following [Composer](https://getcomposer.org/) command:
+Laravel アプリのルートディレクトリから、次の [Composer](https://getcomposer.org/) コマンドを実行します。
 
 ```shell
 composer require livewire/livewire:^3.0@beta
 ```
 
-## Create a Livewire component
+## Livewire コンポーネントの作成
 
-Livewire provides a convenient Artisan command to generate new components quickly. Run the following command to make a new `Counter` component:
+Livewire には、新しいコンポーネントを迅速に生成するための便利な Artisan コマンドが用意されています。以下のコマンドを実行して、新しい `Counter` コンポーネントを作成してみましょう。
 
 ```shell
 php artisan make:livewire counter
 ```
 
-This command will generate two new files in your project:
+このコマンドは、プロジェクト内に 2 つの新しいファイルを生成します。
 * `App\Livewire\Counter.php`
 * `resources/views/livewire/counter.blade.php`
 
-## Writing the class
+## クラスの記述
 
-Open `app/Livewire/Counter.php` and replace its contents with the following:
+`app/Livewire/Counter.php` を開き、内容を以下のように置き換えます。
 
 ```php
 <?php
@@ -62,14 +62,14 @@ class Counter extends Component
 }
 ```
 
-Here's a brief explanation of the code above:
-- `public $count = 1;`—Declares a public property named `$count` with an initial value of `1`.
-- `public function increment()`—Declares a public method named `increment()` that increments the `$count` property each time it's called. Public methods like this can be triggered from the browser in a variety of ways, including when a user clicks a button.
-- `public function render()`—Declares a `render()` method that returns a Blade view. This Blade view will contain the HTML template for our component.
+上記のコードの簡単な説明は以下のとおりです。
+- `public $count = 1;` - `$count` という名前のパブリックプロパティを初期値 `1` で宣言します。
+- `public function increment()` - 呼び出されるたびに `$count` プロパティをインクリメントする `increment()` という名前の パブリックメソッドを宣言します。このようなパブリックメソッドは、ユーザーがボタンをクリックしたときなど、さまざまな方法でブラウザから呼び出すことができます。
+- `public function render()` - Blade ビューを返す `render()` メソッドを宣言します。この Blade ビューには、コンポーネントの HTML テンプレートが含まれます。
 
-## Writing the view
+## ビューの作成
 
-Open the `resources/views/livewire/counter.blade.php` file and replace its content with the following:
+`resources/views/livewire/counter.blade.php` ファイルを開き、その内容を以下に置き換えます。
 
 ```blade
 <div>
@@ -81,11 +81,11 @@ Open the `resources/views/livewire/counter.blade.php` file and replace its conte
 </div>
 ```
 
-This code will display the value of the `$count` property and two buttons that increment and decrement the `$count` property, respectively.
+このコードは、`$count` プロパティの値と、`$count` プロパティをそれぞれ増加および減少させる２つのボタンを表示します。
 
-## Register a route for the component
+## コンポーネントのルートを登録
 
-Open the `routes/web.php` file in your Laravel application and add the following code:
+Laravel アプリケーションで `routes/web.php` ファイルを開き、次のコードを追加します。
 
 ```php
 use App\Livewire\Counter;
