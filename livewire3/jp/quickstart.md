@@ -93,19 +93,19 @@ use App\Livewire\Counter;
 Route::get('/counter', Counter::class);
 ```
 
-Now, our _counter_ component is assigned to the `/counter` route so that when a user visits the `/counter` endpoint in your application, this component will be rendered by the browser.
+これで、`counter` コンポーネントが `/counter` ルートに割り当てられるようになり、ユーザーがアプリケーションの `/counter` エンドポイントにアクセスすると、このコンポーネントがブラウザによってレンダリングされます。
 
-## Create a template layout
+## テンプレートレイアウトの作成
 
-Before you can visit `/counter` in the browser, we need an HTML layout for our component to render inside. By default, Livewire will automatically look for a layout file named: `resources/views/components/layout.blade.php`
+ブラウザで `/counter` にアクセスする前に、内部でレンダリングするコンポーネントの HTML レイアウトが必要です。デフォルトでは、Livewire は自動的に `resources/views/components/layout.blade.php` という名前のレイアウトファイルを検索します。
 
-You may create this file if it doesn't already exist by running the following command:
+このファイルが存在しない場合は、以下のコマンドを実行して作成できます。
 
 ```shell
 php artisan livewire:layout
 ```
 
-This command will generate a file called `resources/views/components/layout.blade.php` with the following contents:
+このコマンドは、以下の内容を含む `resources/views/components/layout.blade.php` というファイルを生成します。
 
 ```blade
 <!DOCTYPE html>
@@ -122,16 +122,16 @@ This command will generate a file called `resources/views/components/layout.blad
 </html>
 ```
 
-The _counter_ component will be rendered in place of the `$slot` variable in the template above.
+`counter` コンポーネントは、上記のテンプレートの `$slot` 変数の代わりにレンダリングされます。
 
-You may have noticed there is no JavaScript or CSS assets provided by Livewire. That is because Livewire 3 and above automatically injects any frontend assets it needs.
+Livewire では JavaScript や CSS アセットが提供されていないことに気づいたかもしれません。 これは、Livewire 3 以降では、必要なフロントエンドアセットが自動的に挿入されるためです。
 
-## Test it out
+## 試してみる
 
-With our component class and templates in place, our component is ready to test!
+コンポーネント クラスとテンプレートを配置したら、コンポーネントをテストする準備が整いました。
 
-Visit `/counter` in your browser, and you should see a number displayed on the screen with two buttons to increment and decrement the number.
+ブラウザで `/counter` にアクセスすると、画面に数字が表示され、数字を増減する２つのボタンが表示されます。
 
-After clicking one of the buttons, you will notice that the count updates in real time without the page reloading. This is the magic of Livewire: dynamic frontend applications written entirely in PHP.
+いずれかのボタンをクリックすると、ページがリロードされずにカウントがリアルタイムで更新されることがわかります。これが Livewire の魔法です。すべて PHP で書かれた動的なフロントエンドアプリケーションです。
 
-We've barely scratched the surface of what Livewire is capable of. Keep reading the documentation to see everything Livewire has to offer.
+Livewire の機能のほんの表面をなぞっただけです。Livewire が提供するすべての機能を確認するには、ドキュメントを読み続けてください。
