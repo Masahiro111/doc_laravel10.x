@@ -1,16 +1,16 @@
-Livewire is a Laravel package, so you will need to have a Laravel application up and running before you can install and use Livewire. If you need help setting up a new Laravel application, please see the [official Laravel documentation](https://laravel.com/docs/installation).
+Livewire は Laravel のパッケージであるため、Livewire をインストールして使用する前に、Laravel アプリケーションを起動して実行する必要があります。新しい Laravel アプリケーションのセットアップにヘルプが必要な場合は、[Laravel の公式ドキュメント](https://laravel.com/docs/installation) を参照してください。
 
-To install Livewire, open your terminal and navigate to your Laravel application directory, then run the following command:
+Livewire をインストールするには、ターミナルを開いて Laravel アプリケーションのディレクトリに移動し、以下のコマンドを実行します。
 
 ```shell
 composer require livewire/livewire:^3.0@beta
 ```
 
-That's it—really. If you want more customization options, keep reading. Otherwise, you can jump right into using Livewire.
+本当にそれだけです。さらにカスタマイズオプションが必要な場合は、以下のドキュメントを読み続けてください。それ以外の場合は、すぐに Livewire の使用を開始できます。
 
-## Publishing the configuration file
+## 設定ファイルの公開
 
-Livewire is "zero-config", meaning you can use it by following conventions without any additional configuration. However, if needed, you can publish and customize Livewire's configuration file by running the following Artisan command:
+Livewire は「ゼロ設定」です。つまり、追加の設定を行わずに規則に従って使用できます。ただし、必要に応じて、以下の Artisan コマンドを実行して、Livewire の設定ファイルを公開およびカスタマイズできます。
 
 ```shell
 php artisan livewire:publish --config
