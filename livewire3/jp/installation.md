@@ -16,13 +16,13 @@ Livewire は「ゼロ設定」です。つまり、追加の設定を行わず�
 php artisan livewire:publish --config
 ```
 
-This will create a new `livewire.php` file in your Laravel application's `config` directory.
+これにより、Laravel アプリケーションの `config` ディレクトリに新しい `livewire.php` ファイルが作成されます。
 
-## Manually including Livewire's frontend assets
+## Livewire のフロントエンドアセットを手動で含める
 
-By default, Livewire injects the JavaScript and CSS assets it needs into each page that includes a Livewire component.
+デフォルトでは、Livewire は必要な JavaScript および CSS アセットを Livewire コンポーネントを含む各ページに挿入します。
 
-If you want more control over this behavior, you can manually include the assets on a page using the following Blade directives:
+この動作をさらに制御したい場合は、次の Blade ディレクティブを使用してページにアセットを手動で含めることができます。
 
 ```blade
 <html>
@@ -37,17 +37,17 @@ If you want more control over this behavior, you can manually include the assets
 </html>
 ```
 
-By including these assets manually on a page, Livewire knows to not inject the assets automatically.
+これらのアセットをページに手動で含めることで、Livewire はアセットが自動的に挿入されないことを認識します。
 
-Though rarely required, you may disable Livewire's auto-injecting asset behavior by updating the `inject_assets` [configuration option](#publishing-config) in your application's `config/livewire.php` file:
+必要になることはほとんどありませんが、アプリケーションの `config/livewire.php` ファイル内の `inject_assets` [設定オプション](#publishing-config) を更新することで、Livewire のアセットの自動挿入動作を無効にすることができます。
 
 ```php
 'inject_assets' => false,
 ```
 
-## Configuring Livewire's update endpoint
+## Livewire の更新エンドポイントの設定
 
-Every update in a Livewire component sends a network request to the server at the following endpoint: `https://example.com/livewire/update`
+Livewire コンポーネントの更新ごとに、エンドポイントである `https://example.com/livewire/update` にネットワークリクエストが送信されます。
 
 This can be a problem for some applications that use localization or multi-tenancy.
 
