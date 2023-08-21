@@ -1,18 +1,18 @@
-# HTTP Session
+# HTTP セッション
 
-- [Introduction](#introduction)
-    - [Configuration](#configuration)
-    - [Driver Prerequisites](#driver-prerequisites)
-- [Interacting With The Session](#interacting-with-the-session)
-    - [Retrieving Data](#retrieving-data)
-    - [Storing Data](#storing-data)
-    - [Flash Data](#flash-data)
-    - [Deleting Data](#deleting-data)
-    - [Regenerating The Session ID](#regenerating-the-session-id)
-- [Session Blocking](#session-blocking)
-- [Adding Custom Session Drivers](#adding-custom-session-drivers)
-    - [Implementing The Driver](#implementing-the-driver)
-    - [Registering The Driver](#registering-the-driver)
+- [はじめに](#introduction)
+    - [設定](#configuration)
+    - [ドライバの動作条件](#driver-prerequisites)
+- [セッションの操作](#interacting-with-the-session)
+    - [データの取得](#retrieving-data)
+    - [データの保存](#storing-data)
+    - [データの一時保存](#flash-data)
+    - [データの削除](#deleting-data)
+    - [セッション ID の再生成](#regenerating-the-session-id)
+- [セッションブロッキング](#session-blocking)
+- [カスタムセッション ドライバの追加](#adding-custom-session-drivers)
+    - [ドライバの実装](#implementing-the-driver)
+    - [ドライバの登録](#registering-the-driver)
 
 <a name="introduction"></a>
 ## Introduction
