@@ -15,38 +15,38 @@
     - [ドライバの登録](#registering-the-driver)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-Since HTTP driven applications are stateless, sessions provide a way to store information about the user across multiple requests. That user information is typically placed in a persistent store / backend that can be accessed from subsequent requests.
+HTTP 駆動のアプリケーションはステートレスであるため、セッションは複数のリクエストにわたってユーザーに関する情報を保存する方法を提供します。そのユーザー情報は通常、後続のリクエストからアクセスできる永続的な保存 / バックエンドに配置されます。
 
-Laravel ships with a variety of session backends that are accessed through an expressive, unified API. Support for popular backends such as [Memcached](https://memcached.org), [Redis](https://redis.io), and databases is included.
+Laravel には、表現力豊かな統合 API を通じてアクセスされるさまざまなセッションバックエンドが用意されています。[Memcached](https://memcached.org)、[Redis](https://redis.io)、データベースなどの一般的なバックエンドをサポートしています。
 
 <a name="configuration"></a>
 ### Configuration
 
-Your application's session configuration file is stored at `config/session.php`. Be sure to review the options available to you in this file. By default, Laravel is configured to use the `file` session driver, which will work well for many applications. If your application will be load balanced across multiple web servers, you should choose a centralized store that all servers can access, such as Redis or a database.
+アプリケーションのセッション設定ファイルは `config/session.php` に保存されています。このファイルで使用できるオプションを必ず確認してください。デフォルトでは、Laravel は `file` セッションドライバを使用するように設定されており、これは多くのアプリケーションで適切に機能します。アプリケーションが複数の Web サーバー間で負荷分散される場合は、Redis やデータベースなど、すべてのサーバーがアクセスできる集中型保存領域を選択する必要があります。
 
-The session `driver` configuration option defines where session data will be stored for each request. Laravel ships with several great drivers out of the box:
+セッションの `driver` 設定オプションは、各リクエストのセッションデータが保存される場所を定義します。Laravel には、すぐに使用できるいくつかの優れたドライバが同梱されています。
 
 <div class="content-list" markdown="1">
 
-- `file` - sessions are stored in `storage/framework/sessions`.
-- `cookie` - sessions are stored in secure, encrypted cookies.
-- `database` - sessions are stored in a relational database.
-- `memcached` / `redis` - sessions are stored in one of these fast, cache based stores.
-- `dynamodb` - sessions are stored in AWS DynamoDB.
-- `array` - sessions are stored in a PHP array and will not be persisted.
+- `file` - セッションを `storage/framework/sessions` に保存します。
+- `cookie` - セッションを安全な暗号化された cookie に保存します。
+- `database` - セッションをリレーショナルデータベースに保存します。
+- `memcached` / `redis` - セッションを、これらの高速なキャッシュベースの保存領域のいずれかに保存します。
+- `dynamodb` - セッションを AWS DynamoDB に保存します。
+- `array` - セッションを PHP 配列に保存され、永続化されません。
 
 </div>
 
 > **Note**  
-> The array driver is primarily used during [testing](/docs/{{version}}/testing) and prevents the data stored in the session from being persisted.
+> array ドライバは主に [testing](/docs/{{version}}/testing) 中に使用され、セッションに保存されたデータが永続化されるのを防ぎます。
 
 <a name="driver-prerequisites"></a>
-### Driver Prerequisites
+### ドライバの動作条件
 
 <a name="database"></a>
-#### Database
+#### データベース
 
 When using the `database` session driver, you will need to create a table to contain the session records. An example `Schema` declaration for the table may be found below:
 
@@ -314,9 +314,9 @@ Since the purpose of these methods is not readily understandable, let's quickly 
 </div>
 
 <a name="registering-the-driver"></a>
-#### Registering The Driver
+#### ドライバの登録
 
-Once your driver has been implemented, you are ready to register it with Laravel. To add additional drivers to Laravel's session backend, you may use the `extend` method provided by the `Session` [facade](/docs/{{version}}/facades). You should call the `extend` method from the `boot` method of a [service provider](/docs/{{version}}/providers). You may do this from the existing `App\Providers\AppServiceProvider` or create an entirely new provider:
+ドライバを実装したら、Laravel に登録する準備が整いました。Laravel のセッションバックエンドにドライバを追加するには、`Session` [ファサード](/docs/{{version}}/facades) によって提供される `extend` メソッドを使用します。[サービスプロバイダ](/docs/{{version}}/providers) の `boot` メソッドから `extend` メソッドを呼び出す必要があります。既存の `App\Providers\AppServiceProvider` からこれを行うことも、また、まったく新しいプロバイダを作成することもできます。
 
     <?php
 
@@ -330,7 +330,7 @@ Once your driver has been implemented, you are ready to register it with Laravel
     class SessionServiceProvider extends ServiceProvider
     {
         /**
-         * Register any application services.
+         * 各種アプリケーションサービスを登録します。
          */
         public function register(): void
         {
@@ -338,15 +338,15 @@ Once your driver has been implemented, you are ready to register it with Laravel
         }
 
         /**
-         * Bootstrap any application services.
+         * あらゆるアプリケーションサービスを初期起動します。
          */
         public function boot(): void
         {
             Session::extend('mongo', function (Application $app) {
-                // Return an implementation of SessionHandlerInterface...
+                // SessionHandlerInterface の実装を返します...
                 return new MongoSessionHandler;
             });
         }
     }
 
-Once the session driver has been registered, you may use the `mongo` driver in your `config/session.php` configuration file.
+セッションドライバを登録すると、`config/session.php` 設定ファイルで `mongo` ドライバを使用できます。
