@@ -22,7 +22,7 @@ HTTP 駆動のアプリケーションはステートレスであるため、セ
 Laravel には、表現力豊かな統合 API を通じてアクセスされるさまざまなセッションバックエンドが用意されています。[Memcached](https://memcached.org)、[Redis](https://redis.io)、データベースなどの一般的なバックエンドをサポートしています。
 
 <a name="configuration"></a>
-### Configuration
+### 設定
 
 アプリケーションのセッション設定ファイルは `config/session.php` に保存されています。このファイルで使用できるオプションを必ず確認してください。デフォルトでは、Laravel は `file` セッションドライバを使用するように設定されており、これは多くのアプリケーションで適切に機能します。アプリケーションが複数の Web サーバー間で負荷分散される場合は、Redis やデータベースなど、すべてのサーバーがアクセスできる集中型保存領域を選択する必要があります。
 
@@ -48,7 +48,7 @@ Laravel には、表現力豊かな統合 API を通じてアクセスされる�
 <a name="database"></a>
 #### データベース
 
-When using the `database` session driver, you will need to create a table to contain the session records. An example `Schema` declaration for the table may be found below:
+`database` セッションドライバを使用する場合は、セッションレコードを含むテーブルを作成する必要があります。テーブルの `Schema` 宣言の例を以下に示します。
 
     use Illuminate\Database\Schema\Blueprint;
     use Illuminate\Support\Facades\Schema;
@@ -62,7 +62,7 @@ When using the `database` session driver, you will need to create a table to con
         $table->integer('last_activity')->index();
     });
 
-You may use the `session:table` Artisan command to generate this migration. To learn more about database migrations, you may consult the complete [migration documentation](/docs/{{version}}/migrations):
+このマイグレーションを生成するには、`session:table` Artisan コマンドを使用します。データベースのマイグレーションの詳細については、完全な [マイグレーションドキュメント](/docs/{{version}}/migrations) を参照してください。
 
 ```shell
 php artisan session:table
@@ -73,18 +73,18 @@ php artisan migrate
 <a name="redis"></a>
 #### Redis
 
-Before using Redis sessions with Laravel, you will need to either install the PhpRedis PHP extension via PECL or install the `predis/predis` package (~1.0) via Composer. For more information on configuring Redis, consult Laravel's [Redis documentation](/docs/{{version}}/redis#configuration).
+Laravel で Redis セッションを使用する前に、PECL 経由で PhpRedis PHP 拡張機能をインストールするか、Composer 経由で `predis/predis` パッケージ (~1.0) をインストールする必要があります。Redis の設定の詳細については、Laravel の [Redis ドキュメント](/docs/{{version}}/redis#configuration) を参照してください。
 
-> **Note**  
-> In the `session` configuration file, the `connection` option may be used to specify which Redis connection is used by the session.
+> **Note**
+> `session` 設定ファイルでは、`connection` オプションを使用して、セッションで使用される Redis 接続を指定できます。
 
 <a name="interacting-with-the-session"></a>
-## Interacting With The Session
+## セッションの操作
 
 <a name="retrieving-data"></a>
-### Retrieving Data
+### データの取得
 
-There are two primary ways of working with session data in Laravel: the global `session` helper and via a `Request` instance. First, let's look at accessing the session via a `Request` instance, which can be type-hinted on a route closure or controller method. Remember, controller method dependencies are automatically injected via the Laravel [service container](/docs/{{version}}/container):
+Laravel でセッションデータを操作するには、主に２つの方法があります。グローバル `session` ヘルパと `Request` インスタンス経由です。まず、`Request` インスタンスを介してセッションにアクセスする方法を見てみましょう。これは、ルートクロージャまたはコントローラメソッドでタイプヒントを指定します。 コントローラメソッドの依存関係は、Laravel [サービスコンテナ](/docs/{{version}}/container) 経由で自動的に依存性注入されます。
 
     <?php
 
@@ -111,7 +111,7 @@ There are two primary ways of working with session data in Laravel: the global `
         }
     }
 
-When you retrieve an item from the session, you may also pass a default value as the second argument to the `get` method. This default value will be returned if the specified key does not exist in the session. If you pass a closure as the default value to the `get` method and the requested key does not exist, the closure will be executed and its result returned:
+セッションからアイテムを取得するとき、デフォルト値を第２引数として `get` メソッドに渡すことができます。指定されたキーがセッションに存在しない場合、このデフォルト値が返されます。クロージャをデフォルト値として `get` メソッドに渡し、要求されたキーが存在しない場合、クロージャが実行され、その結果が返されます。
 
     $value = $request->session()->get('key', 'default');
 
@@ -120,23 +120,23 @@ When you retrieve an item from the session, you may also pass a default value as
     });
 
 <a name="the-global-session-helper"></a>
-#### The Global Session Helper
+#### グローバルセッションヘルパ
 
-You may also use the global `session` PHP function to retrieve and store data in the session. When the `session` helper is called with a single, string argument, it will return the value of that session key. When the helper is called with an array of key / value pairs, those values will be stored in the session:
+グローバル `session` PHP 関数を使用して、セッション内のデータを取得および保存することもできます。`session` ヘルパが単一の文字列引数を指定して呼び出されると、そのセッションキーの値が返されます。キーと値のペアの配列を使用してヘルパを呼び出すと、それらの値はセッションに保存されます。
 
     Route::get('/home', function () {
-        // Retrieve a piece of data from the session...
+        // セッションからデータを取得します...
         $value = session('key');
 
-        // Specifying a default value...
+        // デフォルト値を指定しています...
         $value = session('key', 'default');
 
-        // Store a piece of data in the session...
+        // データをセッションに保存します...
         session(['key' => 'value']);
     });
 
-> **Note**  
-> There is little practical difference between using the session via an HTTP request instance versus using the global `session` helper. Both methods are [testable](/docs/{{version}}/testing) via the `assertSessionHas` method which is available in all of your test cases.
+> **Note**
+> HTTP リクエストインスタンス経由でセッションを使用する場合と、グローバル `session` ヘルパを使用する場合には、実質的な違いはほとんどありません。どちらのメソッドも、すべてのテストケースで使用できる `assertSessionHas` メソッド経由で [テスト可能](/docs/{{version}}/testing) になります。
 
 <a name="retrieving-all-session-data"></a>
 #### Retrieving All Session Data
