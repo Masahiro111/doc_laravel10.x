@@ -139,22 +139,22 @@ Laravel でセッションデータを操作するには、主に２つの方法
 > HTTP リクエストインスタンス経由でセッションを使用する場合と、グローバル `session` ヘルパを使用する場合には、実質的な違いはほとんどありません。どちらのメソッドも、すべてのテストケースで使用できる `assertSessionHas` メソッド経由で [テスト可能](/docs/{{version}}/testing) になります。
 
 <a name="retrieving-all-session-data"></a>
-#### Retrieving All Session Data
+#### 全セッションデータの取得
 
-If you would like to retrieve all the data in the session, you may use the `all` method:
+セッション内のすべてのデータを取得したい場合は、`all` メソッドを使用します。
 
     $data = $request->session()->all();
 
 <a name="determining-if-an-item-exists-in-the-session"></a>
-#### Determining If An Item Exists In The Session
+#### セッション内アイテムの存在判定
 
-To determine if an item is present in the session, you may use the `has` method. The `has` method returns `true` if the item is present and is not `null`:
+アイテムがセッションに存在するかを確認するには、`has` メソッドを使用します。アイテムが存在し、`null` でない場合、`has` メソッドは `true` を返します。
 
     if ($request->session()->has('users')) {
         // ...
     }
 
-To determine if an item is present in the session, even if its value is `null`, you may use the `exists` method:
+`exists` メソッドを使用することで、指定したセッション内のアイテムが `null` だとしても、存在するかどうか確認できます。
 
     if ($request->session()->exists('users')) {
         // ...
