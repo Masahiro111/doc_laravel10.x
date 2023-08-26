@@ -167,14 +167,14 @@ To determine if an item is not present in the session, you may use the `missing`
     }
 
 <a name="storing-data"></a>
-### Storing Data
+### データの保存
 
 To store data in the session, you will typically use the request instance's `put` method or the global `session` helper:
 
-    // Via a request instance...
+    // リクエストインスタンス経由
     $request->session()->put('key', 'value');
 
-    // Via the global "session" helper...
+    // グローバル「セッション」ヘルパ経由
     session(['key' => 'value']);
 
 <a name="pushing-to-array-session-values"></a>
