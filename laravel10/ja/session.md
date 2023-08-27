@@ -208,7 +208,7 @@ Laravel でセッションデータを操作するには、主に２つの方法
 <a name="flash-data"></a>
 ### データの一時保存
 
-Sometimes you may wish to store items in the session for the next request. You may do so using the `flash` method. Data stored in the session using this method will be available immediately and during the subsequent HTTP request. After the subsequent HTTP request, the flashed data will be deleted. Flash data is primarily useful for short-lived status messages:
+場合によっては、後継リクエストに備えてセッションにアイテムを保存したい際は、`flash` メソッドを使用します。このメソッドを使用してセッションに保存されたデータは、即時もしくは後続の HTTP リクエスト中で使用できるようになります。後続の HTTP リクエストの後、一時保存されたデータは削除されます。一時保存データは主に、短期間のステータスメッセージに役立ちます。
 
     $request->session()->flash('status', 'Task was successful!');
 
