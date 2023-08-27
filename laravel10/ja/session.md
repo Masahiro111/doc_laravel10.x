@@ -160,7 +160,7 @@ Laravel でセッションデータを操作するには、主に２つの方法
         // ...
     }
 
-To determine if an item is not present in the session, you may use the `missing` method. The `missing` method returns `true` if the item is not present:
+アイテムがセッションに存在しないかどうかを判断するには、`missing` メソッドを使用します。アイテムが存在しない場合、`missing` メソッドは `true` を返します。
 
     if ($request->session()->missing('users')) {
         // ...
@@ -169,32 +169,33 @@ To determine if an item is not present in the session, you may use the `missing`
 <a name="storing-data"></a>
 ### データの保存
 
-To store data in the session, you will typically use the request instance's `put` method or the global `session` helper:
+セッションにデータを保存するには、通常、リクエストインスタンスの `put` メソッドまたはグローバル `session` ヘルバを使用します。
 
     // リクエストインスタンス経由
     $request->session()->put('key', 'value');
 
-    // グローバル「セッション」ヘルパ経由
+    // グローバル session ヘルパ経由
     session(['key' => 'value']);
 
 <a name="pushing-to-array-session-values"></a>
-#### Pushing To Array Session Values
+#### 配列セッション値への追加
 
-The `push` method may be used to push a new value onto a session value that is an array. For example, if the `user.teams` key contains an array of team names, you may push a new value onto the array like so:
+`push` メソッドは、配列のセッション値に新しい値を追加できます。たとえば、`user.teams` キーにチーム名の配列が含まれている場合、次のように配列に新しい値を追加できます。
 
     $request->session()->push('user.teams', 'developers');
 
 <a name="retrieving-deleting-an-item"></a>
-#### Retrieving & Deleting An Item
 
-The `pull` method will retrieve and delete an item from the session in a single statement:
+#### アイテムの取得と削除
+
+`pull` メソッドは、単一のステートメントでセッションからアイテムを取得して削除します。
 
     $value = $request->session()->pull('key', 'default');
 
 <a name="#incrementing-and-decrementing-session-values"></a>
-#### Incrementing & Decrementing Session Values
+#### セッション値の増減
 
-If your session data contains an integer you wish to increment or decrement, you may use the `increment` and `decrement` methods:
+セッション データにインクリメントまたはデクリメントしたい整数が含まれている場合は、`increment` および `decrement` メソッドを使用できます。
 
     $request->session()->increment('count');
 
@@ -205,7 +206,7 @@ If your session data contains an integer you wish to increment or decrement, you
     $request->session()->decrement('count', $decrementBy = 2);
 
 <a name="flash-data"></a>
-### Flash Data
+### データの一時保存
 
 Sometimes you may wish to store items in the session for the next request. You may do so using the `flash` method. Data stored in the session using this method will be available immediately and during the subsequent HTTP request. After the subsequent HTTP request, the flashed data will be deleted. Flash data is primarily useful for short-lived status messages:
 
