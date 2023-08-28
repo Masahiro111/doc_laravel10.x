@@ -212,7 +212,7 @@ Laravel でセッションデータを操作するには、主に２つの方法
 
     $request->session()->flash('status', 'Task was successful!');
 
-If you need to persist your flash data for several requests, you may use the `reflash` method, which will keep all of the flash data for an additional request. If you only need to keep specific flash data, you may use the `keep` method:
+複数のリクエストの間、一時保存データを保持する必要がある場合は、追加のリクエストに備えてすべての一時保存データを保持する `reflash` メソッドを使用します。特定のフラッシュデータのみを保持する必要がある場合は、`keep` メソッドを使用します。
 
     $request->session()->reflash();
 
