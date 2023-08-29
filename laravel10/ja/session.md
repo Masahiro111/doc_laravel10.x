@@ -305,11 +305,11 @@ Laravel [アプリケーションスターターキット](/docs/{{version}}/sta
 
 <div class="content-list" markdown="1">
 
-- The `open` method would typically be used in file based session store systems. Since Laravel ships with a `file` session driver, you will rarely need to put anything in this method. You can simply leave this method empty.
-- The `close` method, like the `open` method, can also usually be disregarded. For most drivers, it is not needed.
-- The `read` method should return the string version of the session data associated with the given `$sessionId`. There is no need to do any serialization or other encoding when retrieving or storing session data in your driver, as Laravel will perform the serialization for you.
-- The `write` method should write the given `$data` string associated with the `$sessionId` to some persistent storage system, such as MongoDB or another storage system of your choice.  Again, you should not perform any serialization - Laravel will have already handled that for you.
-- The `destroy` method should remove the data associated with the `$sessionId` from persistent storage.
+- `open` メソッドは通常、ファイルベースのセッションストアシステムで使用されます。Laravel には `file` セッションドライバが付属しているため、このメソッドに何も入れる必要はほとんどありません。このメソッドは空のままにすることができます。
+- `close` メソッドも、`open` メソッドと同様に、通常は無視できます。ほとんどのドライバでは必要ありません。
+- `read` メソッドは、指定された `$sessionId` に関連付けられたセッションデータの文字列バージョンを返す必要があります。Laravel がシリアル化を実行するため、ドライバでセッションデータを取得または保存するときにシリアル化やその他のエンコードを行う必要はありません。
+- `write` メソッドは、`$sessionId` に関連付けられた指定の `$data` 文字列を、MongoDB や選択した別のストレージシステムなどの永続ストレージシステムに書き込む必要があります。繰り返しますが、シリアル化を実行しないでください。Laravel がすでにシリアル化を処理しています。
+- `destroy` メソッドは、`$sessionId` に関連付けられたデータを永続ストレージから削除する必要があります。
 - `gc` メソッドは、指定の `$lifetime` (UNIX タイムスタンプ) よりも古いすべてのセッションデータを破棄する必要があります。Memcached や Redis などの自己期限切れシステムの場合、このメソッドは空のままにすることができます。
 
 </div>
