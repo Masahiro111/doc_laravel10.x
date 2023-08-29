@@ -218,33 +218,33 @@ Laravel でセッションデータを操作するには、主に２つの方法
 
     $request->session()->keep(['username', 'email']);
 
-To persist your flash data only for the current request, you may use the `now` method:
+現在のリクエストに対してのみ一時保存データを保持するには、`now` メソッドを使用します。
 
     $request->session()->now('status', 'Task was successful!');
 
 <a name="deleting-data"></a>
-### Deleting Data
+### データの削除
 
-The `forget` method will remove a piece of data from the session. If you would like to remove all data from the session, you may use the `flush` method:
+`forget` メソッドはセッションからデータの一部を削除します。セッションからすべてのデータを削除したい場合は、`flush` メソッドを使用することができます。
 
-    // Forget a single key...
+    // １つのキーを削除 ...
     $request->session()->forget('name');
 
-    // Forget multiple keys...
+    // 複数のキーを削除 ...
     $request->session()->forget(['name', 'status']);
 
     $request->session()->flush();
 
 <a name="regenerating-the-session-id"></a>
-### Regenerating The Session ID
+### セッション ID の再生成
 
-Regenerating the session ID is often done in order to prevent malicious users from exploiting a [session fixation](https://owasp.org/www-community/attacks/Session_fixation) attack on your application.
+セッション ID の再生成は、悪意のあるユーザーがアプリケーションに対して [セッション固定](https://owasp.org/www-community/attacks/Session_fixation) 攻撃をを防ぐために行われることがよくあります。
 
-Laravel automatically regenerates the session ID during authentication if you are using one of the Laravel [application starter kits](/docs/{{version}}/starter-kits) or [Laravel Fortify](/docs/{{version}}/fortify); however, if you need to manually regenerate the session ID, you may use the `regenerate` method:
+Laravel [アプリケーションスターターキット](/docs/{{version}}/starter-kits) または [Laravel Fortify](/docs/{{version}}/fortify) のいずれかを使用している場合、Laravel は認証中にセッション ID を自動的に再生成します。ただし、セッション ID を手動で再生成する必要がある場合は、`regenerate` メソッドを使用してください。
 
     $request->session()->regenerate();
 
-If you need to regenerate the session ID and remove all data from the session in a single statement, you may use the `invalidate` method:
+セッション ID を再生成し、セッションからすべてのデータを削除したい場合、`invalidate` メソッドを使用すると一文で記述可能です。
 
     $request->session()->invalidate();
 
