@@ -249,14 +249,14 @@ Laravel [アプリケーションスターターキット](/docs/{{version}}/sta
     $request->session()->invalidate();
 
 <a name="session-blocking"></a>
-## Session Blocking
+## セッションブロッキング
 
-> **Warning**  
-> To utilize session blocking, your application must be using a cache driver that supports [atomic locks](/docs/{{version}}/cache#atomic-locks). Currently, those cache drivers include the `memcached`, `dynamodb`, `redis`, and `database` drivers. In addition, you may not use the `cookie` session driver.
+> **Warning**
+> セッションブロッキングを利用するには、アプリケーションで [アトミックロック](/docs/{{version}}/cache#atomic-locks) をサポートするキャッシュドライバを使用する必要があります。現在、これらのキャッシュドライバには、`memcached`、`dynamodb`、`redis`、および `database` ドライバが含まれます。`cookie` セッションドライバを使用することはできません。
 
-By default, Laravel allows requests using the same session to execute concurrently. So, for example, if you use a JavaScript HTTP library to make two HTTP requests to your application, they will both execute at the same time. For many applications, this is not a problem; however, session data loss can occur in a small subset of applications that make concurrent requests to two different application endpoints which both write data to the session.
+デフォルトでは、Laravel は同じセッションを使用するリクエストの同時実行を許可します。たとえば、JavaScript HTTP ライブラリを使用してアプリケーションに対して２つの HTTP リクエストを作成すると、両方が同時に実行されます。多くのアプリケーションでは、これは問題になりません。 ただし、セッションデータの損失は、両方ともセッションにデータを書き込む２つの異なるアプリケーションエンドポイントに同時にリクエストを行うアプリケーションの小さなサブセットで発生する可能性があります。
 
-To mitigate this, Laravel provides functionality that allows you to limit concurrent requests for a given session. To get started, you may simply chain the `block` method onto your route definition. In this example, an incoming request to the `/profile` endpoint would acquire a session lock. While this lock is being held, any incoming requests to the `/profile` or `/order` endpoints which share the same session ID will wait for the first request to finish executing before continuing their execution:
+これを軽減するために、Laravel は特定のセッションの同時リクエストを制限できる機能を提供します。まず、ルート定義に `block` メソッドをチェーンさせるだけです。この例では、`/profile` エンドポイントへの受信リクエストはセッションロックを取得します。このロックが保持されている間、同じセッション ID を共有する `/profile` または `/order` エンドポイントへの受信リクエストは、最初のリクエストの実行が完了するまで待機してから、実行を続行します。
 
     Route::post('/profile', function () {
         // ...
@@ -266,7 +266,7 @@ To mitigate this, Laravel provides functionality that allows you to limit concur
         // ...
     })->block($lockSeconds = 10, $waitSeconds = 10)
 
-The `block` method accepts two optional arguments. The first argument accepted by the `block` method is the maximum number of seconds the session lock should be held for before it is released. Of course, if the request finishes executing before this time the lock will be released earlier.
+`block` メソッドは２つのオプションの引数を受け取ります。`block` メソッドの第１引数は、セッションロックが解放されるまで保持される最大秒数です。もちろん、この時間より前にリクエストの実行が終了した場合、ロックはより早く解放されます。
 
 The second argument accepted by the `block` method is the number of seconds a request should wait while attempting to obtain a session lock. An `Illuminate\Contracts\Cache\LockTimeoutException` will be thrown if the request is unable to obtain a session lock within the given number of seconds.
 
