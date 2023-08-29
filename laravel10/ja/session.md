@@ -268,21 +268,21 @@ Laravel [アプリケーションスターターキット](/docs/{{version}}/sta
 
 `block` メソッドは２つのオプションの引数を受け取ります。`block` メソッドの第１引数は、セッションロックが解放されるまで保持される最大秒数です。もちろん、この時間より前にリクエストの実行が終了した場合、ロックはより早く解放されます。
 
-The second argument accepted by the `block` method is the number of seconds a request should wait while attempting to obtain a session lock. An `Illuminate\Contracts\Cache\LockTimeoutException` will be thrown if the request is unable to obtain a session lock within the given number of seconds.
+`block` メソッドでの第２引数は、セッションロックの取得を試行する際にリクエストが待機する秒数です。リクエストが指定された秒数以内にセッションロックを取得できない場合、`Illuminate\Contracts\Cache\LockTimeoutException` がスローされます。
 
-If neither of these arguments is passed, the lock will be obtained for a maximum of 10 seconds and requests will wait a maximum of 10 seconds while attempting to obtain a lock:
+これらの引数のどちらも渡されない場合、ロックは最大１０秒間取得され、リクエストはロックの取得を試行する間最大１０秒間待機します。
 
     Route::post('/profile', function () {
         // ...
     })->block()
 
 <a name="adding-custom-session-drivers"></a>
-## Adding Custom Session Drivers
+## カスタムセッションドライバの追加
 
 <a name="implementing-the-driver"></a>
-#### Implementing The Driver
+#### ドライバの実装
 
-If none of the existing session drivers fit your application's needs, Laravel makes it possible to write your own session handler. Your custom session driver should implement PHP's built-in `SessionHandlerInterface`. This interface contains just a few simple methods. A stubbed MongoDB implementation looks like the following:
+既存のセッションドライバがアプリケーションのニーズに適合しない場合は、Laravel を使用して独自のセッションハンドラを作成できます。カスタム セッションドライバは、PHP の組み込みの `SessionHandlerInterface` を実装する必要があります。このインターフェイスには、いくつかの簡単なメソッドが含まれています。スタブ化された MongoDB 実装は以下のようになります。
 
     <?php
 
@@ -298,10 +298,10 @@ If none of the existing session drivers fit your application's needs, Laravel ma
         public function gc($lifetime) {}
     }
 
-> **Note**  
-> Laravel does not ship with a directory to contain your extensions. You are free to place them anywhere you like. In this example, we have created an `Extensions` directory to house the `MongoSessionHandler`.
+> **Note**
+> Laravel には、拡張機能を格納するディレクトリはありません。好きな場所に自由に配置できます。この例では、`MongoSessionHandler` を格納する `Extensions` ディレクトリを作成しました。
 
-Since the purpose of these methods is not readily understandable, let's quickly cover what each of the methods do:
+これらのメソッドの目的はすぐには理解しずらいため、各メソッドの機能を簡単に説明します。
 
 <div class="content-list" markdown="1">
 
@@ -310,7 +310,7 @@ Since the purpose of these methods is not readily understandable, let's quickly 
 - The `read` method should return the string version of the session data associated with the given `$sessionId`. There is no need to do any serialization or other encoding when retrieving or storing session data in your driver, as Laravel will perform the serialization for you.
 - The `write` method should write the given `$data` string associated with the `$sessionId` to some persistent storage system, such as MongoDB or another storage system of your choice.  Again, you should not perform any serialization - Laravel will have already handled that for you.
 - The `destroy` method should remove the data associated with the `$sessionId` from persistent storage.
-- The `gc` method should destroy all session data that is older than the given `$lifetime`, which is a UNIX timestamp. For self-expiring systems like Memcached and Redis, this method may be left empty.
+- `gc` メソッドは、指定の `$lifetime` (UNIX タイムスタンプ) よりも古いすべてのセッションデータを破棄する必要があります。Memcached や Redis などの自己期限切れシステムの場合、このメソッドは空のままにすることができます。
 
 </div>
 
