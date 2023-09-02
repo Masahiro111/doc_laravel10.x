@@ -140,19 +140,19 @@ Laravel の強力なバリデーション機能について学ぶために、フ
 <a name="stopping-on-first-validation-failure"></a>
 #### 最初のバリデーション失敗時に停止
 
-Sometimes you may wish to stop running validation rules on an attribute after the first validation failure. To do so, assign the `bail` rule to the attribute:
+最初のバリデーションが失敗した後、残りの属性に対するバリデーションルールの実行を停止したい場合があります。これを行うには、`bail` ルールを属性に割り当てます。
 
     $request->validate([
         'title' => 'bail|required|unique:posts|max:255',
         'body' => 'required',
     ]);
 
-In this example, if the `unique` rule on the `title` attribute fails, the `max` rule will not be checked. Rules will be validated in the order they are assigned.
+この例では、`title` 属性の `unique` ルールが失敗した場合、`max` ルールはチェックされません。ルールは割り当てられた順序でバリデーションされます。
 
 <a name="a-note-on-nested-attributes"></a>
-#### A Note On Nested Attributes
+#### ネストした属性に注意
 
-If the incoming HTTP request contains "nested" field data, you may specify these fields in your validation rules using "dot" syntax:
+受信 HTTP リクエストに 「ネストされた」フィールドデータが含まれている場合は、「ドット」構文を使用してバリデーションルールでこれらのフィールドを指定できます。
 
     $request->validate([
         'title' => 'required|unique:posts|max:255',
@@ -160,7 +160,7 @@ If the incoming HTTP request contains "nested" field data, you may specify these
         'author.description' => 'required',
     ]);
 
-On the other hand, if your field name contains a literal period, you can explicitly prevent this from being interpreted as "dot" syntax by escaping the period with a backslash:
+フィールド名にピリオドが含まれている場合は、そのピリオドをバックスラッシュでエスケープすることで、これが「ドット」構文として解釈されるのを明示的に防ぐことができます。
 
     $request->validate([
         'title' => 'required|unique:posts|max:255',
