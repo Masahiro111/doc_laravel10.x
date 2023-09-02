@@ -8,7 +8,7 @@
     - [バリデーションエラーの表示](#quick-displaying-the-validation-errors)
     - [フォームの再入力](#repoptaining-forms)
     - [オプションフィールドに関する注意](#a-note-on-optional-fields)
-    - [バリデーションエラーのレスポンス形式](#検証エラー応答形式)
+    - [バリデーションエラーのレスポンス形式](#validation-error-response-format)
 - [フォームリクエストのバリデーション](#form-request-validation)
     - [フォームリクエストの作成](#creating-form-requests)
     - [フォームリクエストの許可](#authorizing-form-requests)
@@ -37,33 +37,33 @@
     - [Implicit Rules](#implicit-rules)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-Laravel provides several different approaches to validate your application's incoming data. It is most common to use the `validate` method available on all incoming HTTP requests. However, we will discuss other approaches to validation as well.
+Laravel は、アプリケーションの受信データを検証（バリデーション）するために、いくつかの異なるアプローチを提供します。すべての受信 HTTP リクエストで使用できる `validate` メソッドを使用するのが最も一般的です。また、他のバリデーションのアプローチについても説明します。
 
-Laravel includes a wide variety of convenient validation rules that you may apply to data, even providing the ability to validate if values are unique in a given database table. We'll cover each of these validation rules in detail so that you are familiar with all of Laravel's validation features.
+Laravel には、データに適用できる便利なバリデーションルールを幅広く保有しています。特定のデータベーステーブル内で値が一意であるかどうかをバリデーションする機能も提供します。Laravel のすべてのバリデーション機能を理解できるように、これらのバリデーションルールのそれぞれについて詳しく説明します。
 
 <a name="validation-quickstart"></a>
-## Validation Quickstart
+## クイックスタート
 
-To learn about Laravel's powerful validation features, let's look at a complete example of validating a form and displaying the error messages back to the user. By reading this high-level overview, you'll be able to gain a good general understanding of how to validate incoming request data using Laravel:
+Laravel の強力なバリデーション機能について学ぶために、フォームをバリデーションし、ユーザーにエラーメッセージを表示する完全な例を見てみましょう。この高レベルの概要を読むことで、Laravel を使用して受信リクエストデータをバリデーションする一般的な方法を理解できるようになります。
 
 <a name="quick-defining-the-routes"></a>
-### Defining The Routes
+### ルート定義
 
-First, let's assume we have the following routes defined in our `routes/web.php` file:
+まず、`routes/web.php` ファイルに以下のルートが定義されているとします。
 
     use App\Http\Controllers\PostController;
 
     Route::get('/post/create', [PostController::class, 'create']);
     Route::post('/post', [PostController::class, 'store']);
 
-The `GET` route will display a form for the user to create a new blog post, while the `POST` route will store the new blog post in the database.
+`GET` ルートはユーザーが新しいブログ投稿を作成するフォームを表示し、`POST` ルートは新しいブログ投稿をデータベースに保存します。
 
 <a name="quick-creating-the-controller"></a>
-### Creating The Controller
+### コントローラの作成
 
-Next, let's take a look at a simple controller that handles incoming requests to these routes. We'll leave the `store` method empty for now:
+次に、これらのルートへの受信リクエストを処理する単純なコントローラを見てみましょう。ここでは `store` メソッドを空のままにしておきます。
 
     <?php
 
@@ -98,16 +98,16 @@ Next, let's take a look at a simple controller that handles incoming requests to
     }
 
 <a name="quick-writing-the-validation-logic"></a>
-### Writing The Validation Logic
+### バリデーションロジック
 
-Now we are ready to fill in our `store` method with the logic to validate the new blog post. To do this, we will use the `validate` method provided by the `Illuminate\Http\Request` object. If the validation rules pass, your code will keep executing normally; however, if validation fails, an `Illuminate\Validation\ValidationException` exception will be thrown and the proper error response will automatically be sent back to the user.
+これで、新しいブログ投稿をバリデーションするロジックを `store` メソッドに入力する準備が整いました。これを行うには、`Illuminate\Http\Request` オブジェクトによって提供される `validate` メソッドを使用します。バリデーションルールにパスすると、コードは通常どおりに実行され続けます。ただし、バリデーションが失敗した場合は、 `Illuminate\Validation\ValidationException` 例外がスローされ、適切なエラーレスポンスが自動的にユーザーに返されます。
 
-If validation fails during a traditional HTTP request, a redirect response to the previous URL will be generated. If the incoming request is an XHR request, a [JSON response containing the validation error messages](#validation-error-response-format) will be returned.
+従来の HTTP リクエスト処理中にバリデーションが失敗した場合、直前の URL へのリダイレクトレスポンスが生成されます。受信リクエストが XHR リクエストの場合、[バリデーションエラーメッセージを含む JSON レスポンス](#validation-error-response-format) が返されます。
 
-To get a better understanding of the `validate` method, let's jump back into the `store` method:
+ `validate` メソッドをより深く理解するために、 `store` メソッドに戻りましょう。
 
     /**
-     * Store a new blog post.
+     * 新しいブログ投稿の保存
      */
     public function store(Request $request): RedirectResponse
     {
@@ -121,16 +121,16 @@ To get a better understanding of the `validate` method, let's jump back into the
         return redirect('/posts');
     }
 
-As you can see, the validation rules are passed into the `validate` method. Don't worry - all available validation rules are [documented](#available-validation-rules). Again, if the validation fails, the proper response will automatically be generated. If the validation passes, our controller will continue executing normally.
+ご覧のとおり、バリデーションルールは `validate` メソッドに渡されます。心配しないでください。利用可能なバリデーションルールはすべて [文書化](#available-validation-rules) されています。 繰り返しますが、バリデーションが失敗した場合は、適切なレスポンスが自動的に生成されます。バリデーションにパスすると、コントローラは通常どおりに実行を続けます。
 
-Alternatively, validation rules may be specified as arrays of rules instead of a single `|` delimited string:
+あるいは、バリデーションルールを区切りる役割りを持つ `|` 文字列の代わりに、配列としてバリデーションルールを指定することもできます。
 
     $validatedData = $request->validate([
         'title' => ['required', 'unique:posts', 'max:255'],
         'body' => ['required'],
     ]);
 
-In addition, you may use the `validateWithBag` method to validate a request and store any error messages within a [named error bag](#named-error-bags):
+さらに、`validateWithBag` メソッドを使用してリクエストをバリデーションし、エラーメッセージを [名前付きエラーバッグ](#named-error-bags) 内に保存することもできます。
 
     $validatedData = $request->validateWithBag('post', [
         'title' => ['required', 'unique:posts', 'max:255'],
@@ -138,7 +138,7 @@ In addition, you may use the `validateWithBag` method to validate a request and 
     ]);
 
 <a name="stopping-on-first-validation-failure"></a>
-#### Stopping On First Validation Failure
+#### 最初のバリデーション失敗時に停止
 
 Sometimes you may wish to stop running validation rules on an attribute after the first validation failure. To do so, assign the `bail` rule to the attribute:
 
