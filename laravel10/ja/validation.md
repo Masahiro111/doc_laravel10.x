@@ -168,13 +168,13 @@ Laravel の強力なバリデーション機能について学ぶために、フ
     ]);
 
 <a name="quick-displaying-the-validation-errors"></a>
-### Displaying The Validation Errors
+### バリデーションエラーの表示
 
-So, what if the incoming request fields do not pass the given validation rules? As mentioned previously, Laravel will automatically redirect the user back to their previous location. In addition, all of the validation errors and [request input](/docs/{{version}}/requests#retrieving-old-input) will automatically be [flashed to the session](/docs/{{version}}/session#flash-data).
+受信リクエストフィールドが指定されたバリデーションルーをパスしない場合はどうなるでしょうか? 前述したように、Laravel はユーザーを直前の場所に自動的にリダイレクトします。さらに、すべてのバリデーションエラーと [リクエスト入力](/docs/{{version}}/requests#retrieving-old-input) は自動的に [セッションに一時保存](/docs/{{version}}/session#flash-data) されます。
 
-An `$errors` variable is shared with all of your application's views by the `Illuminate\View\Middleware\ShareErrorsFromSession` middleware, which is provided by the `web` middleware group. When this middleware is applied an `$errors` variable will always be available in your views, allowing you to conveniently assume the `$errors` variable is always defined and can be safely used. The `$errors` variable will be an instance of `Illuminate\Support\MessageBag`. For more information on working with this object, [check out its documentation](#working-with-error-messages).
+`$errors` 変数は、`web` ミドルウェアグループが提供する `Illuminate\View\Middleware\ShareErrorsFromSession` ミドルウェアによってアプリケーションのすべてのビューで共有されます。このミドルウェアが適用されると、常にビューで `$errors` 変数が使用できるようになり、`$errors` 変数が常に定義され、安全かつ便利に使用できることでしょう。`$errors` 変数は `Illuminate\Support\MessageBag` のインスタンスになります。このオブジェクトの操作の詳細については、[ドキュメントを確認してください](#working-with-error-messages)。
 
-So, in our example, the user will be redirected to our controller's `create` method when validation fails, allowing us to display the error messages in the view:
+この例では、バリデーションが失敗したときにユーザーはコントローラの `create` メソッドにリダイレクトされ、ビューにエラーメッセージを表示させられます。
 
 ```blade
 <!-- /resources/views/post/create.blade.php -->
@@ -195,24 +195,24 @@ So, in our example, the user will be redirected to our controller's `create` met
 ```
 
 <a name="quick-customizing-the-error-messages"></a>
-#### Customizing The Error Messages
+#### エラーメッセージのカスタマイズ
 
-Laravel's built-in validation rules each have an error message that is located in your application's `lang/en/validation.php` file. Within this file, you will find a translation entry for each validation rule. You are free to change or modify these messages based on the needs of your application.
+Laravel の組み込みバリデーションルールにはそれぞれエラーメッセージがあり、アプリケーションの `lang/en/validation.php` ファイルにあります。このファイル内に、各バリデーションルールの翻訳エントリがあります。アプリケーションのニーズに基づいて、これらのメッセージを自由に変更または修正できます。
 
-In addition, you may copy this file to another language directory to translate the messages for your application's language. To learn more about Laravel localization, check out the complete [localization documentation](/docs/{{version}}/localization).
+さらに、このファイルを別の言語ディレクトリにコピーして、メッセージをアプリケーションの言語に翻訳することもできます。Laravel の多言語化の詳細については、完全な [多言語化ドキュメント](/docs/{{version}}/localization) をご覧ください。
 
 > **Warning**
-> By default, the Laravel application skeleton does not include the `lang` directory. If you would like to customize Laravel's language files, you may publish them via the `lang:publish` Artisan command.
+> デフォルトでは、Laravel アプリケーションのスケルトンには `lang` ディレクトリが含まれません。Laravel の言語ファイルをカスタマイズしたい場合は、`lang:publish` Artisan コマンドを使用して言語ファイルを公開できます。
 
 <a name="quick-xhr-requests-and-validation"></a>
-#### XHR Requests & Validation
+#### XHR リクエストとバリデーション
 
-In this example, we used a traditional form to send data to the application. However, many applications receive XHR requests from a JavaScript powered frontend. When using the `validate` method during an XHR request, Laravel will not generate a redirect response. Instead, Laravel generates a [JSON response containing all of the validation errors](#validation-error-response-format). This JSON response will be sent with a 422 HTTP status code.
+この例では、従来のフォームを使用してデータをアプリケーションに送信しました。ただし、多くのアプリケーションは、JavaScript を利用したフロントエンドから XHR リクエストを受信します。XHRリクエスト中に `validate` メソッドを使用すると、Laravelはリダイレクトレスポンスを生成しません。代わりに、Laravel は [すべてのバリデーションエラーを含む JSON レスポンス](#validation-error-response-format) を生成します。この JSON レスポンスは 422 HTTP ステータスコードとともに送信されます。
 
 <a name="the-at-error-directive"></a>
-#### The `@error` Directive
+#### `@error` ディレクティブ
 
-You may use the `@error` [Blade](/docs/{{version}}/blade) directive to quickly determine if validation error messages exist for a given attribute. Within an `@error` directive, you may echo the `$message` variable to display the error message:
+`@error` [Blade](/docs/{{version}}/blade) ディレクティブを使用すると、特定の属性にバリデーションエラーメッセージが存在するかどうかを迅速に判断できます。`@error` ディレクティブ内で、`$message` 変数をエコーしてエラーメッセージを表示できます。
 
 ```blade
 <!-- /resources/views/post/create.blade.php -->
@@ -229,18 +229,18 @@ You may use the `@error` [Blade](/docs/{{version}}/blade) directive to quickly d
 @enderror
 ```
 
-If you are using [named error bags](#named-error-bags), you may pass the name of the error bag as the second argument to the `@error` directive:
+[名前付きエラーバッグ](#named-error-bags) を使用している場合は、エラー バッグの名前を `@error` ディレクティブの第２引数に渡せます。
 
 ```blade
 <input ... class="@error('title', 'post') is-invalid @enderror">
 ```
 
 <a name="repopulating-forms"></a>
-### Repopulating Forms
+### フォームの再入力
 
-When Laravel generates a redirect response due to a validation error, the framework will automatically [flash all of the request's input to the session](/docs/{{version}}/session#flash-data). This is done so that you may conveniently access the input during the next request and repopulate the form that the user attempted to submit.
+Laravel がバリデーションエラーによりリダイレクトレスポンスを生成すると、フレームワークは自動的に [すべてのリクエストの入力をセッションに一時保存](/docs/{{version}}/session#flash-data) します。これは、直後のリクエストの際、一時保存した入力データにアクセスし、ユーザーが送信しようとしたフォームに再入力できるようにするためです。
 
-To retrieve flashed input from the previous request, invoke the `old` method on an instance of `Illuminate\Http\Request`. The `old` method will pull the previously flashed input data from the [session](/docs/{{version}}/session):
+直前のリクエストから一時保存された入力を取得するには、`Illuminate\Http\Request` のインスタンスで `old` メソッドを呼び出します。`old` メソッドは、直前に一時保存された入力データを [セッション](/docs/{{version}}/session) から取得します。
 
     $title = $request->old('title');
 
