@@ -244,16 +244,16 @@ Laravel がバリデーションエラーによりリダイレクトレスポン
 
     $title = $request->old('title');
 
-Laravel also provides a global `old` helper. If you are displaying old input within a [Blade template](/docs/{{version}}/blade), it is more convenient to use the `old` helper to repopulate the form. If no old input exists for the given field, `null` will be returned:
+Laravel はグローバルな `old` ヘルパも提供します。[Blade テンプレート](/docs/{{version}}/blade) 内で直前の入力を表示している場合は、`old` ヘルパを使用してフォームに再入力する方法が便利です。指定されたフィールドに直前の入力が存在しない場合は、`null` が返されます。
 
 ```blade
 <input type="text" name="title" value="{{ old('title') }}">
 ```
 
 <a name="a-note-on-optional-fields"></a>
-### A Note On Optional Fields
+### オプションのフィールドに関する注意
 
-By default, Laravel includes the `TrimStrings` and `ConvertEmptyStringsToNull` middleware in your application's global middleware stack. These middleware are listed in the stack by the `App\Http\Kernel` class. Because of this, you will often need to mark your "optional" request fields as `nullable` if you do not want the validator to consider `null` values as invalid. For example:
+デフォルトで Laravel にはアプリケーションのグローバルミドルウェアスタックに `TrimStrings` および `ConvertEmptyStringsToNull` ミドルウェアが含まれています。これらのミドルウェアは、スタック内の `App\Http\Kernel` クラスにリストされています。このため、バリデータに `null` 値を無効と判定させたくない場合は、「オプション」のリクエストフィールドを `nullable` としてマークする必要があります。例えば
 
     $request->validate([
         'title' => 'required|unique:posts|max:255',
@@ -261,10 +261,10 @@ By default, Laravel includes the `TrimStrings` and `ConvertEmptyStringsToNull` m
         'publish_at' => 'nullable|date',
     ]);
 
-In this example, we are specifying that the `publish_at` field may be either `null` or a valid date representation. If the `nullable` modifier is not added to the rule definition, the validator would consider `null` an invalid date.
+この例では、 `publish_at` フィールドが `null` または有効な日付表現のいずれかであることを指定しています。`nullable` 修飾子がルール定義に追加されていない場合、バリデータは `null` を無効な日付として判定します。
 
 <a name="validation-error-response-format"></a>
-### Validation Error Response Format
+### バリデーションエラーのレスポンス形式
 
 When your application throws a `Illuminate\Validation\ValidationException` exception and the incoming HTTP request is expecting a JSON response, Laravel will automatically format the error messages for you and return a `422 Unprocessable Entity` HTTP response.
 
