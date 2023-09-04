@@ -305,10 +305,10 @@ php artisan make:request StorePostRequest
 
 生成されたフォームリクエストクラスは `app/Http/Requests` ディレクトリに配置されます。このディレクトリが存在しない場合、`make:request` コマンドを実行する際に作成されます。Laravel によって生成される各フォームリクエストには、`authorize` と `rules` という２つのメソッドがあります。
 
-As you might have guessed, the `authorize` method is responsible for determining if the currently authenticated user can perform the action represented by the request, while the `rules` method returns the validation rules that should apply to the request's data:
+ご想像のとおり、`authorize` メソッドは、現在認証されているユーザーがリクエストで表されるアクションを実行できるかを判断し、`rules` メソッドはリクエストのデータに適用する必要があるバリデーションルールを返します。
 
     /**
-     * Get the validation rules that apply to the request.
+     * リクエストに適用されるバリデーションルールを取得
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
@@ -320,8 +320,8 @@ As you might have guessed, the `authorize` method is responsible for determining
         ];
     }
 
-> **Note**  
-> You may type-hint any dependencies you require within the `rules` method's signature. They will automatically be resolved via the Laravel [service container](/docs/{{version}}/container).
+> **Note**
+> `rules` メソッドの引数で必要な依存関係をタイプヒントで指定できます。これらは、Laravel [サービスコンテナ](/docs/{{version}}/container) を介して自動的に解決されます。
 
 So, how are the validation rules evaluated? All you need to do is type-hint the request on your controller method. The incoming form request is validated before the controller method is called, meaning you do not need to clutter your controller with any validation logic:
 
