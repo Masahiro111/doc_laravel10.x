@@ -292,7 +292,7 @@ Laravel はグローバルな `old` ヘルパも提供します。[Blade テン�
 ```
 
 <a name="form-request-validation"></a>
-## Form Request Validation
+## フォームリクエストのバリデーション
 
 <a name="creating-form-requests"></a>
 ### フォームリクエストの作成
@@ -323,28 +323,28 @@ php artisan make:request StorePostRequest
 > **Note**
 > `rules` メソッドの引数で必要な依存関係をタイプヒントで指定できます。これらは、Laravel [サービスコンテナ](/docs/{{version}}/container) を介して自動的に解決されます。
 
-So, how are the validation rules evaluated? All you need to do is type-hint the request on your controller method. The incoming form request is validated before the controller method is called, meaning you do not need to clutter your controller with any validation logic:
+では、バリデーションルールはどのように評価されるのでしょうか？必要なのは、コントローラメソッドでリクエストをタイプヒントすることだけです。受信フォームリクエストはコントローラメソッドが呼び出される前にバリデーションされます。つまり、コントローラにバリデーションロジックを複雑に記述する必要はありません。
 
     /**
-     * Store a new blog post.
+     * 新しいブログ投稿を保存
      */
     public function store(StorePostRequest $request): RedirectResponse
     {
-        // The incoming request is valid...
+        // 有効な受信リクエスト
 
-        // Retrieve the validated input data...
+        // バリデーション済み入力データを取得
         $validated = $request->validated();
 
-        // Retrieve a portion of the validated input data...
+        // バリデーションされた入力データの一部を取得
         $validated = $request->safe()->only(['name', 'email']);
         $validated = $request->safe()->except(['name', 'email']);
 
-        // Store the blog post...
+        // ブログ投稿を保存
 
         return redirect('/posts');
     }
 
-If validation fails, a redirect response will be generated to send the user back to their previous location. The errors will also be flashed to the session so they are available for display. If the request was an XHR request, an HTTP response with a 422 status code will be returned to the user including a [JSON representation of the validation errors](#validation-error-response-format).
+バリデーションが失敗した場合は、ユーザーを直前のページに戻すリダイレクトレスポンスが生成されます。エラーもセッションにも一時保存されるので、表示できるようになります。リクエストが XHR リクエストの場合、[バリデーションエラーの JSON 表現](#validation-error-response-format) を含む 422 ステータスコードを HTTP レスポンスによってユーザーへと返却されます。
 
 <a name="adding-after-hooks-to-form-requests"></a>
 #### Adding After Hooks To Form Requests
