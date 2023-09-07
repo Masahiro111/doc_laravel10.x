@@ -347,14 +347,14 @@ php artisan make:request StorePostRequest
 バリデーションが失敗した場合は、ユーザーを直前のページに戻すリダイレクトレスポンスが生成されます。エラーもセッションにも一時保存されるので、表示できるようになります。リクエストが XHR リクエストの場合、[バリデーションエラーの JSON 表現](#validation-error-response-format) を含む 422 ステータスコードを HTTP レスポンスによってユーザーへと返却されます。
 
 <a name="adding-after-hooks-to-form-requests"></a>
-#### Adding After Hooks To Form Requests
+#### フォームリクエストへの After フックの追加
 
-If you would like to add an "after" validation hook to a form request, you may use the `withValidator` method. This method receives the fully constructed validator, allowing you to call any of its methods before the validation rules are actually evaluated:
+フォームリクエストに「after」バリデーションフックを追加したい場合は、`withValidator` メソッドを使用できます。 このメソッドは完全に構築されたバリデータを受け取るため、バリデーションルールが実際に評価される前にそのメソッドのいずれかを呼び出すことができます。
 
     use Illuminate\Validation\Validator;
 
     /**
-     * Configure the validator instance.
+     * バリデータインスタンスの設定
      */
     public function withValidator(Validator $validator): void
     {
@@ -367,12 +367,12 @@ If you would like to add an "after" validation hook to a form request, you may u
 
 
 <a name="request-stopping-on-first-validation-rule-failure"></a>
-#### Stopping On First Validation Failure Attribute
+#### バリデーション失敗時の停止処理
 
-By adding a `stopOnFirstFailure` property to your request class, you may inform the validator that it should stop validating all attributes once a single validation failure has occurred:
+リクエストクラスに `stopOnFirstFailure` プロパティを追加すると、バリデーションエラーが発生した場合にすべての属性のバリデーションを停止するようバリデータに指示します。
 
     /**
-     * Indicates if the validator should stop on the first rule failure.
+     * ルールが失敗した際バリデータを停止するかどうか
      *
      * @var bool
      */
