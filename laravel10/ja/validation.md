@@ -381,33 +381,33 @@ php artisan make:request StorePostRequest
 <a name="customizing-the-redirect-location"></a>
 #### リダイレクト先のカスタマイズ
 
-As previously discussed, a redirect response will be generated to send the user back to their previous location when form request validation fails. However, you are free to customize this behavior. To do so, define a `$redirect` property on your form request:
+前述したように、フォームリクエストのバリデーションに失敗した場合、ユーザーを直前の場所に戻すリダイレクトレスポンスが生成されます。ただし、この動作は自由にカスタマイズできます。これを行うには、フォームリクエストで `$redirect` プロパティを定義します。
 
     /**
-     * The URI that users should be redirected to if validation fails.
+     * バリデーション失敗時にリダイレクトする URI
      *
      * @var string
      */
     protected $redirect = '/dashboard';
 
-Or, if you would like to redirect users to a named route, you may define a `$redirectRoute` property instead:
+または、ユーザーを名前付きルートにリダイレクトしたい場合は、代わりに `$redirectRoute` プロパティを定義します。
 
     /**
-     * The route that users should be redirected to if validation fails.
+     * バリデーション失敗時にリダイレクトするルート
      *
      * @var string
      */
     protected $redirectRoute = 'dashboard';
 
 <a name="authorizing-form-requests"></a>
-### Authorizing Form Requests
+### フォームリクエストの許可
 
-The form request class also contains an `authorize` method. Within this method, you may determine if the authenticated user actually has the authority to update a given resource. For example, you may determine if a user actually owns a blog comment they are attempting to update. Most likely, you will interact with your [authorization gates and policies](/docs/{{version}}/authorization) within this method:
+フォームリクエストクラスには `authorize` メソッドも含まれます。このメソッド内で、認証済みユーザーが実際に特定のリソースを更新する権限を持っているかどうかを判断できます。たとえば、ユーザーが更新しようとしているブログコメントを実際に所有しているかどうかを判断できます。おそらく、このメソッド内で [認可ゲートとポリシー](/docs/{{version}}/authorization) を操作することになります。
 
     use App\Models\Comment;
 
     /**
-     * Determine if the user is authorized to make this request.
+     * ユーザーがこのリクエストの権限を持っているか判断
      */
     public function authorize(): bool
     {
@@ -416,11 +416,11 @@ The form request class also contains an `authorize` method. Within this method, 
         return $comment && $this->user()->can('update', $comment);
     }
 
-Since all form requests extend the base Laravel request class, we may use the `user` method to access the currently authenticated user. Also, note the call to the `route` method in the example above. This method grants you access to the URI parameters defined on the route being called, such as the `{comment}` parameter in the example below:
+すべてのフォームリクエストは Laravel のベースリクエストクラスを拡張するため、`user` メソッドを使用して現在認証されているユーザーにアクセスできます。また、上の例の `route` メソッドの呼び出しにも注目してください。このメソッドを使用すると、呼び出されるルートで定義されている URI パラメータ (以下の例の `{comment}` パラメータなど) へのアクセスが許可されます。
 
     Route::post('/comment/{comment}');
 
-Therefore, if your application is taking advantage of [route model binding](/docs/{{version}}/routing#route-model-binding), your code may be made even more succinct by accessing the resolved model as a property of the request:
+したがって、アプリケーションが [ルートモデル結合](/docs/{{version}}/routing#route-model-binding) を利用している場合、解決済みモデルにリクエストのプロパティとしてアクセスすることで、コードをさらに簡潔にすることができます。
 
     return $this->user()->can('update', $this->comment);
 
