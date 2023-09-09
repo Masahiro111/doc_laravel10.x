@@ -424,28 +424,28 @@ php artisan make:request StorePostRequest
 
     return $this->user()->can('update', $this->comment);
 
-If the `authorize` method returns `false`, an HTTP response with a 403 status code will automatically be returned and your controller method will not execute.
+`authorize` メソッドが `false` を返した場合、403 ステータスコードを含む HTTP レスポンスが自動的に返され、コントローラメソッドは実行されません。
 
-If you plan to handle authorization logic for the request in another part of your application, you may simply return `true` from the `authorize` method:
+アプリケーションの別の部分でリクエストの認可ロジックを処理する場合は、`authorize` メソッドから `true` を返してください。
 
     /**
-     * Determine if the user is authorized to make this request.
+     * ユーザーがこのリクエストを行う権限を持っているか判断
      */
     public function authorize(): bool
     {
         return true;
     }
 
-> **Note**  
-> You may type-hint any dependencies you need within the `authorize` method's signature. They will automatically be resolved via the Laravel [service container](/docs/{{version}}/container).
+> **Note**
+> `authorize` メソッドの引数で必要な依存関係をタイプヒントで指定できます。これらは、Laravelの [サービスコンテナ](/docs/{{version}}/container) を介して自動的に依存性解決されます。
 
 <a name="customizing-the-error-messages"></a>
-### Customizing The Error Messages
+### エラーメッセージのカスタマイズ
 
-You may customize the error messages used by the form request by overriding the `messages` method. This method should return an array of attribute / rule pairs and their corresponding error messages:
+`messages` メソッドをオーバーライドすることで、フォームリクエストで使用されるエラーメッセージをカスタマイズできます。このメソッドは、「属性とルールのペア」と「それに対応するエラーメッセージ」の配列を返す必要があります。
 
     /**
-     * Get the error messages for the defined validation rules.
+     * 定義済みのバリデーションルールのエラーメッセージを取得
      *
      * @return array<string, string>
      */
