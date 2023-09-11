@@ -458,12 +458,12 @@ php artisan make:request StorePostRequest
     }
 
 <a name="customizing-the-validation-attributes"></a>
-#### Customizing The Validation Attributes
+#### バリデーション属性のカスタマイズ
 
-Many of Laravel's built-in validation rule error messages contain an `:attribute` placeholder. If you would like the `:attribute` placeholder of your validation message to be replaced with a custom attribute name, you may specify the custom names by overriding the `attributes` method. This method should return an array of attribute / name pairs:
+Laravel の組み込みバリデーションルールのエラーメッセージの多くには、`:attribute` プレースホルダが含まれています。バリデーションメッセージの `:attribute` プレースホルダをカスタム属性名に置き換えたい場合は、`attributes` メソッドをオーバーライドしてカスタム名を指定できます。このメソッドは、属性と名前のペアの配列を返す必要があります。
 
     /**
-     * Get custom attributes for validator errors.
+     * バリデーションエラーのカスタム属性を取得
      *
      * @return array<string, string>
      */
@@ -475,14 +475,14 @@ Many of Laravel's built-in validation rule error messages contain an `:attribute
     }
 
 <a name="preparing-input-for-validation"></a>
-### Preparing Input For Validation
+### バリデーションのための入力準備
 
-If you need to prepare or sanitize any data from the request before you apply your validation rules, you may use the `prepareForValidation` method:
+バリデーションルールを適用する前にリクエストからのデータを準備、またはサニタイズする必要がある場合は、`prepareForValidation` メソッドを使用します。
 
     use Illuminate\Support\Str;
 
     /**
-     * Prepare the data for validation.
+     * バリデーションのためのデータを準備
      */
     protected function prepareForValidation(): void
     {
@@ -491,12 +491,12 @@ If you need to prepare or sanitize any data from the request before you apply yo
         ]);
     }
 
-Likewise, if you need to normalize any request data after validation is complete, you may use the `passedValidation` method:
+同様に、バリデーションの完了後にリクエストデータをノーマライズする必要がある場合は、`passedValidation` メソッドを使用します。
 
     use Illuminate\Support\Str;
 
     /**
-     * Handle a passed validation attempt.
+     * バリデーション完了後の処理
      */
     protected function passedValidation(): void
     {
@@ -504,9 +504,9 @@ Likewise, if you need to normalize any request data after validation is complete
     }
 
 <a name="manually-creating-validators"></a>
-## Manually Creating Validators
+## バリデータの手動生成
 
-If you do not want to use the `validate` method on the request, you may create a validator instance manually using the `Validator` [facade](/docs/{{version}}/facades). The `make` method on the facade generates a new validator instance:
+リクエストで `validate` メソッドを使用したくない場合は、`Validator` [ファサード](/docs/{{version}}/facades) を使用して、バリデータインスタンスを手動で作成します。このファサードの `make` メソッドは、新しいバリデータインスタンスを生成します。
 
     <?php
 
@@ -520,7 +520,7 @@ If you do not want to use the `validate` method on the request, you may create a
     class PostController extends Controller
     {
         /**
-         * Store a new blog post.
+         * 新しいブログ投稿を保存
          */
         public function store(Request $request): RedirectResponse
         {
@@ -535,22 +535,22 @@ If you do not want to use the `validate` method on the request, you may create a
                             ->withInput();
             }
 
-            // Retrieve the validated input...
+            // バリデーションされた入力を取得
             $validated = $validator->validated();
 
-            // Retrieve a portion of the validated input...
+            // バリデーションされた入力の一部を取得
             $validated = $validator->safe()->only(['name', 'email']);
             $validated = $validator->safe()->except(['name', 'email']);
 
-            // Store the blog post...
+            // ブログ投稿を保存
 
             return redirect('/posts');
         }
     }
 
-The first argument passed to the `make` method is the data under validation. The second argument is an array of the validation rules that should be applied to the data.
+`make` メソッドの第１引数は、バリデーション対象のデータです。第２引数は、データに適用する必要があるバリデーションルールの配列です。
 
-After determining whether the request validation failed, you may use the `withErrors` method to flash the error messages to the session. When using this method, the `$errors` variable will automatically be shared with your views after redirection, allowing you to easily display them back to the user. The `withErrors` method accepts a validator, a `MessageBag`, or a PHP `array`.
+リクエストのバリデーションが失敗したかどうかを判断した後、`withErrors` メソッドを使用してエラーメッセージをセッションに一時保存できます。この方法を使用すると、リダイレクト後に `$errors` 変数がビューと自動的に共有されるため、エラーメッセージを簡単にユーザーへと表示できるようになります。`withErrors` メソッドは、バリデータ、`MessageBag`、または PHP の `array` を引数に取ります。
 
 #### Stopping On First Validation Failure
 
