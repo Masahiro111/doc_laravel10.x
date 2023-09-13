@@ -552,25 +552,25 @@ Laravel の組み込みバリデーションルールのエラーメッセージ
 
 リクエストのバリデーションが失敗したかどうかを判断した後、`withErrors` メソッドを使用してエラーメッセージをセッションに一時保存できます。この方法を使用すると、リダイレクト後に `$errors` 変数がビューと自動的に共有されるため、エラーメッセージを簡単にユーザーへと表示できるようになります。`withErrors` メソッドは、バリデータ、`MessageBag`、または PHP の `array` を引数に取ります。
 
-#### Stopping On First Validation Failure
+#### 最初のバリデーション失敗時に停止
 
-The `stopOnFirstFailure` method will inform the validator that it should stop validating all attributes once a single validation failure has occurred:
+`stopOnFirstFailure` メソッドは、バリデーションエラーが１回発生すると、すべての属性のバリデーションを停止する必要があることをバリデータに指示します。
 
     if ($validator->stopOnFirstFailure()->fails()) {
         // ...
     }
 
 <a name="automatic-redirection"></a>
-### Automatic Redirection
+### 自動リダイレクト
 
-If you would like to create a validator instance manually but still take advantage of the automatic redirection offered by the HTTP request's `validate` method, you may call the `validate` method on an existing validator instance. If validation fails, the user will automatically be redirected or, in the case of an XHR request, a [JSON response will be returned](#validation-error-response-format):
+バリデータインスタンスを手動で作成する際に、HTTP リクエストの `validate` メソッドによって提供される自動リダイレクトを利用したい場合は、既存のバリデータインスタンスで `validate` メソッドを呼び出すことができます。バリデーションが失敗した場合、ユーザーは自動的にリダイレクトされます。XHR リクエストの場合は、[JSON レスポンスが返されます。](#validation-error-response-format)
 
     Validator::make($request->all(), [
         'title' => 'required|unique:posts|max:255',
         'body' => 'required',
     ])->validate();
 
-You may use the `validateWithBag` method to store the error messages in a [named error bag](#named-error-bags) if validation fails:
+`validateWithBag` メソッドを使用して、バリデーションが失敗した場合は、エラーメッセージを [名前付きエラーバッグ](#named-error-bags) に保存できます。
 
     Validator::make($request->all(), [
         'title' => 'required|unique:posts|max:255',
@@ -578,28 +578,28 @@ You may use the `validateWithBag` method to store the error messages in a [named
     ])->validateWithBag('post');
 
 <a name="named-error-bags"></a>
-### Named Error Bags
+### 名前付きエラーバッグ
 
-If you have multiple forms on a single page, you may wish to name the `MessageBag` containing the validation errors, allowing you to retrieve the error messages for a specific form. To achieve this, pass a name as the second argument to `withErrors`:
+1 つのページに複数のフォームがある場合は、バリデーションエラーを含む `MessageBag` に名前を付けると、特定のフォームのエラーメッセージを取得できるようになります。これを実現するには、第２引数に名前を指定して `withErrors` に渡します。
 
     return redirect('register')->withErrors($validator, 'login');
 
-You may then access the named `MessageBag` instance from the `$errors` variable:
+その後、`$errors` 変数から名前付きの `MessageBag` インスタンスにアクセスできます。
 
 ```blade
 {{ $errors->login->first('email') }}
 ```
 
 <a name="manual-customizing-the-error-messages"></a>
-### Customizing The Error Messages
+### エラーメッセージのカスタマイズ
 
-If needed, you may provide custom error messages that a validator instance should use instead of the default error messages provided by Laravel. There are several ways to specify custom messages. First, you may pass the custom messages as the third argument to the `Validator::make` method:
+必要に応じて、Laravel が提供するデフォルトのエラーメッセージの代わりに、バリデータインスタンスが使用するカスタムエラーメッセージを指定できます。カスタムメッセージを指定するにはいくつかの方法があります。まず、カスタムメッセージを第３引数に指定して `Validator::make` メソッドに渡します。
 
     $validator = Validator::make($input, $rules, $messages = [
         'required' => 'The :attribute field is required.',
     ]);
 
-In this example, the `:attribute` placeholder will be replaced by the actual name of the field under validation. You may also utilize other placeholders in validation messages. For example:
+この例では、`:attribute` プレースホルダはバリデーション中のフィールドの実際の名前に置き換えられます。バリデーションメッセージでは他のプレースホルダを利用することもできます。 例えば
 
     $messages = [
         'same' => 'The :attribute and :other must match.',
