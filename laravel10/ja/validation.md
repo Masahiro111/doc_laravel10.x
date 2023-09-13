@@ -13,13 +13,13 @@
     - [フォームリクエストの作成](#creating-form-requests)
     - [フォームリクエストの許可](#authorizing-form-requests)
     - [エラーメッセージのカスタマイズ](#customizing-the-error-messages)
-    - [バリデーションの入力準備](#preparing-input-for-validation)
-- [バリデータの生成](#manually-creating-validators)
+    - [バリデーションのための入力準備](#preparing-input-for-validation)
+- [バリデータの手動生成](#manually-creating-validators)
     - [自動リダイレクト](#automatic-redirection)
     - [名前付きエラーバッグ](#named-error-bags)
     - [エラー メッセージのカスタマイズ](#manual-customizing-the-error-messages)
-    - [After Validation Hook](#after-validation-hook)
-- [Working With Validated Input](#working-with-validated-input)
+    - [バリデーション後のフック](#after-validation-hook)
+- [バリデーション済み入力値の使用](#working-with-validated-input)
 - [Working With Error Messages](#working-with-error-messages)
     - [Specifying Custom Messages In Language Files](#specifying-custom-messages-in-language-files)
     - [Specifying Attributes In Language Files](#specifying-attribute-in-language-files)
@@ -609,18 +609,18 @@ Laravel の組み込みバリデーションルールのエラーメッセージ
     ];
 
 <a name="specifying-a-custom-message-for-a-given-attribute"></a>
-#### Specifying A Custom Message For A Given Attribute
+#### 特定の属性にカスタムメッセージの指定
 
-Sometimes you may wish to specify a custom error message only for a specific attribute. You may do so using "dot" notation. Specify the attribute's name first, followed by the rule:
+場合によっては、特定の属性に対してのみカスタムエラーメッセージを指定したい場合があります。「ドット」表記を使用してこれを行うことができます。最初に属性の名前を指定し、次にルールを指定します。
 
     $messages = [
         'email.required' => 'We need to know your email address!',
     ];
 
 <a name="specifying-custom-attribute-values"></a>
-#### Specifying Custom Attribute Values
+#### カスタム属性値の指定
 
-Many of Laravel's built-in error messages include an `:attribute` placeholder that is replaced with the name of the field or attribute under validation. To customize the values used to replace these placeholders for specific fields, you may pass an array of custom attributes as the fourth argument to the `Validator::make` method:
+Laravel の組み込みエラーメッセージの多くには、バリデーション中のフィールドまたは属性の名前に置き換えられる `:attribute` プレースホルダが含まれています。特定のフィールドのこれらのプレースホルダを置換するために使用される値をカスタマイズするには、カスタム属性の配列を第４引数として `Validator::make` メソッドに渡します。
 
     $validator = Validator::make($input, $rules, $messages, [
         'email' => 'email address',
