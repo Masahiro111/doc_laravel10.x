@@ -19,8 +19,8 @@
     - [名前付きエラーバッグ](#named-error-bags)
     - [エラー メッセージのカスタマイズ](#manual-customizing-the-error-messages)
     - [バリデーション後のフック](#after-validation-hook)
-- [バリデーション済み入力値の使用](#working-with-validated-input)
-- [Working With Error Messages](#working-with-error-messages)
+- [バリデーション済み入力値の利用](#working-with-validated-input)
+- [エラーメッセージの取り扱い](#working-with-error-messages)
     - [Specifying Custom Messages In Language Files](#specifying-custom-messages-in-language-files)
     - [Specifying Attributes In Language Files](#specifying-attribute-in-language-files)
     - [Specifying Values In Language Files](#specifying-values-in-language-files)
@@ -649,15 +649,15 @@ You may also attach callbacks to be run after validation is completed. This allo
     }
 
 <a name="working-with-validated-input"></a>
-## Working With Validated Input
+## バリデーション済み入力値の利用
 
-After validating incoming request data using a form request or a manually created validator instance, you may wish to retrieve the incoming request data that actually underwent validation. This can be accomplished in several ways. First, you may call the `validated` method on a form request or validator instance. This method returns an array of the data that was validated:
+フォームリクエストまたは手動で作成したバリデータインスタンスを使用して受信リクエストデータをバリデーションした後、実際にバリデーション済みの受信リクエストデータを取得したい場合があります。これはいくつかの方法で実現できます。まず、フォームリクエストまたはバリデータインスタンスで `validated` メソッドを呼び出す方法です。このメソッドは、バリデーション済みデータの配列を返します。
 
     $validated = $request->validated();
 
     $validated = $validator->validated();
 
-Alternatively, you may call the `safe` method on a form request or validator instance. This method returns an instance of `Illuminate\Support\ValidatedInput`. This object exposes `only`, `except`, and `all` methods to retrieve a subset of the validated data or the entire array of validated data:
+または、フォームリクエストやバリデータのインスタンスで `safe` メソッドを呼び出すこともできます。このメソッドは、 `Illuminate\Support\ValidatedInput` のインスタンスを返します。このオブジェクトは、バリデーション済みデータのサブセットや配列全体を取得するための `only`、`except`、`all` メソッドを用意しています。
 
     $validated = $request->safe()->only(['name', 'email']);
 
@@ -665,75 +665,75 @@ Alternatively, you may call the `safe` method on a form request or validator ins
 
     $validated = $request->safe()->all();
 
-In addition, the `Illuminate\Support\ValidatedInput` instance may be iterated over and accessed like an array:
+さらに、`Illuminate\Support\ValidatedInput` インスタンスは配列のようにループ処理してアクセスすることも可能です。
 
-    // Validated data may be iterated...
+    // バリデーション済みデータをループ処理
     foreach ($request->safe() as $key => $value) {
         // ...
     }
 
-    // Validated data may be accessed as an array...
+    // バリデーション済みデータを配列としてアクセス
     $validated = $request->safe();
 
     $email = $validated['email'];
 
-If you would like to add additional fields to the validated data, you may call the `merge` method:
+バリデーション済みデータにフィールドを追加したい場合は、`merge` メソッドを呼び出します。
 
     $validated = $request->safe()->merge(['name' => 'Taylor Otwell']);
 
-If you would like to retrieve the validated data as a [collection](/docs/{{version}}/collections) instance, you may call the `collect` method:
+バリデーションされたデータを [コレクション](/docs/{{version}}/collections) インスタンスとして取得したい場合は、`collect` メソッドを呼び出します。
 
     $collection = $request->safe()->collect();
 
 <a name="working-with-error-messages"></a>
-## Working With Error Messages
+## エラーメッセージの取り扱い
 
-After calling the `errors` method on a `Validator` instance, you will receive an `Illuminate\Support\MessageBag` instance, which has a variety of convenient methods for working with error messages. The `$errors` variable that is automatically made available to all views is also an instance of the `MessageBag` class.
+`Validator` インスタンスで `errors` メソッドを呼び出した後、`Illuminate\Support\MessageBag` インスタンスを受け取ります。このインスタンスには、エラーメッセージを処理するためのさまざまな便利なメソッドが含まれています。すべてのビューで自動的に利用可能になる `$errors` 変数も、`MessageBag` クラスのインスタンスです。
 
 <a name="retrieving-the-first-error-message-for-a-field"></a>
-#### Retrieving The First Error Message For A Field
+#### 指定フィールドの最初のエラーメッセージ取得
 
-To retrieve the first error message for a given field, use the `first` method:
+指定したフィールドの最初のエラーメッセージを取得するには、`first` メソッドを使用します。
 
     $errors = $validator->errors();
 
     echo $errors->first('email');
 
 <a name="retrieving-all-error-messages-for-a-field"></a>
-#### Retrieving All Error Messages For A Field
+#### 指定フィールドの全エラーメッセージの取得
 
-If you need to retrieve an array of all the messages for a given field, use the `get` method:
+指定したフィールドのすべてのメッセージの配列を取得する必要がある場合は、`get` メソッドを使用します。
 
     foreach ($errors->get('email') as $message) {
         // ...
     }
 
-If you are validating an array form field, you may retrieve all of the messages for each of the array elements using the `*` character:
+配列形式のフィールドをバリデーションする場合は、`*` 文字を使用して配列要素ごとにすべてのメッセージを取得できます。
 
     foreach ($errors->get('attachments.*') as $message) {
         // ...
     }
 
 <a name="retrieving-all-error-messages-for-all-fields"></a>
-#### Retrieving All Error Messages For All Fields
+#### 全フィールドの全エラーメッセージを取得
 
-To retrieve an array of all messages for all fields, use the `all` method:
+全フィールドの全メッセージの配列を取得するには、`all` メソッドを使用します。
 
     foreach ($errors->all() as $message) {
         // ...
     }
 
 <a name="determining-if-messages-exist-for-a-field"></a>
-#### Determining If Messages Exist For A Field
+#### 指定フィールドのメッセージ存在確認
 
-The `has` method may be used to determine if any error messages exist for a given field:
+`has` メソッドは、指定のフィールドにエラーメッセージが存在するかどうかを判断するために使用します。
 
     if ($errors->has('email')) {
         // ...
     }
 
 <a name="specifying-custom-messages-in-language-files"></a>
-### Specifying Custom Messages In Language Files
+### 言語ファイルでのカスタムメッセージの指定
 
 Laravel's built-in validation rules each have an error message that is located in your application's `lang/en/validation.php` file. Within this file, you will find a translation entry for each validation rule. You are free to change or modify these messages based on the needs of your application.
 
