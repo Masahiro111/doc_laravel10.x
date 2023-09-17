@@ -29,23 +29,21 @@ During local development, you should set the `APP_DEBUG` environment variable to
 <a name="reporting-exceptions"></a>
 ### Reporting Exceptions
 
-All exceptions are handled by the `App\Exceptions\Handler` class. This class contains a `register` method where you may register custom exception reporting and rendering callbacks. We'll examine each of these concepts in detail. Exception reporting is used to log exceptions or send them to an external service like [Flare](https://flareapp.io), [Bugsnag](https://bugsnag.com) or [Sentry](https://github.com/getsentry/sentry-laravel). By default, exceptions will be logged based on your [logging](/docs/{{version}}/logging) configuration. However, you are free to log exceptions however you wish.
+All exceptions are handled by the `App\Exceptions\Handler` class. This class contains a `register` method where you may register custom exception reporting and rendering callbacks. We'll examine each of these concepts in detail. Exception reporting is used to log exceptions or send them to an external service like [Flare](https://flareapp.io), [Bugsnag](https://bugsnag.com), or [Sentry](https://github.com/getsentry/sentry-laravel). By default, exceptions will be logged based on your [logging](/docs/{{version}}/logging) configuration. However, you are free to log exceptions however you wish.
 
-For example, if you need to report different types of exceptions in different ways, you may use the `reportable` method to register a closure that should be executed when an exception of a given type needs to be reported. Laravel will deduce what type of exception the closure reports by examining the type-hint of the closure:
+If you need to report different types of exceptions in different ways, you may use the `reportable` method to register a closure that should be executed when an exception of a given type needs to be reported. Laravel will determine what type of exception the closure reports by examining the type-hint of the closure:
 
-```php
-use App\Exceptions\InvalidOrderException;
+    use App\Exceptions\InvalidOrderException;
 
-/**
-    * Register the exception handling callbacks for the application.
-    */
-public function register(): void
-{
-    $this->reportable(function (InvalidOrderException $e) {
-        // ...
-    });
-}
-```
+    /**
+     * Register the exception handling callbacks for the application.
+     */
+    public function register(): void
+    {
+        $this->reportable(function (InvalidOrderException $e) {
+            // ...
+        });
+    }
 
 When you register a custom exception reporting callback using the `reportable` method, Laravel will still log the exception using the default logging configuration for the application. If you wish to stop the propagation of the exception to the default logging stack, you may use the `stop` method when defining your reporting callback or return `false` from the callback:
 
@@ -63,7 +61,7 @@ When you register a custom exception reporting callback using the `reportable` m
 <a name="global-log-context"></a>
 #### Global Log Context
 
-If available, Laravel automatically adds the current user's ID to every exception's log message as contextual data. You may define your own global contextual data by overriding the `context` method of your application's `App\Exceptions\Handler` class. This information will be included in every exception's log message written by your application:
+If available, Laravel automatically adds the current user's ID to every exception's log message as contextual data. You may define your own global contextual data by defining a `context` method on your application's `App\Exceptions\Handler` class. This information will be included in every exception's log message written by your application:
 
     /**
      * Get the default context variables for logging.
@@ -80,7 +78,7 @@ If available, Laravel automatically adds the current user's ID to every exceptio
 <a name="exception-log-context"></a>
 #### Exception Log Context
 
-While adding context to every log message can be useful, sometimes a particular exception may have unique context that you would like to include in your logs. By defining a `context` method on one of your application's custom exceptions, you may specify any data relevant to that exception that should be added to the exception's log entry:
+While adding context to every log message can be useful, sometimes a particular exception may have unique context that you would like to include in your logs. By defining a `context` method on one of your application's exceptions, you may specify any data relevant to that exception that should be added to the exception's log entry:
 
     <?php
 
@@ -119,6 +117,42 @@ Sometimes you may need to report an exception but continue handling the current 
         }
     }
 
+<a name="deduplicating-reported-exceptions"></a>
+#### Deduplicating Reported Exceptions
+
+If you are using the `report` function throughout your application, you may occasionally report the same exception multiple times, creating duplicate entries in your logs.
+
+If you would like to ensure that a single instance of an exception is only ever reported once, you may call the exception handler's `dontReportDuplicates` method. Typically, this method should be invoked from the `boot` method of your application's `AppServiceProvider`:
+
+```php
+use Illuminate\Contracts\Debug\ExceptionHandler;
+
+/**
+ * Bootstrap any application services.
+ */
+public function boot(ExceptionHandler $exceptionHandler): void
+{
+    $exceptionHandler->dontReportDuplicates();
+}
+```
+
+Now, when the `report` helper is called with the same instance of an exception, only the first call will be reported:
+
+```php
+$original = new RuntimeException('Whoops!');
+
+report($original); // reported
+
+try {
+    throw $original;
+} catch (Throwable $caught) {
+    report($caught); // ignored
+}
+
+report($original); // ignored
+report($caught); // ignored
+```
+
 <a name="exception-log-levels"></a>
 ### Exception Log Levels
 
@@ -126,7 +160,7 @@ When messages are written to your application's [logs](/docs/{{version}}/logging
 
 As noted above, even when you register a custom exception reporting callback using the `reportable` method, Laravel will still log the exception using the default logging configuration for the application; however, since the log level can sometimes influence the channels on which a message is logged, you may wish to configure the log level that certain exceptions are logged at.
 
-To accomplish this, you may define an array of exception types and their associated log levels within the `$levels` property of your application's exception handler:
+To accomplish this, you may define a `$levels` property on your application's exception handler. This property should contain an array of exception types and their associated log levels:
 
     use PDOException;
     use Psr\Log\LogLevel;
@@ -143,7 +177,7 @@ To accomplish this, you may define an array of exception types and their associa
 <a name="ignoring-exceptions-by-type"></a>
 ### Ignoring Exceptions By Type
 
-When building your application, there will be some types of exceptions you simply want to ignore and never report. Your application's exception handler contains a `$dontReport` property which is initialized to an empty array. Any classes that you add to this property will never be reported; however, they may still have custom rendering logic:
+When building your application, there will be some types of exceptions you never want to report. To ignore these exceptions, define a `$dontReport` property on your application's exception handler. Any classes that you add to this property will never be reported; however, they may still have custom rendering logic:
 
     use App\Exceptions\InvalidOrderException;
 
@@ -175,7 +209,7 @@ Internally, Laravel already ignores some types of errors for you, such as except
 
 By default, the Laravel exception handler will convert exceptions into an HTTP response for you. However, you are free to register a custom rendering closure for exceptions of a given type. You may accomplish this by invoking the `renderable` method within your exception handler.
 
-The closure passed to the `renderable` method should return an instance of `Illuminate\Http\Response`, which may be generated via the `response` helper. Laravel will deduce what type of exception the closure renders by examining the type-hint of the closure:
+The closure passed to the `renderable` method should return an instance of `Illuminate\Http\Response`, which may be generated via the `response` helper. Laravel will determine what type of exception the closure renders by examining the type-hint of the closure:
 
     use App\Exceptions\InvalidOrderException;
     use Illuminate\Http\Request;
@@ -212,7 +246,7 @@ You may also use the `renderable` method to override the rendering behavior for 
 <a name="renderable-exceptions"></a>
 ### Reportable & Renderable Exceptions
 
-Instead of defining custom reporting and rendering behavior in your exception handler's `register` method, you may define `report` and `render` methods directly on your custom exceptions. When these methods exist, they will be automatically called by the framework:
+Instead of defining custom reporting and rendering behavior in your exception handler's `register` method, you may define `report` and `render` methods directly on your application's exceptions. When these methods exist, they will automatically be called by the framework:
 
     <?php
 
@@ -279,14 +313,14 @@ If your exception contains custom reporting logic that is only necessary when ce
 <a name="http-exceptions"></a>
 ## HTTP Exceptions
 
-Some exceptions describe HTTP error codes from the server. For example, this may be a "page not found" error (404), an "unauthorized error" (401) or even a developer generated 500 error. In order to generate such a response from anywhere in your application, you may use the `abort` helper:
+Some exceptions describe HTTP error codes from the server. For example, this may be a "page not found" error (404), an "unauthorized error" (401), or even a developer generated 500 error. In order to generate such a response from anywhere in your application, you may use the `abort` helper:
 
     abort(404);
 
 <a name="custom-http-error-pages"></a>
 ### Custom HTTP Error Pages
 
-Laravel makes it easy to display custom error pages for various HTTP status codes. For example, if you wish to customize the error page for 404 HTTP status codes, create a `resources/views/errors/404.blade.php` view template. This view will be rendered on all 404 errors generated by your application. The views within this directory should be named to match the HTTP status code they correspond to. The `Symfony\Component\HttpKernel\Exception\HttpException` instance raised by the `abort` function will be passed to the view as an `$exception` variable:
+Laravel makes it easy to display custom error pages for various HTTP status codes. For example, to customize the error page for 404 HTTP status codes, create a `resources/views/errors/404.blade.php` view template. This view will be rendered for all 404 errors generated by your application. The views within this directory should be named to match the HTTP status code they correspond to. The `Symfony\Component\HttpKernel\Exception\HttpException` instance raised by the `abort` function will be passed to the view as an `$exception` variable:
 
     <h2>{{ $exception->getMessage() }}</h2>
 
