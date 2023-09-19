@@ -781,7 +781,7 @@ Laravel の組み込みバリデーションルールのエラーメッセージ
 The credit card number field is required when payment type is cc.（訳：支払いタイプが cc の場合、クレジットカード番号フィールドは必須となります。）
 ```
 
-Instead of displaying `cc` as the payment type value, you may specify a more user-friendly value representation in your `lang/xx/validation.php` language file by defining a `values` array:
+支払いタイプの値として `cc` を表示する代わりに、`lang/xx/validation.php` 言語ファイル内に `values` 配列を定義することで、よりユーザーフレンドリーな値表現を指定できます。
 
     'values' => [
         'payment_type' => [
@@ -790,18 +790,18 @@ Instead of displaying `cc` as the payment type value, you may specify a more use
     ],
 
 > **Warning**
-> By default, the Laravel application skeleton does not include the `lang` directory. If you would like to customize Laravel's language files, you may publish them via the `lang:publish` Artisan command.
+> デフォルトでは、Laravel アプリケーションのスケルトンには `lang` ディレクトリが含まれません。Laravel の言語ファイルをカスタマイズしたい場合は、`lang:publish` Artisan コマンドを使用して言語ファイルを公開できます。
 
-After defining this value, the validation rule will produce the following error message:
+この値を定義すると、バリデーションルールによって次のエラーメッセージが生成されます。
 
 ```none
-The credit card number field is required when payment type is credit card.
+The credit card number field is required when payment type is credit card.（訳：支払いタイプがクレジットカードの場合、クレジットカード番号フィールドは必須です。）
 ```
 
 <a name="available-validation-rules"></a>
-## Available Validation Rules
+## 利用可能なバリデーションルール
 
-Below is a list of all available validation rules and their function:
+以下は、利用可能なすべてのバリデーションルールとその機能の一覧です。
 
 <style>
     .collection-method-list > p {
