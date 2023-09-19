@@ -735,17 +735,17 @@ You may also attach callbacks to be run after validation is completed. This allo
 <a name="specifying-custom-messages-in-language-files"></a>
 ### 言語ファイルでのカスタムメッセージの指定
 
-Laravel's built-in validation rules each have an error message that is located in your application's `lang/en/validation.php` file. Within this file, you will find a translation entry for each validation rule. You are free to change or modify these messages based on the needs of your application.
+Laravel の組み込みバリデーションルールにはそれぞれエラーメッセージがあり、アプリケーションの `lang/en/validation.php` ファイルにあります。このファイル内に、各バリデーションルールの翻訳エントリがあります。アプリケーションのニーズに基づいて、これらのメッセージを自由に変更または修正できます。
 
-In addition, you may copy this file to another language directory to translate the messages for your application's language. To learn more about Laravel localization, check out the complete [localization documentation](/docs/{{version}}/localization).
+さらに、このファイルを別の言語ディレクトリにコピーして、メッセージをアプリケーションの言語に翻訳することもできます。 Laravel の多言語化の詳細については、完全な [多言語化ドキュメント](/docs/{{version}}/localization) をご覧ください。
 
 > **Warning**
-> By default, the Laravel application skeleton does not include the `lang` directory. If you would like to customize Laravel's language files, you may publish them via the `lang:publish` Artisan command.
+> デフォルトでは、Laravel アプリケーションのスケルトンには `lang` ディレクトリが含まれません。Laravel の言語ファイルをカスタマイズしたい場合は、`lang:publish` Artisan コマンドを使用して言語ファイルを公開できます。
 
 <a name="custom-messages-for-specific-attributes"></a>
-#### Custom Messages For Specific Attributes
+#### 特定の属性のカスタムメッセージ
 
-You may customize the error messages used for specified attribute and rule combinations within your application's validation language files. To do so, add your message customizations to the `custom` array of your application's `lang/xx/validation.php` language file:
+アプリケーションのバリデーション言語ファイルにて、指定した属性とルールの組み合わせに使用されるエラーメッセージをカスタマイズできます。これを行うには、アプリケーションの `lang/xx/validation.php` 言語ファイルの `custom` 配列にカスタマイズしたメッセージを追加します。
 
     'custom' => [
         'email' => [
@@ -755,30 +755,30 @@ You may customize the error messages used for specified attribute and rule combi
     ],
 
 <a name="specifying-attribute-in-language-files"></a>
-### Specifying Attributes In Language Files
+### 言語ファイルでの属性の指定
 
-Many of Laravel's built-in error messages include an `:attribute` placeholder that is replaced with the name of the field or attribute under validation. If you would like the `:attribute` portion of your validation message to be replaced with a custom value, you may specify the custom attribute name in the `attributes` array of your `lang/xx/validation.php` language file:
+Laravel の組み込みエラーメッセージの多くには、バリデーション中のフィールドまたは属性の名前に置き換えられる `:attribute` プレースホルダが含まれています。バリデーションメッセージの `:attribute` 部分をカスタム値に置き換えたい場合は、`lang/xx/validation.php` 言語ファイルの `attributes` 配列でカスタム属性名を指定できます。
 
     'attributes' => [
         'email' => 'email address',
     ],
 
 > **Warning**
-> By default, the Laravel application skeleton does not include the `lang` directory. If you would like to customize Laravel's language files, you may publish them via the `lang:publish` Artisan command.
+> デフォルトでは、Laravel アプリケーションのスケルトンには `lang` ディレクトリが含まれません。 Laravel の言語ファイルをカスタマイズしたい場合は、 `lang:publish` Artisan コマンドを使用して言語ファイルを公開できます。
 
 <a name="specifying-values-in-language-files"></a>
-### Specifying Values In Language Files
+### 言語ファイルでの値の指定
 
-Some of Laravel's built-in validation rule error messages contain a `:value` placeholder that is replaced with the current value of the request attribute. However, you may occasionally need the `:value` portion of your validation message to be replaced with a custom representation of the value. For example, consider the following rule that specifies that a credit card number is required if the `payment_type` has a value of `cc`:
+Laravel の組み込みバリデーションルールのエラーメッセージの一部には、リクエスト属性の現在の値に置き換えられる `:value` プレースホルダが含まれています。ただし、場合によっては、バリデーションメッセージの `:value` 部分を値のカスタム表現に置き換えたい場合があります。たとえば、 `payment_type` の値が `cc` の場合にクレジットカード番号が必要であることを指定する次のルールを考えてみましょう。
 
     Validator::make($request->all(), [
         'credit_card_number' => 'required_if:payment_type,cc'
     ]);
 
-If this validation rule fails, it will produce the following error message:
+このバリデーションルールが失敗すると、次のエラーメッセージが生成されます。
 
 ```none
-The credit card number field is required when payment type is cc.
+The credit card number field is required when payment type is cc.（訳：支払いタイプが cc の場合、クレジットカード番号フィールドは必須となります。）
 ```
 
 Instead of displaying `cc` as the payment type value, you may specify a more user-friendly value representation in your `lang/xx/validation.php` language file by defining a `values` array:
