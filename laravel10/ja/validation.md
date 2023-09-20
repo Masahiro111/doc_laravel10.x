@@ -919,17 +919,17 @@ The credit card number field is required when payment type is credit card.（訳
 <a name="rule-accepted"></a>
 #### accepted
 
-The field under validation must be `"yes"`, `"on"`, `1`, or `true`. This is useful for validating "Terms of Service" acceptance or similar fields.
+バリデーション対象のフィールドは、`"yes"`、`"on"`、`1`、`true` でなければなりません。これは、「利用規約」への同意または同様のフィールドをバリデーションするのに役立ちます。
 
 <a name="rule-accepted-if"></a>
-#### accepted_if:anotherfield,value,...
+#### accepted_if:他のフィールド,値,...
 
-The field under validation must be `"yes"`, `"on"`, `1`, or `true` if another field under validation is equal to a specified value. This is useful for validating "Terms of Service" acceptance or similar fields.
+「他のフィールド」が指定した「値」と等しい場合、このフィールドが `"yes"`、`"on"`、`1`、`true`であることををバリデーションします。これは「利用規約」への同意または同様のフィールドをバリデーションするのに役立ちます。
 
 <a name="rule-active-url"></a>
 #### active_url
 
-The field under validation must have a valid A or AAAA record according to the `dns_get_record` PHP function. The hostname of the provided URL is extracted using the `parse_url` PHP function before being passed to `dns_get_record`.
+バリデーション対象のフィールドには、`dns_get_record` PHP 関数に従って有効な A または AAAA レコードが必要です。指定した URL のホスト名は、`dns_get_record` に渡される前に、`parse_url` PHP 関数を使用して抽出されます。
 
 <a name="rule-after"></a>
 #### after:_date_
