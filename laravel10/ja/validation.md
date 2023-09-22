@@ -932,20 +932,20 @@ The credit card number field is required when payment type is credit card.（訳
 バリデーション対象のフィールドには、`dns_get_record` PHP 関数に従って有効な A または AAAA レコードが必要です。指定した URL のホスト名は、`dns_get_record` に渡される前に、`parse_url` PHP 関数を使用して抽出されます。
 
 <a name="rule-after"></a>
-#### after:_date_
+#### after:_日付_
 
-The field under validation must be a value after a given date. The dates will be passed into the `strtotime` PHP function in order to be converted to a valid `DateTime` instance:
+バリデーション対象のフィールドは、指定された日付以降の値である必要があります。日付は有効な `DateTime` インスタンスに変換するために `strtotime` PHP 関数に渡されます。
 
     'start_date' => 'required|date|after:tomorrow'
 
-Instead of passing a date string to be evaluated by `strtotime`, you may specify another field to compare against the date:
+`strtotime` によって評価される日付文字列を渡す代わりに、日付と比較する他のフィールドを指定できます。
 
     'finish_date' => 'required|date|after:start_date'
 
 <a name="rule-after-or-equal"></a>
 #### after\_or\_equal:_date_
 
-The field under validation must be a value after or equal to the given date. For more information, see the [after](#rule-after) rule.
+バリデーション対象のフィールドは、指定した日付以降の値である必要があります。詳細については、[after](#rule-after) ルールを参照してください。
 
 <a name="rule-alpha"></a>
 #### alpha
