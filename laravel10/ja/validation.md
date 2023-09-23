@@ -943,7 +943,7 @@ The credit card number field is required when payment type is credit card.（訳
     'finish_date' => 'required|date|after:start_date'
 
 <a name="rule-after-or-equal"></a>
-#### after\_or\_equal:_date_
+#### after\_or\_equal:_日付_
 
 バリデーション対象のフィールドは、指定した日付以降の値である必要があります。詳細については、[after](#rule-after) ルールを参照してください。
 
