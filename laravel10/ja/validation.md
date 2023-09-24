@@ -924,7 +924,7 @@ The credit card number field is required when payment type is credit card.（訳
 <a name="rule-accepted-if"></a>
 #### accepted_if:他のフィールド,値,...
 
-「他のフィールド」が指定した「値」と等しい場合、このフィールドが `"yes"`、`"on"`、`1`、`true`であることををバリデーションします。これは「利用規約」への同意または同様のフィールドをバリデーションするのに役立ちます。
+「他のフィールド」が指定した「値」と等しい場合、このフィールドが `"yes"`、`"on"`、`1`、`true`であることをバリデーション処理します。これは「利用規約」への同意または同様のフィールドをバリデーションするのに役立ちます。
 
 <a name="rule-active-url"></a>
 #### active_url
@@ -934,7 +934,7 @@ The credit card number field is required when payment type is credit card.（訳
 <a name="rule-after"></a>
 #### after:_日付_
 
-バリデーション対象のフィールドは、指定された日付以降の値である必要があります。日付は有効な `DateTime` インスタンスに変換するために `strtotime` PHP 関数に渡されます。
+バリデーション対象のフィールドは、指定された日付以降の値であるかをバリデーション処理します。日付は有効な `DateTime` インスタンスに変換するために `strtotime` PHP 関数に渡されます。
 
     'start_date' => 'required|date|after:tomorrow'
 
@@ -945,14 +945,14 @@ The credit card number field is required when payment type is credit card.（訳
 <a name="rule-after-or-equal"></a>
 #### after\_or\_equal:_日付_
 
-バリデーション対象のフィールドは、指定した日付以降の値である必要があります。詳細については、[after](#rule-after) ルールを参照してください。
+バリデーション対象のフィールドは、指定した日付以降の値であるかをバリデーション処理します。詳細については、[after](#rule-after) ルールを参照してください。
 
 <a name="rule-alpha"></a>
 #### alpha
 
-The field under validation must be entirely Unicode alphabetic characters contained in [`\p{L}`](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AL%3A%5D&g=&i=) and [`\p{M}`](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AM%3A%5D&g=&i=).
+バリデーション対象のフィールドは、[`\p{L}`](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AL%3A%5D&g=&i=) と [`\p{M}`](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AM%3A%5D&g=&i=) に含まれる Unicode のアルファベット文字のみであるかをバリデーション処理します。
 
-To restrict this validation rule to characters in the ASCII range (`a-z` and `A-Z`), you may provide the `ascii` option to the validation rule:
+このバリデーションルールを ASCII 範囲 (`a-z` と `A-Z`) の文字に制限するには、バリデーションルールに `ascii` オプションを指定します。
 
 ```php
 'username' => 'alpha:ascii',
@@ -961,9 +961,9 @@ To restrict this validation rule to characters in the ASCII range (`a-z` and `A-
 <a name="rule-alpha-dash"></a>
 #### alpha_dash
 
-The field under validation must be entirely Unicode alpha-numeric characters contained in [`\p{L}`](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AL%3A%5D&g=&i=), [`\p{M}`](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AM%3A%5D&g=&i=), [`\p{N}`](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AN%3A%5D&g=&i=), as well as ASCII dashes (`-`) and ASCII underscores (`_`).
+バリデーション対象のフィールドは、[`\p{L}`](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AL%3A%5D&g=&i=) と [`\p{M}`](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AM%3A%5D&g=&i=) に含まれる Unicode の英数字、ASCII ダッシュ (`-`) および ASCII アンダースコア (`_`) であるかをバリデーション処理します。
 
-To restrict this validation rule to characters in the ASCII range (`a-z` and `A-Z`), you may provide the `ascii` option to the validation rule:
+このバリデーションルールを ASCII 範囲 (`a-z` と `A-Z`) の文字に制限するには、バリデーションルールに `ascii` オプションを指定します。
 
 ```php
 'username' => 'alpha_dash:ascii',
@@ -972,9 +972,9 @@ To restrict this validation rule to characters in the ASCII range (`a-z` and `A-
 <a name="rule-alpha-num"></a>
 #### alpha_num
 
-The field under validation must be entirely Unicode alpha-numeric characters contained in [`\p{L}`](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AL%3A%5D&g=&i=), [`\p{M}`](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AM%3A%5D&g=&i=), and [`\p{N}`](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AN%3A%5D&g=&i=).
+バリデーション対象のフィールドは、[`\p{L}`](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AL%3A%5D&g=&i=) と [`\p{M}`](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AM%3A%5D&g=&i=) に含まれる Unicode の英数字であるかをバリデーション処理します。
 
-To restrict this validation rule to characters in the ASCII range (`a-z` and `A-Z`), you may provide the `ascii` option to the validation rule:
+このバリデーションルールを ASCII 範囲 (`a-z` および `A-Z`) の文字に制限するには、バリデーションルールに `ascii` オプションを指定します。
 
 ```php
 'username' => 'alpha_num:ascii',
@@ -983,9 +983,9 @@ To restrict this validation rule to characters in the ASCII range (`a-z` and `A-
 <a name="rule-array"></a>
 #### array
 
-The field under validation must be a PHP `array`.
+バリデーション対象のフィールドは PHP の `配列` であるかをバリデーション処理します。
 
-When additional values are provided to the `array` rule, each key in the input array must be present within the list of values provided to the rule. In the following example, the `admin` key in the input array is invalid since it is not contained in the list of values provided to the `array` rule:
+追加の値を `array` ルールに指定する場合、入力配列内の各キーがルールに指定される値のリスト内に存在する必要があります。次の例では、入力配列の `admin` キーは、`array` ルールに指定した値のリストに含まれていないため無効となります。
 
     use Illuminate\Support\Facades\Validator;
 
@@ -1001,7 +1001,7 @@ When additional values are provided to the `array` rule, each key in the input a
         'user' => 'array:name,username',
     ]);
 
-In general, you should always specify the array keys that are allowed to be present within your array.
+一般的に、配列内に存在できる配列キーを常に指定する必要があります。
 
 <a name="rule-ascii"></a>
 #### ascii
