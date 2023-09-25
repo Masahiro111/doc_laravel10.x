@@ -1006,63 +1006,63 @@ The credit card number field is required when payment type is credit card.（訳
 <a name="rule-ascii"></a>
 #### ascii
 
-The field under validation must be entirely 7-bit ASCII characters.
+バリデーション対象のフィールドが全て 7 ビット ASCII 文字であるかをバリデーション処理します。
 
 <a name="rule-bail"></a>
 #### bail
 
-Stop running validation rules for the field after the first validation failure.
+バリデーションが最初に失敗した時点で、残りのバリデーションルールの実行を停止します。
 
-While the `bail` rule will only stop validating a specific field when it encounters a validation failure, the `stopOnFirstFailure` method will inform the validator that it should stop validating all attributes once a single validation failure has occurred:
+ `bail` ルールは、バリデーションが失敗が発生した場合にのみ特定フィールドのバリデーションのみを停止しますが、`stopOnFirstFailure` メソッドは、ひとつのバリデーションの失敗が発生するとすべての属性のバリデーションを停止する必要があることをバリデータに通知します。
 
     if ($validator->stopOnFirstFailure()->fails()) {
         // ...
     }
 
 <a name="rule-before"></a>
-#### before:_date_
+#### before:_日付_
 
-The field under validation must be a value preceding the given date. The dates will be passed into the PHP `strtotime` function in order to be converted into a valid `DateTime` instance. In addition, like the [`after`](#rule-after) rule, the name of another field under validation may be supplied as the value of `date`.
+バリデーション対象のフィールドは、指定された日付より前の値である必要があります。日付は有効な `DateTime` インスタンスに変換するために PHP の `strtotime` 関数に渡されます。さらに、[`after`](#rule-after) ルールと同様に、バリデーション中の別のフィールドの名前を `date` の値として指定することもできます。
 
 <a name="rule-before-or-equal"></a>
-#### before\_or\_equal:_date_
+#### before\_or\_equal:_日付_
 
-The field under validation must be a value preceding or equal to the given date. The dates will be passed into the PHP `strtotime` function in order to be converted into a valid `DateTime` instance. In addition, like the [`after`](#rule-after) rule, the name of another field under validation may be supplied as the value of `date`.
+バリデーション対象のフィールドは、指定された日付以前の値である必要があります。日付は有効な `DateTime` インスタンスに変換するために PHP の `strtotime` 関数に渡されます。さらに、[`after`](#rule-after) ルールと同様に、バリデーション中の別のフィールドの名前を `date` の値として指定することもできます。
 
 <a name="rule-between"></a>
-#### between:_min_,_max_
+#### between:_最大値_,_最小値_
 
-The field under validation must have a size between the given _min_ and _max_ (inclusive). Strings, numerics, arrays, and files are evaluated in the same fashion as the [`size`](#rule-size) rule.
+バリデーション中のフィールドのサイズは、指定された _最小値_ と _最大値_ (両端を含む) の間である必要があります。文字列、数値、配列、ファイルは、[`size`](#rule-size) ルールと同じ方法で評価されます。
 
 <a name="rule-boolean"></a>
 #### boolean
 
-The field under validation must be able to be cast as a boolean. Accepted input are `true`, `false`, `1`, `0`, `"1"`, and `"0"`.
+バリデーション中のフィールドは、論理値として有効である必要があります。受け入れられる入力は、`true`、`false`、`1`、`0`、`"1"`、`"0"` です。
 
 <a name="rule-confirmed"></a>
 #### confirmed
 
-The field under validation must have a matching field of `{field}_confirmation`. For example, if the field under validation is `password`, a matching `password_confirmation` field must be present in the input.
+バリデーション中のフィールドは、`{field}_confirmation` フィールドと一致する必要があります。たとえば、バリデーション対象のフィールドが `password` の場合、 `password_confirmation` フィールドが入力に存在し、値も一致している必要があります。
 
 <a name="rule-current-password"></a>
 #### current_password
 
-The field under validation must match the authenticated user's password. You may specify an [authentication guard](/docs/{{version}}/authentication) using the rule's first parameter:
+バリデーション中のフィールドは、認証されたユーザーのパスワードと一致する必要があります。ルールの最初のパラメータで、[認証ガード](/docs/{{version}}/authentication) を指定できます。
 
     'password' => 'current_password:api'
 
 <a name="rule-date"></a>
 #### date
 
-The field under validation must be a valid, non-relative date according to the `strtotime` PHP function.
+バリデーション対象のフィールドは、PHP 関数の `strtotime` に従った有効な非相対日付である必要があります。
 
 <a name="rule-date-equals"></a>
-#### date_equals:_date_
+#### date_equals:_日付_
 
-The field under validation must be equal to the given date. The dates will be passed into the PHP `strtotime` function in order to be converted into a valid `DateTime` instance.
+バリデーション対象のフィールドは、指定した日付と一致する必要があります。日付は、有効な `DateTime` インスタンスに変換するため、PHP の `strtotime` 関数に渡されます。
 
 <a name="rule-date-format"></a>
-#### date_format:_format_,...
+#### date_format:_フォーマット_,...
 
 The field under validation must match one of the given _formats_. You should use **either** `date` or `date_format` when validating a field, not both. This validation rule supports all formats supported by PHP's [DateTime](https://www.php.net/manual/en/class.datetime.php) class.
 
