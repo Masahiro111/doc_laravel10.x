@@ -1088,28 +1088,28 @@ The credit card number field is required when payment type is credit card.（訳
 バリデーション中の別のフィールドが指定された値と等しい場合、バリデーション中のフィールドは `"no"`、`"off"`、`0`、`false` である必要があります。
 
 <a name="rule-different"></a>
-#### different:_field_
+#### different:_フィールド_
 
-The field under validation must have a different value than _field_.
+バリデーション中のフィールドは、`different` で指定したフィールドとは異なる値を持つ必要があります。
 
 <a name="rule-digits"></a>
-#### digits:_value_
+#### digits:_値_
 
-The integer under validation must have an exact length of _value_.
+バリデーション中のフィールドは、整数であり `digits` で指定した値の桁数である必要があります。
 
 <a name="rule-digits-between"></a>
 #### digits_between:_min_,_max_
 
-The integer validation must have a length between the given _min_ and _max_.
+バリデーション中のフィールドは、整数かつ指定した最小値と最大値の桁数の間である必要があります。
 
 <a name="rule-dimensions"></a>
 #### dimensions
 
-The file under validation must be an image meeting the dimension constraints as specified by the rule's parameters:
+バリデーション中のファイルは、ルールのパラメータで指定されたサイズの制約を満たす画像である必要があります。
 
     'avatar' => 'dimensions:min_width=100,min_height=200'
 
-Available constraints are: _min\_width_, _max\_width_, _min\_height_, _max\_height_, _width_, _height_, _ratio_.
+使用可能な制約パラメータは、_min\_width_、_max\_width_、_min\_height_、_max\_height_、_width_、_height_、_ratio_ です。
 
 A _ratio_ constraint should be represented as width divided by height. This can be specified either by a fraction like `3/2` or a float like `1.5`:
 
