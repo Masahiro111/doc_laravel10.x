@@ -1064,12 +1064,12 @@ The credit card number field is required when payment type is credit card.（訳
 <a name="rule-date-format"></a>
 #### date_format:_フォーマット_,...
 
-The field under validation must match one of the given _formats_. You should use **either** `date` or `date_format` when validating a field, not both. This validation rule supports all formats supported by PHP's [DateTime](https://www.php.net/manual/en/class.datetime.php) class.
+バリデーション中のフィールドは、指定した_フォーマット_のいずれかに一致する必要があります。フィールドをバリデーションするときは、両方ではなく、`date` または `date_format` の **どちらか** を使用する必要があります。このバリデーションルールは、PHP の [DateTime](https://www.php.net/manual/en/class.datetime.php) クラスでサポートされるすべての形式をサポートします。
 
 <a name="rule-decimal"></a>
-#### decimal:_min_,_max_
+#### decimal:_最小値_,_最大値_
 
-The field under validation must be numeric and must contain the specified number of decimal places:
+バリデーション対象のフィールドは、指定された小数点以下の桁数を含む必要があります。
 
     // Must have exactly two decimal places (9.99)...
     'price' => 'decimal:2'
@@ -1080,12 +1080,12 @@ The field under validation must be numeric and must contain the specified number
 <a name="rule-declined"></a>
 #### declined
 
-The field under validation must be `"no"`, `"off"`, `0`, or `false`.
+バリデーションされるフィールドは、`"no"`、`"off"`、`0`、`false` である必要があります。
 
 <a name="rule-declined-if"></a>
-#### declined_if:anotherfield,value,...
+#### declined_if:他のフィールド,値,...
 
-The field under validation must be `"no"`, `"off"`, `0`, or `false` if another field under validation is equal to a specified value.
+バリデーション中の別のフィールドが指定された値と等しい場合、バリデーション中のフィールドは `"no"`、`"off"`、`0`、`false` である必要があります。
 
 <a name="rule-different"></a>
 #### different:_field_
