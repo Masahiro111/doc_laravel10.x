@@ -1111,11 +1111,11 @@ The credit card number field is required when payment type is credit card.（訳
 
 使用可能な制約パラメータは、_min\_width_、_max\_width_、_min\_height_、_max\_height_、_width_、_height_、_ratio_ です。
 
-A _ratio_ constraint should be represented as width divided by height. This can be specified either by a fraction like `3/2` or a float like `1.5`:
+_ratio_ 制約は、幅を高さで割ったものとして表す必要があります。これは、`3/2` のような分数または `1.5` のような浮動小数点数で指定できます。
 
     'avatar' => 'dimensions:ratio=3/2'
 
-Since this rule requires several arguments, you may use the `Rule::dimensions` method to fluently construct the rule:
+このルールには複数の引数が必要なため、 `Rule::dimensions` メソッドを使用してルールをスムーズに構築してください。
 
     use Illuminate\Support\Facades\Validator;
     use Illuminate\Validation\Rule;
@@ -1130,36 +1130,36 @@ Since this rule requires several arguments, you may use the `Rule::dimensions` m
 <a name="rule-distinct"></a>
 #### distinct
 
-When validating arrays, the field under validation must not have any duplicate values:
+配列をバリデーションする場合、バリデーション対象のフィールドに重複する値があってはなりません。
 
     'foo.*.id' => 'distinct'
 
-Distinct uses loose variable comparisons by default. To use strict comparisons, you may add the `strict` parameter to your validation rule definition:
+distinct は、デフォルトで緩い変数比較を使用します。厳密な比較を使用するには、バリデーションルール定義に `strict` パラメータを追加します。
 
     'foo.*.id' => 'distinct:strict'
 
-You may add `ignore_case` to the validation rule's arguments to make the rule ignore capitalization differences:
+バリデーションルールの引数に `ignore_case` を追加して、大文字と小文字の違いを無視するルールを加えられます。
 
     'foo.*.id' => 'distinct:ignore_case'
 
 <a name="rule-doesnt-start-with"></a>
 #### doesnt_start_with:_foo_,_bar_,...
 
-The field under validation must not start with one of the given values.
+バリデーション中のフィールドは、指定された値のいずれかで始まってはなりません。
 
 <a name="rule-doesnt-end-with"></a>
 #### doesnt_end_with:_foo_,_bar_,...
 
-The field under validation must not end with one of the given values.
+バリデーション中のフィールドは、指定された値のいずれかで終わってはいけません。
 
 <a name="rule-email"></a>
 #### email
 
-The field under validation must be formatted as an email address. This validation rule utilizes the [`egulias/email-validator`](https://github.com/egulias/EmailValidator) package for validating the email address. By default, the `RFCValidation` validator is applied, but you can apply other validation styles as well:
+バリデーション中のフィールドは、電子メールアドレスのフォーマットである必要があります。このバリデーションルールは、電子メールアドレスをバリデーションするために [`egulias/email-validator`](https://github.com/egulias/EmailValidator) パッケージを利用します。デフォルトでは、 `RFCValidation` バリデータが適用されますが、他のバリデーションスタイルも適用できます。
 
     'email' => 'email:rfc,dns'
 
-The example above will apply the `RFCValidation` and `DNSCheckValidation` validations. Here's a full list of validation styles you can apply:
+上記の例では、`RFCValidation` と `DNSCheckValidation` バリデーションを適用します。適用できるバリデーションスタイルの完全なリストは次のとおりです。
 
 <div class="content-list" markdown="1">
 
@@ -1172,7 +1172,7 @@ The example above will apply the `RFCValidation` and `DNSCheckValidation` valida
 
 </div>
 
-The `filter` validator, which uses PHP's `filter_var` function, ships with Laravel and was Laravel's default email validation behavior prior to Laravel version 5.8.
+PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel に同梱されており、Laravel バージョン 5.8 より前の Laravel のデフォルトの電子メールバリデーション動作でした。
 
 > **Warning**  
 > The `dns` and `spoof` validators require the PHP `intl` extension.
