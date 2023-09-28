@@ -1174,18 +1174,18 @@ distinct は、デフォルトで緩い変数比較を使用します。厳密�
 
 PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel に同梱されており、Laravel バージョン 5.8 より前の Laravel のデフォルトの電子メールバリデーション動作でした。
 
-> **Warning**  
-> The `dns` and `spoof` validators require the PHP `intl` extension.
+> **Warning**
+> `dns` と `spoof` バリデータには、PHP の `intl` 拡張が必要です。
 
 <a name="rule-ends-with"></a>
 #### ends_with:_foo_,_bar_,...
 
-The field under validation must end with one of the given values.
+バリデーション中のフィールドは、指定された値のいずれかで終わる必要があります。
 
 <a name="rule-enum"></a>
 #### enum
 
-The `Enum` rule is a class based rule that validates whether the field under validation contains a valid enum value. The `Enum` rule accepts the name of the enum as its only constructor argument:
+ `Enum` ルールは、バリデーション対象のフィールドに有効な列挙値が含まれているかどうかをバリデーションするクラスベースのルールです。`Enum` ルールは、コンストラクタ引数として列挙型の名前を受け取ります。
 
     use App\Enums\ServerStatus;
     use Illuminate\Validation\Rules\Enum;
@@ -1197,14 +1197,14 @@ The `Enum` rule is a class based rule that validates whether the field under val
 <a name="rule-exclude"></a>
 #### exclude
 
-The field under validation will be excluded from the request data returned by the `validate` and `validated` methods.
+バリデーション中のフィールドは、`validate` と `validated` メソッドによって返されるリクエストデータから除外されます。
 
 <a name="rule-exclude-if"></a>
 #### exclude_if:_anotherfield_,_value_
 
-The field under validation will be excluded from the request data returned by the `validate` and `validated` methods if the _anotherfield_ field is equal to _value_.
+「_anotherfield_」が「_value_」と等しい場合、バリデーション中のフィールドは `validate` と `validated` メソッドによって返されるリクエストデータから除外されます。
 
-If complex conditional exclusion logic is required, you may utilize the `Rule::excludeIf` method. This method accepts a boolean or a closure. When given a closure, the closure should return `true` or `false` to indicate if the field under validation should be excluded:
+複雑な条件付き除外ロジックが必要な場合は、`Rule::excludeIf` メソッドを利用できます。このメソッドは論理値またはクロージャを引数に受け取ります。クロージャが指定された場合、クロージャはバリデーション中のフィールドを除外する必要があるかどうかを示すために `true` または `false` を返す必要があります。
 
     use Illuminate\Support\Facades\Validator;
     use Illuminate\Validation\Rule;
