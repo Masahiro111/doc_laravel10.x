@@ -1200,9 +1200,9 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 バリデーション中のフィールドは、`validate` と `validated` メソッドによって返されるリクエストデータから除外されます。
 
 <a name="rule-exclude-if"></a>
-#### exclude_if:_anotherfield_,_value_
+#### exclude_if:_他のフィールド_,_値_
 
-「_anotherfield_」が「_value_」と等しい場合、バリデーション中のフィールドは `validate` と `validated` メソッドによって返されるリクエストデータから除外されます。
+「_他のフィールド_」が「_値_」と等しい場合、バリデーション中のフィールドは `validate` と `validated` メソッドによって返されるリクエストデータから除外されます。
 
 複雑な条件付き除外ロジックが必要な場合は、`Rule::excludeIf` メソッドを利用できます。このメソッドは論理値またはクロージャを引数に受け取ります。クロージャが指定された場合、クロージャはバリデーション中のフィールドを除外する必要があるかどうかを示すために `true` または `false` を返す必要があります。
 
@@ -1218,14 +1218,14 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
     ]);
 
 <a name="rule-exclude-unless"></a>
-#### exclude_unless:_anotherfield_,_value_
+#### exclude_unless:_他のフィールド_,_値_
 
-The field under validation will be excluded from the request data returned by the `validate` and `validated` methods unless _anotherfield_'s field is equal to _value_. If _value_ is `null` (`exclude_unless:name,null`), the field under validation will be excluded unless the comparison field is `null` or the comparison field is missing from the request data.
+「_他のフィールド_ 」が「_値_」と等しくない場合、バリデーション中のフィールドは `validate` および `validated` メソッドによって返されるリクエストデータから除外されます。「_値_」が `null` (`exclude_unless:name,null`) の場合、比較フィールドが `null` であるか、比較フィールドがリクエストデータに含まれていない場合を除き、バリデーション対象のフィールドは除外されます。
 
 <a name="rule-exclude-with"></a>
-#### exclude_with:_anotherfield_
+#### exclude_with:_他のフィールド_
 
-The field under validation will be excluded from the request data returned by the `validate` and `validated` methods if the _anotherfield_ field is present.
+「_他のフィールド_」が存在する場合、バリデーション中のフィールドは、`validate` および `validated` メソッドによって返されるリクエストデータから除外されます。
 
 <a name="rule-exclude-without"></a>
 #### exclude_without:_anotherfield_
