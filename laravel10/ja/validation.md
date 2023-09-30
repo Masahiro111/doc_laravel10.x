@@ -1228,17 +1228,17 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 「_他のフィールド_」が存在する場合、バリデーション中のフィールドは、`validate` および `validated` メソッドによって返されるリクエストデータから除外されます。
 
 <a name="rule-exclude-without"></a>
-#### exclude_without:_anotherfield_
+#### exclude_without:_他のフィールド_
 
-The field under validation will be excluded from the request data returned by the `validate` and `validated` methods if the _anotherfield_ field is not present.
+「他のフィールド」が存在しない場合、バリデーション中のフィールドは、`validate` と `validated` メソッドによって返されるリクエストデータから除外されます。
 
 <a name="rule-exists"></a>
-#### exists:_table_,_column_
+#### exists:_テーブル_,_カラム_
 
-The field under validation must exist in a given database table.
+バリデーション中のフィールドは、指定したデータベーステーブルに存在する必要があります。
 
 <a name="basic-usage-of-exists-rule"></a>
-#### Basic Usage Of Exists Rule
+#### Exists ルールの基本的な使用法
 
     'state' => 'exists:states'
 
