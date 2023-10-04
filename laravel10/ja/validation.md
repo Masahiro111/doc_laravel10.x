@@ -1238,20 +1238,20 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 バリデーション中のフィールドは、指定したデータベーステーブルに存在する必要があります。
 
 <a name="basic-usage-of-exists-rule"></a>
-#### Exists ルールの基本的な使用法
+#### exists ルールの基本的な使用法
 
     'state' => 'exists:states'
 
-If the `column` option is not specified, the field name will be used. So, in this case, the rule will validate that the `states` database table contains a record with a `state` column value matching the request's `state` attribute value.
+`column` オプションが指定されていない場合は、フィールド名が使用されます。上記の場合、`states` データベーステーブルに、リクエストの `state` 属性値と一致する `state` カラム値を持つレコードが含まれていることをバリデーションします。
 
 <a name="specifying-a-custom-column-name"></a>
-#### Specifying A Custom Column Name
+#### カスタムカラム名の指定
 
-You may explicitly specify the database column name that should be used by the validation rule by placing it after the database table name:
+データベーステーブル名の後に配置することで、バリデーションルールで使用するデータベースのカラム名を明示的に指定できます。
 
     'state' => 'exists:states,abbreviation'
 
-Occasionally, you may need to specify a specific database connection to be used for the `exists` query. You can accomplish this by prepending the connection name to the table name:
+場合によっては、 `exists` クエリに使用する特定のデータベース接続を指定する必要がある場合があります。これを行うには、テーブル名の前に接続名を追加します。
 
     'email' => 'exists:connection.staff,email'
 
