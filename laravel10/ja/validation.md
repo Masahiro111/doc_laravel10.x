@@ -1291,7 +1291,7 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 <a name="rule-gt"></a>
 #### gt:_フィールド_
 
-バリデーション対象のフィールドは、指定した「フィールド」より大きい値である必要があります。２つのフィールドは同じタイプである必要があります。文字列、数値、配列、ファイルは、[`size`](#rule-size) ルールと同じ規則を使用して評価されます。
+バリデーション対象のフィールドは、指定した「フィールド」の値より大きい値である必要があります。２つのフィールドは同じタイプである必要があります。文字列、数値、配列、ファイルは、[`size`](#rule-size) ルールと同じ規則を使用して評価されます。
 
 <a name="rule-gte"></a>
 #### gte:_フィールド_
@@ -1343,60 +1343,60 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 <a name="rule-integer"></a>
 #### integer
 
-The field under validation must be an integer.
+バリデーション中のフィールドは整数である必要があります。
 
 > **Warning**  
-> This validation rule does not verify that the input is of the "integer" variable type, only that the input is of a type accepted by PHP's `FILTER_VALIDATE_INT` rule. If you need to validate the input as being a number please use this rule in combination with [the `numeric` validation rule](#rule-numeric).
+> このバリデーションルールは、入力が「整数」変数タイプであることをバリデーションするのではなく、入力が PHP の `FILTER_VALIDATE_INT` ルールで受け入れられるタイプであることのみをバリデーションします。入力が数値であることをバリデーションする必要がある場合は、このルールを [`numeric` バリデーションルール](#rule-numeric) と組み合わせて使用してください。
 
 <a name="rule-ip"></a>
 #### ip
 
-The field under validation must be an IP address.
+バリデーション対象のフィールドは IP アドレスの形式である必要があります。
 
 <a name="ipv4"></a>
 #### ipv4
 
-The field under validation must be an IPv4 address.
+バリデーション対象のフィールドは IPv4 アドレスの形式である必要があります。
 
 <a name="ipv6"></a>
 #### ipv6
 
-The field under validation must be an IPv6 address.
+バリデーション対象のフィールドは IPv6 アドレスの形式である必要があります。
 
 <a name="rule-json"></a>
 #### json
 
-The field under validation must be a valid JSON string.
+バリデーション対象のフィールドは有効な JSON 文字列である必要があります。
 
 <a name="rule-lt"></a>
-#### lt:_field_
+#### lt:_フィールド_
 
-The field under validation must be less than the given _field_. The two fields must be of the same type. Strings, numerics, arrays, and files are evaluated using the same conventions as the [`size`](#rule-size) rule.
+バリデーション対象のフィールドは、指定した「フィールド」の値より小さくなければなりません。２つのフィールドは同じタイプである必要があります。文字列、数値、配列、ファイルは、[`size`](#rule-size) ルールと同じ規則を使用して評価されます。
 
 <a name="rule-lte"></a>
-#### lte:_field_
+#### lte:_フィールド_
 
-The field under validation must be less than or equal to the given _field_. The two fields must be of the same type. Strings, numerics, arrays, and files are evaluated using the same conventions as the [`size`](#rule-size) rule.
+バリデーション対象のフィールドは、指定した「 _フィールド_ 」の値以下である必要があります。２つのフィールドは同じタイプである必要があります。文字列、数値、配列、ファイルは、[`size`](#rule-size) ルールと同じ規則を使用して評価されます。
 
 <a name="rule-lowercase"></a>
 #### lowercase
 
-The field under validation must be lowercase.
+バリデーション中のフィールドは小文字である必要があります。
 
 <a name="rule-mac"></a>
 #### mac_address
 
-The field under validation must be a MAC address.
+バリデーション対象のフィールドは MAC アドレスである必要があります。
 
 <a name="rule-max"></a>
-#### max:_value_
+#### max:_値_
 
-The field under validation must be less than or equal to a maximum _value_. Strings, numerics, arrays, and files are evaluated in the same fashion as the [`size`](#rule-size) rule.
+バリデーション対象のフィールドは、最大値として指定した「 _値_ 」以下である必要があります。文字列、数値、配列、ファイルは、[`size`](#rule-size) ルールと同じ方法で評価されます。
 
 <a name="rule-max-digits"></a>
-#### max_digits:_value_
+#### max_digits:_値_
 
-The integer under validation must have a maximum length of _value_.
+バリデーションされる整数の桁数は、最大値として指定した「 _値_ 」以下の桁数である必要があります。
 
 <a name="rule-mimetypes"></a>
 #### mimetypes:_text/plain_,...
