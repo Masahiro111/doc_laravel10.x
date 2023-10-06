@@ -1401,23 +1401,23 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 <a name="rule-mimetypes"></a>
 #### mimetypes:_text/plain_,...
 
-The file under validation must match one of the given MIME types:
+バリデーション中のファイルは、指定された MIME タイプのいずれかに一致する必要があります。
 
     'video' => 'mimetypes:video/avi,video/mpeg,video/quicktime'
 
-To determine the MIME type of the uploaded file, the file's contents will be read and the framework will attempt to guess the MIME type, which may be different from the client's provided MIME type.
+アップロードされたファイルの MIME タイプを判別するために、ファイルの内容が読み取られ、フレームワークは MIME タイプを推測しようとしますが、これはクライアントが提供した MIME タイプとは異なる場合があります。
 
 <a name="rule-mimes"></a>
 #### mimes:_foo_,_bar_,...
 
-The file under validation must have a MIME type corresponding to one of the listed extensions.
+バリデーション中のファイルは、指定した拡張子のいずれかに対応する MIME タイプを持っている必要があります。
 
 <a name="basic-usage-of-mime-rule"></a>
-#### Basic Usage Of MIME Rule
+#### MIME ルールの基本的な使用法
 
     'photo' => 'mimes:jpg,bmp,png'
 
-Even though you only need to specify the extensions, this rule actually validates the MIME type of the file by reading the file's contents and guessing its MIME type. A full listing of MIME types and their corresponding extensions may be found at the following location:
+拡張子の指定のみでも良いですが、このルールは、実際にファイルの内容を読み取り、その MIME タイプを推測することによってファイルの MIME タイプをバリデーションします。 MIME タイプとそれに対応する拡張子の完全なリストは、次の場所にあります。
 
 [https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types](https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types)
 
