@@ -1422,24 +1422,24 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 [https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types](https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types)
 
 <a name="rule-min"></a>
-#### min:_value_
+#### min:_値_
 
-The field under validation must have a minimum _value_. Strings, numerics, arrays, and files are evaluated in the same fashion as the [`size`](#rule-size) rule.
+バリデーション中のフィールドには、最小値として指定した「値」以上である必要があります。文字列、数値、配列、ファイルは、[`size`](#rule-size) ルールと同じ方法で評価されます。
 
 <a name="rule-min-digits"></a>
-#### min_digits:_value_
+#### min_digits:_値_
 
-The integer under validation must have a minimum length of _value_.
+バリデーション中のフィールドの整数は、最小値として指定した「値」以上の桁数を持つ必要があります。
 
 <a name="rule-multiple-of"></a>
 #### multiple_of:_value_
 
-The field under validation must be a multiple of _value_.
+バリデーション中のフィールドは、指定した「値」の倍数である必要があります。
 
 <a name="rule-missing"></a>
 #### missing
 
-The field under validation must not be present in the input data.
+バリデーション中のフィールドは入力データに存在してはなりません。
 
  <a name="rule-missing-if"></a>
  #### missing_if:_anotherfield_,_value_,...
