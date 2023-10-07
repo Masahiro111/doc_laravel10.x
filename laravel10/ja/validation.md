@@ -1439,32 +1439,32 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 <a name="rule-missing"></a>
 #### missing
 
-バリデーション中のフィールドは入力データに存在してはなりません。
+バリデーション中のフィールドは、入力データに存在してはなりません。
 
  <a name="rule-missing-if"></a>
- #### missing_if:_anotherfield_,_value_,...
+ #### missing_if:_他のフィールド_,_値_,...
 
- The field under validation must not be present if the _anotherfield_ field is equal to any _value_.
+指定した「他のフィールド」が、指定した「値」のいずれかと等しい場合、バリデーション中のフィールドは存在してはなりません。
 
  <a name="rule-missing-unless"></a>
- #### missing_unless:_anotherfield_,_value_
+ #### missing_unless:_他のフィールド_,_値_
 
-The field under validation must not be present unless the _anotherfield_ field is equal to any _value_.
+指定した「他のフィールド」が、指定した「値」と等しくない場合、バリデーション中のフィールドは存在してはなりません。
 
  <a name="rule-missing-with"></a>
  #### missing_with:_foo_,_bar_,...
 
- The field under validation must not be present _only if_ any of the other specified fields are present.
+指定したフィールドのいずれか１つでも存在する場合、バリデーション中のフィールドは存在してはなりません。
 
  <a name="rule-missing-with-all"></a>
  #### missing_with_all:_foo_,_bar_,...
 
- The field under validation must not be present _only if_ all of the other specified fields are present.
+指定したフィールドがすべて存在する場合にのみ、バリデーション中のフィールドは存在してはなりません。
 
 <a name="rule-not-in"></a>
 #### not_in:_foo_,_bar_,...
 
-The field under validation must not be included in the given list of values. The `Rule::notIn` method may be used to fluently construct the rule:
+バリデーション中のフィールドは、指定した値のリストに含めてはなりません。`Rule::notIn` メソッドを使用すると、ルールをスムーズに構築できます。
 
     use Illuminate\Validation\Rule;
 
