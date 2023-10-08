@@ -1476,32 +1476,32 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
     ]);
 
 <a name="rule-not-regex"></a>
-#### not_regex:_pattern_
+#### not_regex:_正規表現_
 
-The field under validation must not match the given regular expression.
+バリデーション中のフィールドは、指定した正規表現と一致しては **なりません**。
 
-Internally, this rule uses the PHP `preg_match` function. The pattern specified should obey the same formatting required by `preg_match` and thus also include valid delimiters. For example: `'email' => 'not_regex:/^.+$/i'`.
+内部的に、このルールは PHP の `preg_match` 関数を使用しています。指定したパターンは、有効な区切り文字も含め `preg_match` で必要とされるフォーマットと同じように従う必要があります。たとえば、`'email' => 'not_regex:/^.+$/i'` のように記述します。
 
-> **Warning**  
-> When using the `regex` / `not_regex` patterns, it may be necessary to specify your validation rules using an array instead of using `|` delimiters, especially if the regular expression contains a `|` character.
+> **Warning**
+> `regex` / `not_regex` パターンを使用する場合、特に正規表現に `|` 文字が含まれている場合は、`|` 区切り文字を使用する代わりに配列を使用してバリデーションルールを指定する必要がある場合があります。
 
 <a name="rule-nullable"></a>
 #### nullable
 
-The field under validation may be `null`.
+バリデーション中のフィールドは `null` である可能性を許容します。
 
 <a name="rule-numeric"></a>
 #### numeric
 
-The field under validation must be [numeric](https://www.php.net/manual/en/function.is-numeric.php).
+バリデーション中のフィールドは [数値](https://www.php.net/manual/en/function.is-numeric.php) である必要があります。
 
 <a name="rule-password"></a>
 #### password
 
-The field under validation must match the authenticated user's password.
+バリデーション中のフィールドは、認証済みユーザーのパスワードと一致する必要があります。
 
-> **Warning**  
-> This rule was renamed to `current_password` with the intention of removing it in Laravel 9. Please use the [Current Password](#rule-current-password) rule instead.
+> **Warning**
+> このルールは、Laravel 9 で削除する目的で `current_password` に名前変更されました。代わりに [current_password](#rule-current-password) ルールを使用してください。
 
 <a name="rule-present"></a>
 #### present
