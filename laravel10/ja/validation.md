@@ -1506,33 +1506,33 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 <a name="rule-present"></a>
 #### present
 
-The field under validation must exist in the input data.
+バリデーション中のフィールドは、入力データに存在する必要があります。
 
 <a name="rule-prohibited"></a>
 #### prohibited
 
-The field under validation must be missing or empty. A field is "empty" if it meets one of the following criteria:
+バリデーション中のフィールドは、存在しないか、または空である必要があります。以下の基準のいずれかを満たしている場合、フィールドは `空` です。
 
 <div class="content-list" markdown="1">
 
-- The value is `null`.
-- The value is an empty string.
-- The value is an empty array or empty `Countable` object.
-- The value is an uploaded file with an empty path.
+- 値が `null` である
+- 値が空の文字列である
+- 値が空の配列、または空の `Countable` オブジェクトである
+- 値がパスのないアップロード済みファイルである
 
 </div>
 
 <a name="rule-prohibited-if"></a>
-#### prohibited_if:_anotherfield_,_value_,...
+#### prohibited_if:_他のフィールド_,_値_,...
 
-The field under validation must be missing or empty if the _anotherfield_ field is equal to any _value_. A field is "empty" if it meets one of the following criteria:
+指定した「他のフィールド」が指定した「値」のいずれかと等しい場合、バリデーション中のフィールドは存在していないか、空である必要があります。以下の基準のいずれかを満たしている場合、フィールドは `空` です。
 
 <div class="content-list" markdown="1">
 
-- The value is `null`.
-- The value is an empty string.
-- The value is an empty array or empty `Countable` object.
-- The value is an uploaded file with an empty path.
+- 値が `null` である
+- 値が空の文字列である
+- 値が空の配列、または空の `Countable` オブジェクトである
+- 値がパスのないアップロード済みファイルである
 
 </div>
 
@@ -1550,7 +1550,7 @@ If complex conditional prohibition logic is required, you may utilize the `Rule:
     ]);
 
 <a name="rule-prohibited-unless"></a>
-#### prohibited_unless:_anotherfield_,_value_,...
+#### prohibited_unless:_他のフィールド_,_値_,...
 
 The field under validation must be missing or empty unless the _anotherfield_ field is equal to any _value_. A field is "empty" if it meets one of the following criteria:
 
