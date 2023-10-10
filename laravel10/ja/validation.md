@@ -1525,7 +1525,7 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 <a name="rule-prohibited-if"></a>
 #### prohibited_if:_他のフィールド_,_値_,...
 
-指定した「他のフィールド」が指定した「値」のいずれかと等しい場合、バリデーション中のフィールドは存在していないか、空である必要があります。以下の基準のいずれかを満たしている場合、フィールドは `空` です。
+指定した「他のフィールド」が指定した「値」のいずれかと等しい場合、バリデーション中のフィールドは存在しないか、空である必要があります。以下の基準のいずれかを満たしている場合、そのフィールドは `空` と判定されます。
 
 <div class="content-list" markdown="1">
 
@@ -1552,35 +1552,35 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 <a name="rule-prohibited-unless"></a>
 #### prohibited_unless:_他のフィールド_,_値_,...
 
-The field under validation must be missing or empty unless the _anotherfield_ field is equal to any _value_. A field is "empty" if it meets one of the following criteria:
+指定した「他のフィールド」が指定した「値」のいずれかと等しい場合を除き、バリデーション中のフィールドが、存在しないか空である必要があります。以下の基準のいずれかを満たしている場合、そのフィールドは `空` と判定されます。
 
 <div class="content-list" markdown="1">
 
-- The value is `null`.
-- The value is an empty string.
-- The value is an empty array or empty `Countable` object.
-- The value is an uploaded file with an empty path.
+- 値は `null` である
+- 値は空の文字列である
+- 値が空の配列または空の `Countable` オブジェクトである
+- 値はパスのないアップロード済みファイルである
 
 </div>
 
 <a name="rule-prohibits"></a>
-#### prohibits:_anotherfield_,...
+#### prohibits:_他のフィールド_,...
 
-If the field under validation is not missing or empty, all fields in _anotherfield_ must be missing or empty. A field is "empty" if it meets one of the following criteria:
+バリデーション中のフィールドが、存在しないか空でない場合、指定した「他のフィールド」のすべてのフィールドが存在しないか空である必要があります。以下の基準のいずれかを満たしている場合、そのフィールドは `空` と判定されます。
 
 <div class="content-list" markdown="1">
 
-- The value is `null`.
-- The value is an empty string.
-- The value is an empty array or empty `Countable` object.
-- The value is an uploaded file with an empty path.
+- 値は `null` である
+- 値は空の文字列である
+- 値が空の配列または空の `Countable` オブジェクトである
+- 値はパスのないアップロード済みファイルである
 
 </div>
 
 <a name="rule-regex"></a>
-#### regex:_pattern_
+#### regex:_正規表現_
 
-The field under validation must match the given regular expression.
+バリデーション中のフィールドは、指定した正規表現と一致する必要があります。
 
 Internally, this rule uses the PHP `preg_match` function. The pattern specified should obey the same formatting required by `preg_match` and thus also include valid delimiters. For example: `'email' => 'regex:/^.+@.+$/i'`.
 
