@@ -1536,7 +1536,7 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 
 </div>
 
-If complex conditional prohibition logic is required, you may utilize the `Rule::prohibitedIf` method. This method accepts a boolean or a closure. When given a closure, the closure should return `true` or `false` to indicate if the field under validation should be prohibited:
+複雑な条件付き禁止ロジックが必要な場合は、`Rule::prohibitedIf` メソッドを利用してください。このメソッドは論理値またはクロージャを引数に取ります。クロージャが指定された場合、そのクロージャはバリデーション中のフィールドを禁止する必要があるかどうかを示すために `true` または `false` を返す必要があります。
 
     use Illuminate\Support\Facades\Validator;
     use Illuminate\Validation\Rule;
