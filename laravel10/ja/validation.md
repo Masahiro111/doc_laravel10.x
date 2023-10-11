@@ -1582,31 +1582,31 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 
 バリデーション中のフィールドは、指定した正規表現と一致する必要があります。
 
-Internally, this rule uses the PHP `preg_match` function. The pattern specified should obey the same formatting required by `preg_match` and thus also include valid delimiters. For example: `'email' => 'regex:/^.+@.+$/i'`.
+内部的に、このルールは PHP の `preg_match` 関数を使用しています。指定したパターンは、有効な区切り文字も含め `preg_match` で必要とされるフォーマットと同じように従う必要があります。たとえば、`'email' => 'not_regex:/^.+$/i'` のように記述します。
 
-> **Warning**  
-> When using the `regex` / `not_regex` patterns, it may be necessary to specify rules in an array instead of using `|` delimiters, especially if the regular expression contains a `|` character.
+> **Warning**
+> `regex` / `not_regex` パターンを使用する場合、特に正規表現に `|` 文字が含まれている場合は、`|` 区切り文字を使用する代わりに配列を使用してバリデーションルールを指定する必要がある場合があります。
 
 <a name="rule-required"></a>
 #### required
 
-The field under validation must be present in the input data and not empty. A field is "empty" if it meets one of the following criteria:
+バリデーション中のフィールドは、入力データに存在する必要があり、かつ空であってはなりません。以下の基準のいずれかを満たしている場合、そのフィールドは `空` と判定されます。
 
 <div class="content-list" markdown="1">
 
-- The value is `null`.
-- The value is an empty string.
-- The value is an empty array or empty `Countable` object.
-- The value is an uploaded file with no path.
+- 値は `null` である
+- 値は空の文字列である
+- 値が空の配列または空の `Countable` オブジェクトである
+- 値はパスのないアップロード済みファイルである
 
 </div>
 
 <a name="rule-required-if"></a>
-#### required_if:_anotherfield_,_value_,...
+#### required_if:_他のフィールド_,_値_,...
 
-The field under validation must be present and not empty if the _anotherfield_ field is equal to any _value_.
+指定した「他のフィールド」が指定した「値」のいずれかと等しい場合、バリデーション中のフィールドは存在する必要があり、かつ空であってはなりません。
 
-If you would like to construct a more complex condition for the `required_if` rule, you may use the `Rule::requiredIf` method. This method accepts a boolean or a closure. When passed a closure, the closure should return `true` or `false` to indicate if the field under validation is required:
+`required_if` ルールのより複雑な条件を構築したい場合は、`Rule::requiredIf` メソッドを使用できます。このメソッドは論理値またはクロージャを受け取ります。クロージャが渡されると、クロージャはバリデーション中のフィールドが必要かどうかを示すために `true` または `false` を返す必要があります。
 
     use Illuminate\Support\Facades\Validator;
     use Illuminate\Validation\Rule;
