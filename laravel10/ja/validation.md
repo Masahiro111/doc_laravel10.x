@@ -1432,7 +1432,7 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 バリデーション中のフィールドの整数は、最小値として指定した「値」以上の桁数を持つ必要があります。
 
 <a name="rule-multiple-of"></a>
-#### multiple_of:_value_
+#### multiple_of:_値_
 
 バリデーション中のフィールドは、指定した「値」の倍数である必要があります。
 
@@ -1620,14 +1620,14 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
     ]);
 
 <a name="rule-required-unless"></a>
-#### required_unless:_anotherfield_,_value_,...
+#### required_unless:_他のフィールド_,_値_,...
 
 The field under validation must be present and not empty unless the _anotherfield_ field is equal to any _value_. This also means _anotherfield_ must be present in the request data unless _value_ is `null`. If _value_ is `null` (`required_unless:name,null`), the field under validation will be required unless the comparison field is `null` or the comparison field is missing from the request data.
 
 <a name="rule-required-with"></a>
 #### required_with:_foo_,_bar_,...
 
-The field under validation must be present and not empty _only if_ any of the other specified fields are present and not empty.
+バリデーション中のフィールドは、他の指定したフィールドが存在し、空でない場合にのみ、存在し、空であってはなりません。
 
 <a name="rule-required-with-all"></a>
 #### required_with_all:_foo_,_bar_,...
