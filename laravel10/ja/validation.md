@@ -1622,17 +1622,17 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 <a name="rule-required-unless"></a>
 #### required_unless:_他のフィールド_,_値_,...
 
-The field under validation must be present and not empty unless the _anotherfield_ field is equal to any _value_. This also means _anotherfield_ must be present in the request data unless _value_ is `null`. If _value_ is `null` (`required_unless:name,null`), the field under validation will be required unless the comparison field is `null` or the comparison field is missing from the request data.
+指定した「他のフィールド」が指定した「値」のいずれにも一致していない場合、バリデーション中のフィールドは存在するし、空でない必要があります。これは、指定した「値」が `null` でない限り、リクエストデータに指定した「他のフィールド」が存在する必要があることを意味します。指定した「 値」が `null` (`required_unless:name,null`) の場合、比較フィールドが `null` であるか、比較フィールドがリクエスト データに存在しない場合を除き、バリデーション対象のフィールドは必須になります。
 
 <a name="rule-required-with"></a>
 #### required_with:_foo_,_bar_,...
 
-バリデーション中のフィールドは、他の指定したフィールドが存在し、空でない場合にのみ、存在し、空であってはなりません。
+指定した他のフィールドのいずれかが存在する場合、バリデーション中のこのフィールドが存在し、空でない必要があります。
 
 <a name="rule-required-with-all"></a>
 #### required_with_all:_foo_,_bar_,...
 
-The field under validation must be present and not empty _only if_ all of the other specified fields are present and not empty.
+指定した他のフィールドがすべて存在する場合、バリデーション中のこのフィールドが存在し、空でない必要があります。
 
 <a name="rule-required-without"></a>
 #### required_without:_foo_,_bar_,...
