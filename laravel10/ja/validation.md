@@ -1637,12 +1637,12 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 <a name="rule-required-without"></a>
 #### required_without:_foo_,_bar_,...
 
-The field under validation must be present and not empty _only when_ any of the other specified fields are empty or not present.
+指定した他のフィールドのいずれかが空であるか存在しない場合にのみ、バリデーション中のフィールドは空ではなく存在する必要があります。
 
 <a name="rule-required-without-all"></a>
 #### required_without_all:_foo_,_bar_,...
 
-The field under validation must be present and not empty _only when_ all of the other specified fields are empty or not present.
+指定したフィールドの全てが空であるか存在しない場合にのみ、バリデーション対象のフィールドは空ではなく存在する必要があります。
 
 <a name="rule-required-array-keys"></a>
 #### required_array_keys:_foo_,_bar_,...
