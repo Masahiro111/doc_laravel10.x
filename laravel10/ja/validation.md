@@ -1655,26 +1655,26 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 指定した「フィールド」は、バリデーション中のフィールドと同じ値で一致する必要があります。
 
 <a name="rule-size"></a>
-#### size:_value_
+#### size:_値_
 
-The field under validation must have a size matching the given _value_. For string data, _value_ corresponds to the number of characters. For numeric data, _value_ corresponds to a given integer value (the attribute must also have the `numeric` or `integer` rule). For an array, _size_ corresponds to the `count` of the array. For files, _size_ corresponds to the file size in kilobytes. Let's look at some examples:
+バリデーション中のフィールドのサイズは、指定した「値」と一致する必要があります。文字列データの場合、指定した「値」は文字数に対応します。数値データの場合、「値」は整数値 (属性には `numeric` または `integer` ルールも必要です) となります。配列の場合、「値」は配列の `count` に対応します。ファイルの場合、「値」はキロバイト単位のファイルサイズに対応します。いくつかの例を見てみましょう。
 
-    // Validate that a string is exactly 12 characters long...
+    // 文字列の長さがちょうど 12 文字であるか
     'title' => 'size:12';
 
-    // Validate that a provided integer equals 10...
+    // 指定された整数が 10 であるか
     'seats' => 'integer|size:10';
 
-    // Validate that an array has exactly 5 elements...
+    // 配列はちょうど 5 つの要素があるか
     'tags' => 'array|size:5';
 
-    // Validate that an uploaded file is exactly 512 kilobytes...
+    // アップロードされたファイルがちょうど 512 キロバイトであるか
     'image' => 'file|size:512';
 
 <a name="rule-starts-with"></a>
 #### starts_with:_foo_,_bar_,...
 
-The field under validation must start with one of the given values.
+バリデーション中のフィールドは、指定された値のいずれかで始まる必要があります。
 
 <a name="rule-string"></a>
 #### string
