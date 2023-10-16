@@ -1647,12 +1647,12 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 <a name="rule-required-array-keys"></a>
 #### required_array_keys:_foo_,_bar_,...
 
-The field under validation must be an array and must contain at least the specified keys.
+バリデーション中のフィールドは、配列である必要があり、少なくとも指定されたキーが含まれている必要があります。
 
 <a name="rule-same"></a>
-#### same:_field_
+#### same:_フィールド_
 
-The given _field_ must match the field under validation.
+指定した「フィールド」は、バリデーション中のフィールドと同じ値で一致する必要があります。
 
 <a name="rule-size"></a>
 #### size:_value_
