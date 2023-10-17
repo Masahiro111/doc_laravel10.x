@@ -1705,13 +1705,13 @@ The arguments [accepted by the `DateTimeZone::listIdentifiers` method](https://w
 
     'email' => 'unique:App\Models\User,email_address'
 
-The `column` option may be used to specify the field's corresponding database column. If the `column` option is not specified, the name of the field under validation will be used.
+`column` オプションを使用して、フィールドに対応するデータベースカラムを指定できます。`column` オプションが指定されていない場合は、バリデーション中のフィールドの名前が使用されます。
 
     'email' => 'unique:users,email_address'
 
-**Specifying A Custom Database Connection**
+**カスタムデータベース接続の指定**
 
-Occasionally, you may need to set a custom connection for database queries made by the Validator. To accomplish this, you may prepend the connection name to the table name:
+場合により、バリデータが行うデータベースクエリに対してカスタム接続を設定する必要がある場合があります。これを実現するには、テーブル名の前に接続名を追加します。
 
     'email' => 'unique:connection.users,email_address'
 
@@ -1732,22 +1732,22 @@ To instruct the validator to ignore the user's ID, we'll use the `Rule` class to
         ],
     ]);
 
-> **Warning**  
-> You should never pass any user controlled request input into the `ignore` method. Instead, you should only pass a system generated unique ID such as an auto-incrementing ID or UUID from an Eloquent model instance. Otherwise, your application will be vulnerable to an SQL injection attack.
+> **Warning**
+> ユーザー制御のリクエスト入力を `ignore` メソッドに渡さないでください。代わりに、Eloquent モデルインスタンスからの自動インクリメント ID や UUID など、システムが生成した一意の ID のみを渡す必要があります。そうしないと、アプリケーションが SQL インジェクション攻撃に対して脆弱になります。
 
-Instead of passing the model key's value to the `ignore` method, you may also pass the entire model instance. Laravel will automatically extract the key from the model:
+モデルキーの値を `ignore` メソッドに渡す代わりに、モデルインスタンス全体を渡すこともできます。Laravel はモデルからキーを自動的に抽出します。
 
     Rule::unique('users')->ignore($user)
 
-If your table uses a primary key column name other than `id`, you may specify the name of the column when calling the `ignore` method:
+テーブルの主キーとして `id` 以外のカラム名を使用している場合は、 `ignore` メソッドを呼び出すときにカラムの名前を指定できます。
 
     Rule::unique('users')->ignore($user->id, 'user_id')
 
-By default, the `unique` rule will check the uniqueness of the column matching the name of the attribute being validated. However, you may pass a different column name as the second argument to the `unique` method:
+デフォルトでは、`unique` ルールは、バリデーションされる属性の名前に一致するカラムの一意性をチェックします。ただし、別のカラム名を第２引数として `unique` メソッドに渡すこともできます。
 
     Rule::unique('users', 'email_address')->ignore($user->id)
 
-**Adding Additional Where Clauses:**
+**Where 句を追加する**
 
 You may specify additional query conditions by customizing the query using the `where` method. For example, let's add a query condition that scopes the query to only search records that have an `account_id` column value of `1`:
 
