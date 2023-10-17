@@ -1749,32 +1749,32 @@ To instruct the validator to ignore the user's ID, we'll use the `Rule` class to
 
 **Where 句を追加する**
 
-You may specify additional query conditions by customizing the query using the `where` method. For example, let's add a query condition that scopes the query to only search records that have an `account_id` column value of `1`:
+ `where` メソッドを使用してクエリをカスタマイズすることにより、追加のクエリ条件を指定できます。たとえば、`account_id` 列の値が `1` であるレコードのみを検索するように、クエリの範囲を設定するクエリ条件を追加してみましょう。
 
     'email' => Rule::unique('users')->where(fn (Builder $query) => $query->where('account_id', 1))
 
 <a name="rule-uppercase"></a>
 #### uppercase
 
-The field under validation must be uppercase.
+バリデーション中のフィールドは、大文字である必要があります。
 
 <a name="rule-url"></a>
 #### url
 
-The field under validation must be a valid URL.
+バリデーション中のフィールドは、有効な URL である必要があります。
 
 <a name="rule-ulid"></a>
 #### ulid
 
-The field under validation must be a valid [Universally Unique Lexicographically Sortable Identifier](https://github.com/ulid/spec) (ULID).
+バリデーション対象のフィールドは、有効な [Universally Unique Lexicographically Sortable Identifier](https://github.com/ulid/spec) (ULID) である必要があります。
 
 <a name="rule-uuid"></a>
 #### uuid
 
-The field under validation must be a valid RFC 4122 (version 1, 3, 4, or 5) universally unique identifier (UUID).
+バリデーション中のフィールドは、有効な RFC 4122 (バージョン 1、3、4、5) の universally unique identifier (UUID) である必要があります。
 
 <a name="conditionally-adding-rules"></a>
-## Conditionally Adding Rules
+## 条件付きルールの追加
 
 <a name="skipping-validation-when-fields-have-certain-values"></a>
 #### Skipping Validation When Fields Have Certain Values
