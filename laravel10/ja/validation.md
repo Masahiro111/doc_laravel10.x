@@ -1679,21 +1679,29 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 <a name="rule-string"></a>
 #### string
 
-The field under validation must be a string. If you would like to allow the field to also be `null`, you should assign the `nullable` rule to the field.
+バリデーション中のフィールドは文字列である必要があります。フィールドが `null` であることも許可したい場合は、フィールドに `nullable` ルールを指定してください。
 
 <a name="rule-timezone"></a>
 #### timezone
 
-The field under validation must be a valid timezone identifier according to the `timezone_identifiers_list` PHP function.
+The field under validation must be a valid timezone identifier according to the `DateTimeZone::listIdentifiers` method.
+
+The arguments [accepted by the `DateTimeZone::listIdentifiers` method](https://www.php.net/manual/en/datetimezone.listidentifiers.php) may also be provided to this validation rule:
+
+    'timezone' => 'required|timezone:all';
+
+    'timezone' => 'required|timezone:Africa';
+
+    'timezone' => 'required|timezone:per_country,US';
 
 <a name="rule-unique"></a>
-#### unique:_table_,_column_
+#### unique:_テーブル_,_カラム_
 
-The field under validation must not exist within the given database table.
+バリデーション中のフィールドは、指定したデータベーステーブル内に存在してはなりません。
 
-**Specifying A Custom Table / Column Name:**
+**カスタムテーブル / カラム名の指定**
 
-Instead of specifying the table name directly, you may specify the Eloquent model which should be used to determine the table name:
+テーブル名を直接指定する代わりに、テーブル名の決定に使用する Eloquent モデルを指定することもできます。
 
     'email' => 'unique:App\Models\User,email_address'
 
