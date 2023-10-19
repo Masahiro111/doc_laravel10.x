@@ -1679,14 +1679,14 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 <a name="rule-string"></a>
 #### string
 
-バリデーション中のフィールドは文字列である必要があります。フィールドが `null` であることも許可したい場合は、フィールドに `nullable` ルールを指定してください。
+バリデーション中のフィールドは、文字列である必要があります。フィールドが `null` であることも許可したい場合は、フィールドに `nullable` ルールを指定してください。
 
 <a name="rule-timezone"></a>
 #### timezone
 
-The field under validation must be a valid timezone identifier according to the `DateTimeZone::listIdentifiers` method.
+バリデーション中のフィールドは、`DateTimeZone::listIdentifiers` メソッドに従った有効なタイムゾーン識別子である必要があります。
 
-The arguments [accepted by the `DateTimeZone::listIdentifiers` method](https://www.php.net/manual/en/datetimezone.listidentifiers.php) may also be provided to this validation rule:
+このルールには、[`DateTimeZone::listIdentifiers` メソッドで受け取る](https://www.php.net/manual/en/datetimezone.listidentifiers.php) 引数を指定することもできます。
 
     'timezone' => 'required|timezone:all';
 
@@ -1715,11 +1715,11 @@ The arguments [accepted by the `DateTimeZone::listIdentifiers` method](https://w
 
     'email' => 'unique:connection.users,email_address'
 
-**Forcing A Unique Rule To Ignore A Given ID:**
+**指定 ID の unique ルールを無視する**
 
-Sometimes, you may wish to ignore a given ID during unique validation. For example, consider an "update profile" screen that includes the user's name, email address, and location. You will probably want to verify that the email address is unique. However, if the user only changes the name field and not the email field, you do not want a validation error to be thrown because the user is already the owner of the email address in question.
+場合によっては、unique のバリデーション中に特定の ID を無視したい場合があります。たとえば、ユーザーの名前、電子メールアドレス、場所が含まれる「プロフィールの更新」画面を考えてみましょう。おそらく、電子メールアドレスが一意であることを確認する必要があるでしょう。ただし、ユーザーが名前フィールドのみを変更し、電子メールフィールドを変更しない場合、ユーザーはすでに問題の電子メールアドレスの所有者であるため、バリデーションエラーがスローされることは望ましくありません。
 
-To instruct the validator to ignore the user's ID, we'll use the `Rule` class to fluently define the rule. In this example, we'll also specify the validation rules as an array instead of using the `|` character to delimit the rules:
+バリデータにユーザー ID を無視するよう指示するには、`Rule` クラスを使用するとルールをスムーズに定義できます。以下の例では、ルールを区切るために `|` 文字を使用する代わりに、バリデーションルールを配列として指定します。
 
     use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Support\Facades\Validator;
@@ -1777,7 +1777,7 @@ To instruct the validator to ignore the user's ID, we'll use the `Rule` class to
 ## 条件付きルールの追加
 
 <a name="skipping-validation-when-fields-have-certain-values"></a>
-#### Skipping Validation When Fields Have Certain Values
+#### 指定値のフィールドはバリデーションスキップ
 
 You may occasionally wish to not validate a given field if another field has a given value. You may accomplish this using the `exclude_if` validation rule. In this example, the `appointment_date` and `doctor_name` fields will not be validated if the `has_appointment` field has a value of `false`:
 
