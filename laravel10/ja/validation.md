@@ -2145,9 +2145,9 @@ If necessary, you may provide placeholder replacements and the preferred languag
         'value' => $this->value,
     ], 'fr')
 
-#### Accessing Additional Data
+#### 追加データへのアクセス
 
-If your custom validation rule class needs to access all of the other data undergoing validation, your rule class may implement the `Illuminate\Contracts\Validation\DataAwareRule` interface. This interface requires your class to define a `setData` method. This method will automatically be invoked by Laravel (before validation proceeds) with all of the data under validation:
+カスタムバリデーションルールクラスがバリデーション中の他のすべてのデータにアクセスする必要がある場合、ルールクラスは `Illuminate\Contracts\Validation\DataAwareRule` インターフェイスを実装してください。このインターフェイスでは、クラスで `setData` メソッドを定義する必要があります。このメソッドは Laravel によって (バリデーションの処理前に) 自動的にバリデーション対象のすべてのデータで呼び出されます。
 
     <?php
 
@@ -2159,7 +2159,7 @@ If your custom validation rule class needs to access all of the other data under
     class Uppercase implements DataAwareRule, ValidationRule
     {
         /**
-         * All of the data under validation.
+         * バリデーション対象の全データ
          *
          * @var array<string, mixed>
          */
@@ -2168,7 +2168,7 @@ If your custom validation rule class needs to access all of the other data under
         // ...
 
         /**
-         * Set the data under validation.
+         * バリデーション対象にデータを設定
          *
          * @param  array<string, mixed>  $data
          */
@@ -2180,7 +2180,7 @@ If your custom validation rule class needs to access all of the other data under
         }
     }
 
-Or, if your validation rule requires access to the validator instance performing the validation, you may implement the `ValidatorAwareRule` interface:
+または、バリデーションルールでバリデーションを実行するバリデータインスタンスへのアクセスが必要な場合は、 `ValidatorAwareRule` インターフェイスを実装してください。
 
     <?php
 
