@@ -1809,12 +1809,12 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 上の例では、`email` フィールドは、`$data` 配列に存在する場合にのみバリデーションされます。
 
 > **Note**
-> 常に存在しているフィールドが空であるかをバリデーションしようとしている場合は、[オプションフィールドに関する注意](#a-note-on-optional-fields) を確認してください。
+> 常に存在しているフィールドが空であるかをバリデーションする場合は、[オプションフィールドに関する注意](#a-note-on-optional-fields) を確認してください。
 
 <a name="complex-conditional-validation"></a>
 #### 複雑な条件付きバリデーション
 
-Sometimes you may wish to add validation rules based on more complex conditional logic. For example, you may wish to require a given field only if another field has a greater value than 100. Or, you may need two fields to have a given value only when another field is present. Adding these validation rules doesn't have to be a pain. First, create a `Validator` instance with your _static rules_ that never change:
+場合によっては、より複雑な条件ロジックに基づいたバリデーションルールを追加したい場合があります。たとえば、他のフィールドの値が100より大きい場合にのみ、指定のフィールドを必須にすることができます。または、2つのフィールドのうちの一方が存在する場合、両方共に値を指定する必要があることがあります。これらのバリデーションルールの追加は、それほど難しいことではありません。まず、決して変更されない **静的ルール** を使用して `Validator` インスタンスを作成します。
 
     use Illuminate\Support\Facades\Validator;
 
@@ -1823,7 +1823,7 @@ Sometimes you may wish to add validation rules based on more complex conditional
         'games' => 'required|numeric',
     ]);
 
-Let's assume our web application is for game collectors. If a game collector registers with our application and they own more than 100 games, we want them to explain why they own so many games. For example, perhaps they run a game resale shop, or maybe they just enjoy collecting games. To conditionally add this requirement, we can use the `sometimes` method on the `Validator` instance.
+ゲームコレクター向けの Web アプリケーションがあるとしましょう。ゲームコレクターが私たちのアプリケーションに登録し、100 以上のゲームを所有している場合、なぜそんなに多くのゲームを所有しているのかを聞きたいと考えています。たとえば、ゲームの再販ショップを経営しているかもしれませんし、単にゲームを収集するのが趣味かもしれません。この要件を条件付きで追加するには、 `Validator` インスタンスで `sometime` メソッドを使用します。
 
     use Illuminate\Support\Fluent;
 
@@ -1831,14 +1831,14 @@ Let's assume our web application is for game collectors. If a game collector reg
         return $input->games >= 100;
     });
 
-The first argument passed to the `sometimes` method is the name of the field we are conditionally validating. The second argument is a list of the rules we want to add. If the closure passed as the third argument returns `true`, the rules will be added. This method makes it a breeze to build complex conditional validations. You may even add conditional validations for several fields at once:
+`sometime` メソッドに渡す最初の引数は、条件付きでバリデーションするフィールドの名前です。第2引数は、追加するルールのリストです。第3引数として渡すクロージャが `true` を返す場合、ルールが追加されます。この方法を使用すると、複雑な条件付きバリデーションを簡単に構築できます。複数のフィールドの条件付きバリデーションを一度に追加することもできます。
 
     $validator->sometimes(['reason', 'cost'], 'required', function (Fluent $input) {
         return $input->games >= 100;
     });
 
-> **Note**  
-> The `$input` parameter passed to your closure will be an instance of `Illuminate\Support\Fluent` and may be used to access your input and files under validation.
+> **Note**
+> クロージャに渡される `$input` パラメータは `Illuminate\Support\Fluent` のインスタンスとなり、バリデーション中の入力およびファイルにアクセスするために使用できます。
 
 <a name="complex-conditional-array-validation"></a>
 #### Complex Conditional Array Validation
@@ -2193,7 +2193,7 @@ Or, if your validation rule requires access to the validator instance performing
     class Uppercase implements ValidationRule, ValidatorAwareRule
     {
         /**
-         * The validator instance.
+         * バリデータインスタンス
          *
          * @var \Illuminate\Validation\Validator
          */
@@ -2202,7 +2202,7 @@ Or, if your validation rule requires access to the validator instance performing
         // ...
 
         /**
-         * Set the current validator.
+         * 現在のバリデータを設定
          */
         public function setValidator(Validator $validator): static
         {
@@ -2213,9 +2213,9 @@ Or, if your validation rule requires access to the validator instance performing
     }
 
 <a name="using-closures"></a>
-### Using Closures
+### クロージャの使用
 
-If you only need the functionality of a custom rule once throughout your application, you may use a closure instead of a rule object. The closure receives the attribute's name, the attribute's value, and a `$fail` callback that should be called if validation fails:
+アプリケーション全体でカスタムルールの機能が1回だけ必要な場合は、ルールオブジェクトの代わりにクロージャを使用できます。クロージャは、属性の名前、属性の値、およびバリデーションが失敗した場合に呼び出される `$fail` コールバックを受け取ります。
 
     use Illuminate\Support\Facades\Validator;
     use Closure;
@@ -2233,9 +2233,9 @@ If you only need the functionality of a custom rule once throughout your applica
     ]);
 
 <a name="implicit-rules"></a>
-### Implicit Rules
+### 暗黙のルール
 
-By default, when an attribute being validated is not present or contains an empty string, normal validation rules, including custom rules, are not run. For example, the [`unique`](#rule-unique) rule will not be run against an empty string:
+デフォルトでは、バリデーション対象の属性が存在しないか、空の文字列が含まれている場合、カスタムルールを含む通常のバリデーションルールは実行されません。たとえば、[`unique`](#rule-unique) ルールは空の文字列に対しては実行されません。
 
     use Illuminate\Support\Facades\Validator;
 
@@ -2245,11 +2245,11 @@ By default, when an attribute being validated is not present or contains an empt
 
     Validator::make($input, $rules)->passes(); // true
 
-For a custom rule to run even when an attribute is empty, the rule must imply that the attribute is required. To quickly generate a new implicit rule object, you may use the `make:rule` Artisan command with the `--implicit` option:
+属性が空の場合でもカスタムルールを実行するには、その属性が必須であることをルールで暗黙的に示す必要があります。新しい暗黙的なルールオブジェクトを生成するには、`make:rule` Artisan コマンドを `--implicit` オプションとともに使用します。
 
 ```shell
 php artisan make:rule Uppercase --implicit
 ```
 
-> **Warning**  
-> An "implicit" rule only _implies_ that the attribute is required. Whether it actually invalidates a missing or empty attribute is up to you.
+> **Warning**
+> 「暗黙の」ルールは、属性が必須であることを暗黙的にします。存在しない属性、または空の属性を実際に無効にするかどうかは、ユーザー次第です。
