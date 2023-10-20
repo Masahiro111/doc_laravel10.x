@@ -1779,7 +1779,7 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 <a name="skipping-validation-when-fields-have-certain-values"></a>
 #### 指定値のフィールドはバリデーションスキップ
 
-You may occasionally wish to not validate a given field if another field has a given value. You may accomplish this using the `exclude_if` validation rule. In this example, the `appointment_date` and `doctor_name` fields will not be validated if the `has_appointment` field has a value of `false`:
+他のフィールドに指定値がある場合、フィールドをバリデーションしたくない場合があります。その際は `exclude_if` バリデーションルールを使用してください。以下の例では、 `has_appointment` フィールドの値が `false` の場合、 `appointment_date` フィールドと `doctor_name` フィールドはバリデーションされません。
 
     use Illuminate\Support\Facades\Validator;
 
@@ -1789,7 +1789,7 @@ You may occasionally wish to not validate a given field if another field has a g
         'doctor_name' => 'exclude_if:has_appointment,false|required|string',
     ]);
 
-Alternatively, you may use the `exclude_unless` rule to not validate a given field unless another field has a given value:
+あるいは、 `exclude_unless` ルールを使用して、他のフィールドに指定値が入力されていない場合、指定のフィールドをバリデーションしないこともできます。
 
     $validator = Validator::make($data, [
         'has_appointment' => 'required|boolean',
@@ -1798,21 +1798,21 @@ Alternatively, you may use the `exclude_unless` rule to not validate a given fie
     ]);
 
 <a name="validating-when-present"></a>
-#### Validating When Present
+#### フィールド存在時のバリデーション
 
-In some situations, you may wish to run validation checks against a field **only** if that field is present in the data being validated. To quickly accomplish this, add the `sometimes` rule to your rule list:
+状況によっては、フィールドがバリデーション対象のデータに存在する場合に **のみ**、そのフィールドに対してバリデーションチェックを実行したい場合があります。その際は、ルールリストに `sometimes` ルールを追加します。
 
     $v = Validator::make($data, [
         'email' => 'sometimes|required|email',
     ]);
 
-In the example above, the `email` field will only be validated if it is present in the `$data` array.
+上の例では、`email` フィールドは、`$data` 配列に存在する場合にのみバリデーションされます。
 
-> **Note**  
-> If you are attempting to validate a field that should always be present but may be empty, check out [this note on optional fields](#a-note-on-optional-fields).
+> **Note**
+> 常に存在しているフィールドが空であるかをバリデーションしようとしている場合は、[オプションフィールドに関する注意](#a-note-on-optional-fields) を確認してください。
 
 <a name="complex-conditional-validation"></a>
-#### Complex Conditional Validation
+#### 複雑な条件付きバリデーション
 
 Sometimes you may wish to add validation rules based on more complex conditional logic. For example, you may wish to require a given field only if another field has a greater value than 100. Or, you may need two fields to have a given value only when another field is present. Adding these validation rules doesn't have to be a pain. First, create a `Validator` instance with your _static rules_ that never change:
 
