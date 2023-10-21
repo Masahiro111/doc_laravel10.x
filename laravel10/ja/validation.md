@@ -1841,9 +1841,9 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
 > クロージャに渡される `$input` パラメータは `Illuminate\Support\Fluent` のインスタンスとなり、バリデーション中の入力およびファイルにアクセスするために使用できます。
 
 <a name="complex-conditional-array-validation"></a>
-#### Complex Conditional Array Validation
+#### 複雑な条件付きの配列バリデーション
 
-Sometimes you may want to validate a field based on another field in the same nested array whose index you do not know. In these situations, you may allow your closure to receive a second argument which will be the current individual item in the array being validated:
+インデックスが不明の同じ入れ子配列内の別のフィールドに基づいてフィールドをバリデーションしたい場合があります。このような状況では、クロージャがバリデーション中の配列内の現在の個々の項目となる第2引数を受け取ることを許可できます。
 
     $input = [
         'channels' => [
@@ -1866,12 +1866,12 @@ Sometimes you may want to validate a field based on another field in the same ne
         return $item->type !== 'email';
     });
 
-Like the `$input` parameter passed to the closure, the `$item` parameter is an instance of `Illuminate\Support\Fluent` when the attribute data is an array; otherwise, it is a string.
+クロージャに渡される `$input` パラメータと同様に、属性データが配列の場合、`$item` パラメータは `Illuminate\Support\Fluent` のインスタンスになります。それ以外の場合は文字列となります。
 
 <a name="validating-arrays"></a>
-## Validating Arrays
+## 配列のバリデーション
 
-As discussed in the [`array` validation rule documentation](#rule-array), the `array` rule accepts a list of allowed array keys. If any additional keys are present within the array, validation will fail:
+[`array` バリデーションルールのドキュメント](#rule-array) で説明したように、`array` ルールは許可する配列キーのリストを受け入れます。配列内にその他追加のキーが存在する場合、バリデーションは失敗します。
 
     use Illuminate\Support\Facades\Validator;
 
