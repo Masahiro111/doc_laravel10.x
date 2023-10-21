@@ -2090,18 +2090,18 @@ Occasionally, you may want to attach additional validation rules to your default
     });
 
 <a name="custom-validation-rules"></a>
-## Custom Validation Rules
+## カスタムバリデーションルール
 
 <a name="using-rule-objects"></a>
-### Using Rule Objects
+### ルールオブジェクトの使用
 
-Laravel provides a variety of helpful validation rules; however, you may wish to specify some of your own. One method of registering custom validation rules is using rule objects. To generate a new rule object, you may use the `make:rule` Artisan command. Let's use this command to generate a rule that verifies a string is uppercase. Laravel will place the new rule in the `app/Rules` directory. If this directory does not exist, Laravel will create it when you execute the Artisan command to create your rule:
+Laravel は、多くの便利なバリデーションルールを提供します。ただし、独自のものを指定したい場合もあります。カスタムバリデーションルールを登録する1つの方法は、ルールオブジェクトを使用することです。新しいルールオブジェクトを生成するには、`make:rule` Artisan コマンドを使用します。このコマンドを使用して、文字列が大文字であることをバリデーションするルールを生成してみましょう。Laravel は新しいルールを `app/Rules` ディレクトリに配置します。このディレクトリが存在しない場合、Artisan コマンドを実行してルールを作成すると、Laravel によってディレクトリが作成されます。
 
 ```shell
 php artisan make:rule Uppercase
 ```
 
-Once the rule has been created, we are ready to define its behavior. A rule object contains a single method: `validate`. This method receives the attribute name, its value, and a callback that should be invoked on failure with the validation error message:
+ルールを作成したら、その動作を定義します。ルールオブジェクトには、`validate` という1つのメソッドがあります。このメソッドは、属性名とその値、およびバリデーションエラーメッセージが表示されて失敗した場合に呼び出されるコールバックを受け取ります。
 
     <?php
 
@@ -2113,7 +2113,7 @@ Once the rule has been created, we are ready to define its behavior. A rule obje
     class Uppercase implements ValidationRule
     {
         /**
-         * Run the validation rule.
+         * バリデーションルールを実行
          */
         public function validate(string $attribute, mixed $value, Closure $fail): void
         {
@@ -2123,7 +2123,7 @@ Once the rule has been created, we are ready to define its behavior. A rule obje
         }
     }
 
-Once the rule has been defined, you may attach it to a validator by passing an instance of the rule object with your other validation rules:
+ルールを定義したら、他のバリデーションルールとともにルールオブジェクトのインスタンスを渡すことで、ルールをバリデータに付加させることが可能です。
 
     use App\Rules\Uppercase;
 
@@ -2131,15 +2131,15 @@ Once the rule has been defined, you may attach it to a validator by passing an i
         'name' => ['required', 'string', new Uppercase],
     ]);
 
-#### Translating Validation Messages
+#### バリデーションメッセージの翻訳
 
-Instead of providing a literal error message to the `$fail` closure, you may also provide a [translation string key](/docs/{{version}}/localization) and instruct Laravel to translate the error message:
+`$fail` クロージャーに文字列のエラーメッセージを指定する代わりに、[翻訳文字列キー](/docs/{{version}}/localization) を指定して、Laravel にエラーメッセージを翻訳するよう指示できます。
 
     if (strtoupper($value) !== $value) {
         $fail('validation.uppercase')->translate();
     }
 
-If necessary, you may provide placeholder replacements and the preferred language as the first and second arguments to the `translate` method:
+必要に応じて、プレースホルダ置換や、優先言語を `translate` メソッドの第1引数と第2引数に指定して設定できます。
 
     $fail('validation.location')->translate([
         'value' => $this->value,
