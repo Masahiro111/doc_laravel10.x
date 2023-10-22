@@ -1887,12 +1887,12 @@ PHP の `filter_var` 関数を使用する `filter` バリデータは Laravel �
         'user' => 'array:username,locale',
     ]);
 
-In general, you should always specify the array keys that are allowed to be present within your array. Otherwise, the validator's `validate` and `validated` methods will return all of the validated data, including the array and all of its keys, even if those keys were not validated by other nested array validation rules.
+一般的に、配列内に存在できる配列キーを常に指定する必要があります。そうでない場合、バリデータの `validate` と `validated` メソッドは、たとえそれらのキーが他の入れ子になった配列バリデーションルールによりバリデーションされなかったとしても、配列とそのすべてのキーを含む全バリデーション済みデータを返してしまいます。
 
 <a name="validating-nested-array-input"></a>
-### Validating Nested Array Input
+### ネストした配列入力のバリデーション
 
-Validating nested array based form input fields doesn't have to be a pain. You may use "dot notation" to validate attributes within an array. For example, if the incoming HTTP request contains a `photos[profile]` field, you may validate it like so:
+ネストした配列ベースのフォーム入力フィールドのバリデーションは、それほど面倒なことではありません。「ドット表記」を使用して、配列内の属性をバリデーションできます。たとえば、受信した HTTP リクエストに `photos[profile]` フィールドが含まれている場合、以下のようにバリデーションできます。
 
     use Illuminate\Support\Facades\Validator;
 
@@ -1900,14 +1900,14 @@ Validating nested array based form input fields doesn't have to be a pain. You m
         'photos.profile' => 'required|image',
     ]);
 
-You may also validate each element of an array. For example, to validate that each email in a given array input field is unique, you may do the following:
+配列の各要素をバリデーションすることもできます。たとえば、特定の配列入力フィールド内の各電子メールが一意であることをバリデーションするには、以下のようにします。
 
     $validator = Validator::make($request->all(), [
         'person.*.email' => 'email|unique:users',
         'person.*.first_name' => 'required_with:person.*.last_name',
     ]);
 
-Likewise, you may use the `*` character when specifying [custom validation messages in your language files](#custom-messages-for-specific-attributes), making it a breeze to use a single validation message for array based fields:
+同様に、[言語ファイルのカスタムバリデーションメッセージ](#custom-messages-for-specific-attributes) を指定するときに `*` 文字を使用すると、配列ベースのフィールドに単一のバリデーションメッセージを簡単に使用できます。
 
     'custom' => [
         'person.*.email' => [
@@ -1916,7 +1916,7 @@ Likewise, you may use the `*` character when specifying [custom validation messa
     ],
 
 <a name="accessing-nested-array-data"></a>
-#### Accessing Nested Array Data
+#### ネストした配列データへのアクセス
 
 Sometimes you may need to access the value for a given nested array element when assigning validation rules to the attribute. You may accomplish this using the `Rule::forEach` method. The `forEach` method accepts a closure that will be invoked for each iteration of the array attribute under validation and will receive the attribute's value and explicit, fully-expanded attribute name. The closure should return an array of rules to assign to the array element:
 
@@ -1934,9 +1934,9 @@ Sometimes you may need to access the value for a given nested array element when
     ]);
 
 <a name="error-message-indexes-and-positions"></a>
-### Error Message Indexes & Positions
+### エラーメッセージのインデックスと位置
 
-When validating arrays, you may want to reference the index or position of a particular item that failed validation within the error message displayed by your application. To accomplish this, you may include the `:index` (starts from `0`) and `:position` (starts from `1`) placeholders within your [custom validation message](#manual-customizing-the-error-messages):
+配列のバリデーションを行う際、アプリケーションが表示したエラーメッセージ内で、バリデーションに失敗した項目のインデックスや位置を参照したいことがあるかもしれません。これを実現するには、[カスタムバリデーションメッセージ](#manual-customizing-the-error-messages) に `:index` (`0` から始まる) と `:position` (`1` から始まる) プレースホルダを使用してください。
 
     use Illuminate\Support\Facades\Validator;
 
@@ -1959,10 +1959,10 @@ When validating arrays, you may want to reference the index or position of a par
         'photos.*.description.required' => 'Please describe photo #:position.',
     ]);
 
-Given the example above, validation will fail and the user will be presented with the following error of _"Please describe photo #2."_
+上記の例では、バリデーションは失敗し、ユーザーには「Please describe photo #2」というエラーが表示されます。
 
 <a name="validating-files"></a>
-## Validating Files
+## ファイルのバリデーション
 
 Laravel provides a variety of validation rules that may be used to validate uploaded files, such as `mimes`, `image`, `min`, and `max`. While you are free to specify these rules individually when validating files, Laravel also offers a fluent file validation rule builder that you may find convenient:
 
