@@ -1964,7 +1964,7 @@ Sometimes you may need to access the value for a given nested array element when
 <a name="validating-files"></a>
 ## ファイルのバリデーション
 
-Laravel provides a variety of validation rules that may be used to validate uploaded files, such as `mimes`, `image`, `min`, and `max`. While you are free to specify these rules individually when validating files, Laravel also offers a fluent file validation rule builder that you may find convenient:
+Laravel は、`mimes`、`image`、`min`、`max` など、アップロードされたファイルのバリデーションに使用できる多様なバリデーションルールを提供しています。ファイルをバリデーションするときにこれらのルールを個別に自由に指定できますが、Laravel では、便利なファイルバリデーションルールビルダも提供しています。
 
     use Illuminate\Support\Facades\Validator;
     use Illuminate\Validation\Rules\File;
@@ -1978,7 +1978,7 @@ Laravel provides a variety of validation rules that may be used to validate uplo
         ],
     ]);
 
-If your application accepts images uploaded by your users, you may use the `File` rule's `image` constructor method to indicate that the uploaded file should be an image. In addition, the `dimensions` rule may be used to limit the dimensions of the image:
+アプリケーションがユーザーによってアップロードされた画像を受け取る場合、`File` ルールの `image` コンストラクタメソッドを使用して、アップロードされるファイルが画像である必要があることを指定することができます。さらに、`dimensions` ルールを使用して画像の大きさを制限することもできます。
 
     use Illuminate\Support\Facades\Validator;
     use Illuminate\Validation\Rules\File;
@@ -1993,20 +1993,20 @@ If your application accepts images uploaded by your users, you may use the `File
         ],
     ]);
 
-> **Note**  
-> More information regarding validating image dimensions may be found in the [dimension rule documentation](#rule-dimensions).
+> **Note**
+> 画像サイズのバリデーションに関する詳細は、[dimensions ルールのドキュメント](#rule-dimensions) を参照してください。
 
 <a name="validating-files-file-types"></a>
-#### File Types
+#### ファイルタイプ
 
-Even though you only need to specify the extensions when invoking the `types` method, this method actually validates the MIME type of the file by reading the file's contents and guessing its MIME type. A full listing of MIME types and their corresponding extensions may be found at the following location:
+`types` メソッドを呼び出すときには拡張子を指定するだけですが、このメソッドは実際にファイルの内容を読み取り、その MIME タイプを推測することによってファイルの MIME タイプをバリデーションします。MIME タイプとそれに対応する拡張子の完全なリストは、以下の場所にあります。
 
 [https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types](https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types)
 
 <a name="validating-passwords"></a>
-## Validating Passwords
+## パスワードのバリデーション
 
-To ensure that passwords have an adequate level of complexity, you may use Laravel's `Password` rule object:
+パスワードに適切なレベルの複雑さを持たせるには、Laravel の `Password` ルールオブジェクトを使用できます。
 
     use Illuminate\Support\Facades\Validator;
     use Illuminate\Validation\Rules\Password;
@@ -2015,21 +2015,21 @@ To ensure that passwords have an adequate level of complexity, you may use Larav
         'password' => ['required', 'confirmed', Password::min(8)],
     ]);
 
-The `Password` rule object allows you to easily customize the password complexity requirements for your application, such as specifying that passwords require at least one letter, number, symbol, or characters with mixed casing:
+ `Password` ルールオブジェクトを使用すると、パスワードに文字、数字、記号を最低1文字必須にしたり、大文字と小文字が混在する文字列を必須にするなど、アプリケーションのパスワードの複雑さの要件を簡単にカスタマイズできます。
 
-    // Require at least 8 characters...
+    // 最低8文字が必要
     Password::min(8)
 
-    // Require at least one letter...
+    // 最低1文字が必要
     Password::min(8)->letters()
 
-    // Require at least one uppercase and one lowercase letter...
+    // 最低大文字と小文字が1文字ずつ必要
     Password::min(8)->mixedCase()
 
-    // Require at least one number...
+    // 最低1文字の数値が必要
     Password::min(8)->numbers()
 
-    // Require at least one symbol...
+    // 最低1文字の記号が必要
     Password::min(8)->symbols()
 
 In addition, you may ensure that a password has not been compromised in a public password data breach leak using the `uncompromised` method:
