@@ -21,20 +21,20 @@
     - [バリデーション後のフック](#after-validation-hook)
 - [バリデーション済み入力値の利用](#working-with-validated-input)
 - [エラーメッセージの取り扱い](#working-with-error-messages)
-    - [Specifying Custom Messages In Language Files](#specifying-custom-messages-in-language-files)
-    - [Specifying Attributes In Language Files](#specifying-attribute-in-language-files)
-    - [Specifying Values In Language Files](#specifying-values-in-language-files)
-- [Available Validation Rules](#available-validation-rules)
-- [Conditionally Adding Rules](#conditionally-adding-rules)
-- [Validating Arrays](#validating-arrays)
-    - [Validating Nested Array Input](#validating-nested-array-input)
-    - [Error Message Indexes & Positions](#error-message-indexes-and-positions)
-- [Validating Files](#validating-files)
-- [Validating Passwords](#validating-passwords)
-- [Custom Validation Rules](#custom-validation-rules)
-    - [Using Rule Objects](#using-rule-objects)
-    - [Using Closures](#using-closures)
-    - [Implicit Rules](#implicit-rules)
+    - [言語ファイルでのカスタムメッセージの指定](#specifying-custom-messages-in-language-files)
+    - [言語ファイルでの属性指定](#specifying-attribute-in-language-files)
+    - [言語ファイルでの値指定](#specifying-values-in-language-files)
+- [利用可能なバリデーションルール](#available-validation-rules)
+- [条件付きルールの追加](#conditionally-adding-rules)
+- [配列のバリデーション](#validating-arrays)
+    - [ネストした配列入力のバリデーション](#validating-nested-array-input)
+    - [エラーメッセージのインデックスと位置](#error-message-indexes-and-positions)
+- [ファイルのバリデーション](#validating-files)
+- [パスワードのバリデーション](#validating-passwords)
+- [カスタムバリデーションルール](#custom-validation-rules)
+    - [ルールオブジェクトの使用](#using-rule-objects)
+    - [クロージャの使用](#using-closures)
+    - [暗黙のルール](#implicit-rules)
 
 <a name="introduction"></a>
 ## はじめに
@@ -733,7 +733,7 @@ You may also attach callbacks to be run after validation is completed. This allo
     }
 
 <a name="specifying-custom-messages-in-language-files"></a>
-### 言語ファイルでのカスタムメッセージの指定
+### 言語ファイルでのカスタムメッセージ指定
 
 Laravel の組み込みバリデーションルールにはそれぞれエラーメッセージがあり、アプリケーションの `lang/en/validation.php` ファイルにあります。このファイル内に、各バリデーションルールの翻訳エントリがあります。アプリケーションのニーズに基づいて、これらのメッセージを自由に変更または修正できます。
 
@@ -755,7 +755,7 @@ Laravel の組み込みバリデーションルールにはそれぞれエラー
     ],
 
 <a name="specifying-attribute-in-language-files"></a>
-### 言語ファイルでの属性の指定
+### 言語ファイルでの属性指定
 
 Laravel の組み込みエラーメッセージの多くには、バリデーション中のフィールドまたは属性の名前に置き換えられる `:attribute` プレースホルダが含まれています。バリデーションメッセージの `:attribute` 部分をカスタム値に置き換えたい場合は、`lang/xx/validation.php` 言語ファイルの `attributes` 配列でカスタム属性名を指定できます。
 
@@ -767,7 +767,7 @@ Laravel の組み込みエラーメッセージの多くには、バリデーシ
 > デフォルトでは、Laravel アプリケーションのスケルトンには `lang` ディレクトリが含まれません。 Laravel の言語ファイルをカスタマイズしたい場合は、 `lang:publish` Artisan コマンドを使用して言語ファイルを公開できます。
 
 <a name="specifying-values-in-language-files"></a>
-### 言語ファイルでの値の指定
+### 言語ファイルでの値指定
 
 Laravel の組み込みバリデーションルールのエラーメッセージの一部には、リクエスト属性の現在の値に置き換えられる `:value` プレースホルダが含まれています。ただし、場合によっては、バリデーションメッセージの `:value` 部分を値のカスタム表現に置き換えたい場合があります。たとえば、 `payment_type` の値が `cc` の場合にクレジットカード番号が必要であることを指定する次のルールを考えてみましょう。
 
@@ -2053,15 +2053,15 @@ Laravel は、`mimes`、`image`、`min`、`max` など、アップロードさ�
         ->uncompromised()
 
 <a name="defining-default-password-rules"></a>
-#### Defining Default Password Rules
+#### デフォルトパスワードルールの定義
 
-You may find it convenient to specify the default validation rules for passwords in a single location of your application. You can easily accomplish this using the `Password::defaults` method, which accepts a closure. The closure given to the `defaults` method should return the default configuration of the Password rule. Typically, the `defaults` rule should be called within the `boot` method of one of your application's service providers:
+アプリケーションの一か所で、パスワードのデフォルトバリデーションルールを指定すると便利です。これは、クロージャを引数に取る `Password::defaults` メソッドを使用して簡単に実現できます。`defaults` メソッドに渡すクロージャは、パスワードルールのデフォルト設定を返す必要があります。通常、`defaults` ルールは、アプリケーションのサービスプロバイダーの1つの `boot` メソッド内で呼び出す必要があります。
 
 ```php
 use Illuminate\Validation\Rules\Password;
 
 /**
- * Bootstrap any application services.
+ * アプリケーションの全サービスを初期処理
  */
 public function boot(): void
 {
@@ -2075,11 +2075,11 @@ public function boot(): void
 }
 ```
 
-Then, when you would like to apply the default rules to a particular password undergoing validation, you may invoke the `defaults` method with no arguments:
+次に、バリデーション中の特定のパスワードにデフォルトのルールを適用したい場合は、引数なしで `defaults` メソッドを呼び出すことができます。
 
     'password' => ['required', Password::defaults()],
 
-Occasionally, you may want to attach additional validation rules to your default password validation rules. You may use the `rules` method to accomplish this:
+場合により、デフォルトのパスワードバリデーションルールに追加のバリデーションルールを加えたい場合、`rules` メソッドを使用できます。
 
     use App\Rules\ZxcvbnRule;
 
