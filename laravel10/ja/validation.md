@@ -2032,18 +2032,18 @@ Laravel は、`mimes`、`image`、`min`、`max` など、アップロードさ�
     // 最低1文字の記号が必要
     Password::min(8)->symbols()
 
-In addition, you may ensure that a password has not been compromised in a public password data breach leak using the `uncompromised` method:
+さらに、`uncompromised` メソッドを使用することで、一般に公開されているパスワードの漏洩情報を参照して、対象のパスワードが漏洩されていないかを確認できます。
 
     Password::min(8)->uncompromised()
 
-Internally, the `Password` rule object uses the [k-Anonymity](https://en.wikipedia.org/wiki/K-anonymity) model to determine if a password has been leaked via the [haveibeenpwned.com](https://haveibeenpwned.com) service without sacrificing the user's privacy or security.
+内部的には、`Password` ルールオブジェクトは [k-Anonymity](https://en.wikipedia.org/wiki/K-anonymity) モデルを使用し、ユーザーのプライバシーやセキュリティを犠牲にすることなくパスワードが漏洩したかどうかを [haveibeenpwned.com](https://haveibeenpwned.com) サービスを介して判断しています。
 
-By default, if a password appears at least once in a data leak, it will be considered compromised. You can customize this threshold using the first argument of the `uncompromised` method:
+デフォルトでは、パスワードがデータ漏洩の際に少なくとも1回出現すると、そのパスワードは侵害されたとみなされます。このしきい値は、`uncompromized` メソッドの第1引数を使用してカスタマイズできます。
 
-    // Ensure the password appears less than 3 times in the same data leak...
+    // 同じデータ漏洩でパスワードの出現回数が3回未満であることを確認
     Password::min(8)->uncompromised(3);
 
-Of course, you may chain all the methods in the examples above:
+もちろん、上記の例のすべてのメソッドをチェーンさせることもできます。
 
     Password::min(8)
         ->letters()
