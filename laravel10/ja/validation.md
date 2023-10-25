@@ -7,7 +7,7 @@
     - [バリデーションロジック](#quick-writing-the-validation-logic)
     - [バリデーションエラーの表示](#quick-displaying-the-validation-errors)
     - [フォームの再入力](#repoptaining-forms)
-    - [オプションフィールドに関する注意](#a-note-on-optional-fields)
+    - [オプションフィールドの注意](#a-note-on-optional-fields)
     - [バリデーションエラーのレスポンス形式](#validation-error-response-format)
 - [フォームリクエストのバリデーション](#form-request-validation)
     - [フォームリクエストの作成](#creating-form-requests)
@@ -251,9 +251,9 @@ Laravel はグローバルな `old` ヘルパも提供します。[Blade テン�
 ```
 
 <a name="a-note-on-optional-fields"></a>
-### オプションのフィールドに関する注意
+### オプションフィールドの注意
 
-デフォルトで Laravel にはアプリケーションのグローバルミドルウェアスタックに `TrimStrings` および `ConvertEmptyStringsToNull` ミドルウェアが含まれています。これらのミドルウェアは、スタック内の `App\Http\Kernel` クラスにリストされています。このため、バリデータに `null` 値を無効と判定させたくない場合は、「オプション」のリクエストフィールドを `nullable` としてマークする必要があります。例えば
+Laravel にはデフォルトでアプリケーションのグローバルミドルウェアスタックに `TrimStrings` と `ConvertEmptyStringsToNull` ミドルウェアが含まれています。これらのミドルウェアは、スタック内の `App\Http\Kernel` クラスに登録されています。このため、バリデータに `null` 値を無効と判定させたくない場合は、オプションのリクエストフィールドを `nullable` としてマークする必要があります。たとえば
 
     $request->validate([
         'title' => 'required|unique:posts|max:255',
@@ -261,7 +261,7 @@ Laravel はグローバルな `old` ヘルパも提供します。[Blade テン�
         'publish_at' => 'nullable|date',
     ]);
 
-この例では、 `publish_at` フィールドが `null` または有効な日付表現のいずれかであることを指定しています。`nullable` 修飾子がルール定義に追加されていない場合、バリデータは `null` を無効な日付として判定します。
+この例では、`publish_at` フィールドが `null` または有効な日付表現のいずれかであることを指定しています。`nullable` 修飾子がルール定義に追加されていない場合、バリデータは `null` を無効な日付として判定します。
 
 <a name="validation-error-response-format"></a>
 ### バリデーションエラーのレスポンス形式
