@@ -630,7 +630,7 @@ Laravel の組み込みエラーメッセージの多くには、バリデーシ
 <a name="performing-additional-validation"></a>
 ### 追加のバリデーションを実行
 
-Sometimes you need to perform additional validation after your initial validation is complete. You can accomplish this using the validator's `after` method. The `after` method accepts a closure or an array of callables which will be invoked after validation is complete. The given callables will receive an `Illuminate\Validation\Validator` instance, allowing you to raise additional error messages if necessary:
+場合によっては、最初のバリデーションが完了した後、追加のバリデーションを実行する必要がある際は、バリデータの `after` メソッドを使用して実現できます。`after` メソッドは、バリデーションが完了した後に呼び出されるクロージャ、または呼び出し可能オブジェクトの配列を受け取ります。指定された呼び出し可能オブジェクトは `Illuminate\Validation\Validator` インスタンスを受け取り、必要に応じて追加のエラーメッセージを生成できるようになります。
 
     use Illuminate\Support\Facades\Validator;
 
@@ -648,7 +648,7 @@ Sometimes you need to perform additional validation after your initial validatio
         // ...
     }
 
-As noted, the `after` method also accepts an array of callables, which is particularly convenient if your "after validation" logic is encapsulated in invokable classes, which will receive an `Illuminate\Validation\Validator` instance via their `__invoke` method:
+前述のとおり、`after` メソッドは呼び出し可能な配列も受け取ります。これは、"after validation" ロジックが呼び出し可能なクラスにカプセル化されており `__invoke` メソッドを介して `Illuminate\Validation\Validator` インスタンスを受け取る場合に特に便利です。
 
 ```php
 use App\Validation\ValidateShippingTime;
