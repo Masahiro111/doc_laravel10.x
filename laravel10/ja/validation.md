@@ -18,7 +18,7 @@
     - [自動リダイレクト](#automatic-redirection)
     - [名前付きエラーバッグ](#named-error-bags)
     - [エラー メッセージのカスタマイズ](#manual-customizing-the-error-messages)
-    - [バリデーション後のフック](#after-validation-hook)
+    - [追加のバリデーションを実行](#performing-additional-validation)
 - [バリデーション済み入力値の利用](#working-with-validated-input)
 - [エラーメッセージの取り扱い](#working-with-error-messages)
     - [言語ファイルでのカスタムメッセージの指定](#specifying-custom-messages-in-language-files)
@@ -69,7 +69,6 @@ Laravel の強力なバリデーション機能について学ぶために、フ
 
     namespace App\Http\Controllers;
 
-    use App\Http\Controllers\Controller;
     use Illuminate\Http\RedirectResponse;
     use Illuminate\Http\Request;
     use Illuminate\View\View;
@@ -104,7 +103,7 @@ Laravel の強力なバリデーション機能について学ぶために、フ
 
 従来の HTTP リクエスト処理中にバリデーションが失敗した場合、直前の URL へのリダイレクトレスポンスが生成されます。受信リクエストが XHR リクエストの場合、[バリデーションエラーメッセージを含む JSON レスポンス](#validation-error-response-format) が返されます。
 
- `validate` メソッドをより深く理解するために、 `store` メソッドに戻りましょう。
+ `validate` メソッドをより深く理解するために、 `store` メソッドに注目してみましょう。
 
     /**
      * 新しいブログ投稿の保存
@@ -123,7 +122,7 @@ Laravel の強力なバリデーション機能について学ぶために、フ
 
 ご覧のとおり、バリデーションルールは `validate` メソッドに渡されます。心配しないでください。利用可能なバリデーションルールはすべて [文書化](#available-validation-rules) されています。 繰り返しますが、バリデーションが失敗した場合は、適切なレスポンスが自動的に生成されます。バリデーションにパスすると、コントローラは通常どおりに実行を続けます。
 
-あるいは、バリデーションルールを区切りる役割りを持つ `|` 文字列の代わりに、配列としてバリデーションルールを指定することもできます。
+あるいは、バリデーションルールを区切りる役割りを持つ `|` 文字列の代わりに、配列でバリデーションルールを指定することもできます。
 
     $validatedData = $request->validate([
         'title' => ['required', 'unique:posts', 'max:255'],
@@ -197,7 +196,9 @@ Laravel の強力なバリデーション機能について学ぶために、フ
 <a name="quick-customizing-the-error-messages"></a>
 #### エラーメッセージのカスタマイズ
 
-Laravel の組み込みバリデーションルールにはそれぞれエラーメッセージがあり、アプリケーションの `lang/en/validation.php` ファイルにあります。このファイル内に、各バリデーションルールの翻訳エントリがあります。アプリケーションのニーズに基づいて、これらのメッセージを自由に変更または修正できます。
+Laravel の組み込みバリデーションルールにはそれぞれエラーメッセージがあり、アプリケーションの `lang/en/validation.php` ファイルに記述されています。アプリケーションに `lang` ディレクトリがない場合は、`lang:publish` Artisan コマンドを使用してディレクトリを作成するように Laravel に指示できます。
+
+`lang/en/validation.php` ファイル内に、各バリデーションルールの翻訳エントリがあります。アプリケーションのニーズに基づいて、これらのメッセージを自由に変更または修正できます。
 
 さらに、このファイルを別の言語ディレクトリにコピーして、メッセージをアプリケーションの言語に翻訳することもできます。Laravel の多言語化の詳細については、完全な [多言語化ドキュメント](/docs/{{version}}/localization) をご覧ください。
 
@@ -626,17 +627,16 @@ Laravel の組み込みエラーメッセージの多くには、バリデーシ
         'email' => 'email address',
     ]);
 
-<a name="after-validation-hook"></a>
-### After Validation Hook
+<a name="performing-additional-validation"></a>
+### 追加のバリデーションを実行
 
-You may also attach callbacks to be run after validation is completed. This allows you to easily perform further validation and even add more error messages to the message collection. To get started, call the `after` method on a validator instance:
+Sometimes you need to perform additional validation after your initial validation is complete. You can accomplish this using the validator's `after` method. The `after` method accepts a closure or an array of callables which will be invoked after validation is complete. The given callables will receive an `Illuminate\Validation\Validator` instance, allowing you to raise additional error messages if necessary:
 
-    use Illuminate\Support\Facades;
-    use Illuminate\Validation\Validator;
+    use Illuminate\Support\Facades\Validator;
 
-    $validator = Facades\Validator::make(/* ... */);
+    $validator = Validator::make(/* ... */);
 
-    $validator->after(function (Validator $validator) {
+    $validator->after(function ($validator) {
         if ($this->somethingElseIsInvalid()) {
             $validator->errors()->add(
                 'field', 'Something is wrong with this field!'
@@ -647,6 +647,21 @@ You may also attach callbacks to be run after validation is completed. This allo
     if ($validator->fails()) {
         // ...
     }
+
+As noted, the `after` method also accepts an array of callables, which is particularly convenient if your "after validation" logic is encapsulated in invokable classes, which will receive an `Illuminate\Validation\Validator` instance via their `__invoke` method:
+
+```php
+use App\Validation\ValidateShippingTime;
+use App\Validation\ValidateUserStatus;
+
+$validator->after([
+    new ValidateUserStatus,
+    new ValidateShippingTime,
+    function ($validator) {
+        // ...
+    },
+]);
+```
 
 <a name="working-with-validated-input"></a>
 ## バリデーション済み入力値の利用
