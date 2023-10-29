@@ -1,28 +1,28 @@
-# Error Handling
+# エラー処理
 
-- [Introduction](#introduction)
-- [Configuration](#configuration)
-- [The Exception Handler](#the-exception-handler)
-    - [Reporting Exceptions](#reporting-exceptions)
-    - [Exception Log Levels](#exception-log-levels)
-    - [Ignoring Exceptions By Type](#ignoring-exceptions-by-type)
-    - [Rendering Exceptions](#rendering-exceptions)
-    - [Reportable & Renderable Exceptions](#renderable-exceptions)
-- [Throttling Reported Exceptions](#throttling-reported-exceptions)
-- [HTTP Exceptions](#http-exceptions)
-    - [Custom HTTP Error Pages](#custom-http-error-pages)
+- [はじめに](#introduction)
+- [設定](#configuration)
+- [例外ハンドラ](#the-exception-handler)
+    - [例外のレポート](#reporting-exceptions)
+    - [例外のログレベル](#exception-log-levels)
+    - [タイプごとの例外の無視](#ignoring-exceptions-by-type)
+    - [例外のレンダリング](#rendering-exceptions)
+    - [Reportable 例外と Renderable 例外](#renderable-exceptions)
+- [レポートした例外の調節](#throttling-reported-exceptions)
+- [HTTP 例外](#http-exceptions)
+    - [カスタム HTTP エラーページ](#custom-http-error-pages)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-When you start a new Laravel project, error and exception handling is already configured for you. The `App\Exceptions\Handler` class is where all exceptions thrown by your application are logged and then rendered to the user. We'll dive deeper into this class throughout this documentation.
+新しい Laravel プロジェクトを開始すれば、エラーと例外の処理がすでに設定されています。`App\Exceptions\Handler` クラスは、アプリケーションによってスローされたすべての例外がログに記録され、ユーザーに表示される場所です。このドキュメントでは、このクラスについてさらに詳しく説明します。
 
 <a name="configuration"></a>
-## Configuration
+## 設定
 
-The `debug` option in your `config/app.php` configuration file determines how much information about an error is actually displayed to the user. By default, this option is set to respect the value of the `APP_DEBUG` environment variable, which is stored in your `.env` file.
+`config/app.php` 設定ファイルの `debug` オプションは、エラーに関する情報が実際にユーザーにどの程度表示されるかを指定します。デフォルトでは、このオプションは `.env` ファイルに保存されている `APP_DEBUG` 環境変数の値を尊重するように設定されています。
 
-During local development, you should set the `APP_DEBUG` environment variable to `true`. **In your production environment, this value should always be `false`. If the value is set to `true` in production, you risk exposing sensitive configuration values to your application's end users.**
+ローカルでの開発中は、`APP_DEBUG` 環境変数を `true` に設定する必要があります。**実稼働環境では、この値は常に `false` である必要があります。運用環境で値が `true` に設定されている場合、機密の構成値がアプリケーションのエンドユーザーに公開される危険があります。**
 
 <a name="the-exception-handler"></a>
 ## The Exception Handler
