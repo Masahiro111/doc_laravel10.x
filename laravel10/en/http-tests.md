@@ -22,26 +22,26 @@
 
 Laravel provides a very fluent API for making HTTP requests to your application and examining the responses. For example, take a look at the feature test defined below:
 
-    <?php
+```php
+<?php
 
-    namespace Tests\Feature;
+namespace Tests\Feature;
 
-    use Illuminate\Foundation\Testing\RefreshDatabase;
-    use Illuminate\Foundation\Testing\WithoutMiddleware;
-    use Tests\TestCase;
+use Tests\TestCase;
 
-    class ExampleTest extends TestCase
+class ExampleTest extends TestCase
+{
+    /**
+     * A basic test example.
+     */
+    public function test_the_application_returns_a_successful_response(): void
     {
-        /**
-         * A basic test example.
-         */
-        public function test_a_basic_request(): void
-        {
-            $response = $this->get('/');
+        $response = $this->get('/');
 
-            $response->assertStatus(200);
-        }
+        $response->assertStatus(200);
     }
+}
+```
 
 The `get` method makes a `GET` request into the application, while the `assertStatus` method asserts that the returned response should have the given HTTP status code. In addition to this simple assertion, Laravel also contains a variety of assertions for inspecting the response headers, content, JSON structure, and more.
 
@@ -56,8 +56,6 @@ Instead of returning an `Illuminate\Http\Response` instance, test request method
 
     namespace Tests\Feature;
 
-    use Illuminate\Foundation\Testing\RefreshDatabase;
-    use Illuminate\Foundation\Testing\WithoutMiddleware;
     use Tests\TestCase;
 
     class ExampleTest extends TestCase
@@ -235,6 +233,15 @@ Sometimes you may want to test that your application is throwing a specific exce
 In addition, if you would like to ensure that your application is not utilizing features that have been deprecated by the PHP language or the libraries your application is using, you may invoke the `withoutDeprecationHandling` method before making your request. When deprecation handling is disabled, deprecation warnings will be converted to exceptions, thus causing your test to fail:
 
     $response = $this->withoutDeprecationHandling()->get('/');
+
+The `assertThrows` method may be used to assert that code within a given closure throws an exception of the specified type:
+
+```php
+$this->assertThrows(
+    fn () => (new ProcessOrder)->execute(),
+    OrderInvalid::class
+);
+```
 
 <a name="testing-json-apis"></a>
 ## Testing JSON APIs
@@ -481,8 +488,6 @@ The `Illuminate\Http\UploadedFile` class provides a `fake` method which may be u
 
     namespace Tests\Feature;
 
-    use Illuminate\Foundation\Testing\RefreshDatabase;
-    use Illuminate\Foundation\Testing\WithoutMiddleware;
     use Illuminate\Http\UploadedFile;
     use Illuminate\Support\Facades\Storage;
     use Tests\TestCase;
@@ -621,8 +626,10 @@ Laravel's `Illuminate\Testing\TestResponse` class provides a variety of custom a
 [assertExactJson](#assert-exact-json)
 [assertForbidden](#assert-forbidden)
 [assertFound](#assert-found)
+[assertGone](#assert-gone)
 [assertHeader](#assert-header)
 [assertHeaderMissing](#assert-header-missing)
+[assertInternalServerError](#assert-internal-server-error)
 [assertJson](#assert-json)
 [assertJsonCount](#assert-json-count)
 [assertJsonFragment](#assert-json-fragment)
@@ -637,6 +644,7 @@ Laravel's `Illuminate\Testing\TestResponse` class provides a variety of custom a
 [assertJsonValidationErrors](#assert-json-validation-errors)
 [assertJsonValidationErrorFor](#assert-json-validation-error-for)
 [assertLocation](#assert-location)
+[assertMethodNotAllowed](#assert-method-not-allowed)
 [assertMovedPermanently](#assert-moved-permanently)
 [assertContent](#assert-content)
 [assertNoContent](#assert-no-content)
@@ -654,6 +662,8 @@ Laravel's `Illuminate\Testing\TestResponse` class provides a variety of custom a
 [assertSeeInOrder](#assert-see-in-order)
 [assertSeeText](#assert-see-text)
 [assertSeeTextInOrder](#assert-see-text-in-order)
+[assertServerError](#assert-server-error)
+[assertServiceUnavailable](#assert-server-unavailable)
 [assertSessionHas](#assert-session-has)
 [assertSessionHasInput](#assert-session-has-input)
 [assertSessionHasAll](#assert-session-has-all)
@@ -779,6 +789,13 @@ Assert that the response has a found (302) HTTP status code:
 
     $response->assertFound();
 
+<a name="assert-gone"></a>
+#### assertGone
+
+Assert that the response has a gone (410) HTTP status code:
+
+    $response->assertGone();
+
 <a name="assert-header"></a>
 #### assertHeader
 
@@ -792,6 +809,13 @@ Assert that the given header and value is present on the response:
 Assert that the given header is not present on the response:
 
     $response->assertHeaderMissing($headerName);
+
+<a name="assert-internal-server-error"></a>
+#### assertInternalServerError
+
+Assert that the response has an "Internal Server Error" (500) HTTP status code:
+
+    $response->assertInternalServerError();
 
 <a name="assert-json"></a>
 #### assertJson
@@ -979,6 +1003,13 @@ Assert the response has any JSON validation errors for the given key:
 
     $response->assertJsonValidationErrorFor(string $key, $responseKey = 'errors');
 
+<a name="assert-method-not-allowed"></a>
+#### assertMethodNotAllowed
+
+Assert that the response has a method not allowed (405) HTTP status code:
+
+    $response->assertMethodNotAllowed();
+
 <a name="assert-moved-permanently"></a>
 #### assertMovedPermanently
 
@@ -1047,7 +1078,7 @@ Assert that the response contains the given unencrypted cookie:
 
 Assert that the response is a redirect to the given URI:
 
-    $response->assertRedirect($uri);
+    $response->assertRedirect($uri = null);
 
 <a name="assert-redirect-contains"></a>
 #### assertRedirectContains
@@ -1061,7 +1092,7 @@ Assert whether the response is redirecting to a URI that contains the given stri
 
 Assert that the response is a redirect to the given [named route](/docs/{{version}}/routing#named-routes):
 
-    $response->assertRedirectToRoute($name = null, $parameters = []);
+    $response->assertRedirectToRoute($name, $parameters = []);
 
 <a name="assert-redirect-to-signed-route"></a>
 #### assertRedirectToSignedRoute
@@ -1105,6 +1136,20 @@ Assert that the given strings are contained in order within the response text. T
 
     $response->assertSeeTextInOrder(array $values, $escaped = true);
 
+<a name="assert-server-error"></a>
+#### assertServerError
+
+Assert that the response has a server error (>= 500 , < 600) HTTP status code:
+
+    $response->assertServerError();
+
+<a name="assert-server-unavailable"></a>
+#### assertServiceUnavailable
+
+Assert that the response has a "Service Unavailable" (503) HTTP status code:
+
+    $response->assertServiceUnavailable();
+
 <a name="assert-session-has"></a>
 #### assertSessionHas
 
@@ -1126,6 +1171,8 @@ Assert that the session has a given value in the [flashed input array](/docs/{{v
     $response->assertSessionHasInput($key, $value = null);
 
 If needed, a closure can be provided as the second argument to the `assertSessionHasInput` method. The assertion will pass if the closure returns `true`:
+
+    use Illuminate\Support\Facades\Crypt;
 
     $response->assertSessionHasInput($key, function (string $value) {
         return Crypt::decryptString($value) === 'secret';
@@ -1151,7 +1198,7 @@ For example, if your application's session contains `name` and `status` keys, yo
 Assert that the session contains an error for the given `$keys`. If `$keys` is an associative array, assert that the session contains a specific error message (value) for each field (key). This method should be used when testing routes that flash validation errors to the session instead of returning them as a JSON structure:
 
     $response->assertSessionHasErrors(
-        array $keys, $format = null, $errorBag = 'default'
+        array $keys = [], $format = null, $errorBag = 'default'
     );
 
 For example, to assert that the `name` and `email` fields have validation error messages that were flashed to the session, you may invoke the `assertSessionHasErrors` method like so:
@@ -1268,7 +1315,7 @@ You may also assert that a given key has a particular validation error message. 
 <a name="assert-view-has"></a>
 #### assertViewHas
 
-Assert that the response view contains given a piece of data:
+Assert that the response view contains a given piece of data:
 
     $response->assertViewHas($key, $value = null);
 

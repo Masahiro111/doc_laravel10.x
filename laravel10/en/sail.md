@@ -39,7 +39,7 @@ Laravel Sail is supported on macOS, Linux, and Windows (via [WSL2](https://docs.
 <a name="installation"></a>
 ## Installation & Setup
 
-Laravel Sail is automatically installed with all new Laravel applications so you may start using it immediately. To learn how to create a new Laravel application, please consult Laravel's [installation documentation](/docs/{{version}}/installation) for your operating system. During installation, you will be asked to choose which Sail supported services your application will be interacting with.
+Laravel Sail is automatically installed with all new Laravel applications so you may start using it immediately. To learn how to create a new Laravel application, please consult Laravel's [installation documentation](/docs/{{version}}/installation#laravel-and-docker) for your operating system. During installation, you will be asked to choose which Sail supported services your application will be interacting with.
 
 <a name="installing-sail-into-existing-applications"></a>
 ### Installing Sail Into Existing Applications
@@ -50,7 +50,7 @@ If you are interested in using Sail with an existing Laravel application, you ma
 composer require laravel/sail --dev
 ```
 
-After Sail has been installed, you may run the `sail:install` Artisan command. This command will publish Sail's `docker-compose.yml` file to the root of your application:
+After Sail has been installed, you may run the `sail:install` Artisan command. This command will publish Sail's `docker-compose.yml` file to the root of your application and modify your `.env` file with the required environment variables in order to connect to the Docker services:
 
 ```shell
 php artisan sail:install
@@ -61,6 +61,9 @@ Finally, you may start Sail. To continue learning how to use Sail, please contin
 ```shell
 ./vendor/bin/sail up
 ```
+
+> **Warning**
+> If you are using Docker Desktop for Linux, you should use the `default` Docker context by executing the following command: `docker context use default`.
 
 <a name="adding-additional-services"></a>
 #### Adding Additional Services
@@ -179,7 +182,7 @@ docker run --rm \
     composer install --ignore-platform-reqs
 ```
 
-When using the `laravelsail/phpXX-composer` image, you should use the same version of PHP that you plan to use for your application (`74`, `80`, `81`, or `82`).
+When using the `laravelsail/phpXX-composer` image, you should use the same version of PHP that you plan to use for your application (`80`, `81`, or `82`).
 
 <a name="executing-artisan-commands"></a>
 ### Executing Artisan Commands
@@ -294,6 +297,8 @@ By default, Sail will create a dedicated `testing` database so that your tests d
 ```yaml
 selenium:
     image: 'selenium/standalone-chrome'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     volumes:
         - '/dev/shm:/dev/shm'
     networks:
@@ -323,6 +328,8 @@ If your local machine contains an Apple Silicon chip, your `selenium` service mu
 ```yaml
 selenium:
     image: 'seleniarm/standalone-chromium'
+    extra_hosts:
+        - 'host.docker.internal:host-gateway'
     volumes:
         - '/dev/shm:/dev/shm'
     networks:
@@ -362,9 +369,12 @@ sail tinker
 <a name="sail-php-versions"></a>
 ## PHP Versions
 
-Sail currently supports serving your application via PHP 8.2, 8.1, PHP 8.0, or PHP 7.4. The default PHP version used by Sail is currently PHP 8.2. To change the PHP version that is used to serve your application, you should update the `build` definition of the `laravel.test` container in your application's `docker-compose.yml` file:
+Sail currently supports serving your application via PHP 8.3, 8.2, 8.1, or PHP 8.0. The default PHP version used by Sail is currently PHP 8.2. To change the PHP version that is used to serve your application, you should update the `build` definition of the `laravel.test` container in your application's `docker-compose.yml` file:
 
 ```yaml
+# PHP 8.3
+context: ./vendor/laravel/sail/runtimes/8.3
+
 # PHP 8.2
 context: ./vendor/laravel/sail/runtimes/8.2
 
@@ -373,9 +383,6 @@ context: ./vendor/laravel/sail/runtimes/8.1
 
 # PHP 8.0
 context: ./vendor/laravel/sail/runtimes/8.0
-
-# PHP 7.4
-context: ./vendor/laravel/sail/runtimes/7.4
 ```
 
 In addition, you may wish to update your `image` name to reflect the version of PHP being used by your application. This option is also defined in your application's `docker-compose.yml` file:

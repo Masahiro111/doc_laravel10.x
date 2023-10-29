@@ -33,6 +33,12 @@ If you're only interested in a particular section of the application overview ou
 php artisan about --only=environment
 ```
 
+Or, to explore a specific configuration file's values in detail, you may use the `config:show` Artisan command:
+
+```shell
+php artisan config:show database
+```
+
 <a name="environment-configuration"></a>
 ## Environment Configuration
 
@@ -201,6 +207,12 @@ Once the configuration has been cached, your application's `.env` file will not 
 
 For this reason, you should ensure you are only calling the `env` function from within your application's configuration (`config`) files. You can see many examples of this by examining Laravel's default configuration files. Configuration values may be accessed from anywhere in your application using the `config` function [described above](#accessing-configuration-values).
 
+The `config:clear` command may be used to purge the cached configuration:
+
+```shell
+php artisan config:clear
+```
+
 > **Warning**  
 > If you execute the `config:cache` command during your deployment process, you should be sure that you are only calling the `env` function from within your configuration files. Once the configuration has been cached, the `.env` file will not be loaded; therefore, the `env` function will only return external, system level environment variables.
 
@@ -252,7 +264,7 @@ https://example.com/1630542a-246b-4b66-afa1-dd72a4c43515
 When accessing this hidden route, you will then be redirected to the `/` route of the application. Once the cookie has been issued to your browser, you will be able to browse the application normally as if it was not in maintenance mode.
 
 > **Note**  
-> Your maintenance mode secret should typically consist of alpha-numeric characters and, optionally, dashes. You should avoid using characters that have special meaning in URLs such as `?`.
+> Your maintenance mode secret should typically consist of alpha-numeric characters and, optionally, dashes. You should avoid using characters that have special meaning in URLs such as `?` or `&`.
 
 <a name="pre-rendering-the-maintenance-mode-view"></a>
 #### Pre-Rendering The Maintenance Mode View

@@ -97,7 +97,7 @@ composer require laravel/cashier
 <a name="database-migrations"></a>
 ### Database Migrations
 
-Cashier's service provider registers its own database migration directory, so remember to migrate your database after installing the package. The Cashier migrations will add several columns to your `users` table as well as create a new `subscriptions` table to hold all of your customer's subscriptions:
+Cashier's service provider registers its own database migration directory, so remember to migrate your database after installing the package. The Cashier migrations will add several columns to your `users` table. It will also create a new `subscriptions` table to hold all of your customer's subscriptions and a `subscription_items` table for subscriptions with multiple prices:
 
 ```shell
 php artisan migrate
@@ -1456,8 +1456,9 @@ To ensure your application can handle Stripe webhooks, be sure to configure the 
 - `customer.subscription.deleted`
 - `customer.updated`
 - `customer.deleted`
-- `invoice.payment_succeeded`
+- `payment_method.automatically_updated`
 - `invoice.payment_action_required`
+- `invoice.payment_succeeded`
 
 For convenience, Cashier includes a `cashier:webhook` Artisan command. This command will create a webhook in Stripe that listens to all of the events required by Cashier:
 

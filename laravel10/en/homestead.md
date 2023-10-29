@@ -114,6 +114,8 @@ Homestead runs on any Windows, macOS, or Linux system and includes Nginx, PHP, M
 - Go
 - Grafana
 - InfluxDB
+- Logstash
+- Mailpit <small>(Replaces Mailhog)</small>
 - MariaDB
 - Meilisearch
 - MinIO
@@ -141,7 +143,7 @@ Homestead runs on any Windows, macOS, or Linux system and includes Nginx, PHP, M
 
 Before launching your Homestead environment, you must install [Vagrant](https://developer.hashicorp.com/vagrant/downloads) as well as one of the following supported providers:
 
-- [VirtualBox 6.1.x](https://www.virtualbox.org/wiki/Downloads)
+- [VirtualBox 6.1.x](https://www.virtualbox.org/wiki/Download_Old_Builds_6_1)
 - [Parallels](https://www.parallels.com/products/desktop/)
 
 All of these software packages provide easy-to-use visual installers for all popular operating systems.
@@ -215,7 +217,7 @@ folders:
 > **Warning**  
 > You should never mount `.` (the current directory) when using Homestead. This causes Vagrant to not map the current folder to `/vagrant` and will break optional features and cause unexpected results while provisioning.
 
-To enable [NFS](https://www.vagrantup.com/docs/synced-folders/nfs.html), you may add a `type` option to your folder mapping:
+To enable [NFS](https://developer.hashicorp.com/vagrant/docs/synced-folders/nfs), you may add a `type` option to your folder mapping:
 
 ```yaml
 folders:
@@ -227,7 +229,7 @@ folders:
 > **Warning**  
 > When using NFS on Windows, you should consider installing the [vagrant-winnfsd](https://github.com/winnfsd/vagrant-winnfsd) plug-in. This plug-in will maintain the correct user / group permissions for files and directories within the Homestead virtual machine.
 
-You may also pass any options supported by Vagrant's [Synced Folders](https://www.vagrantup.com/docs/synced-folders/basic_usage.html) by listing them under the `options` key:
+You may also pass any options supported by Vagrant's [Synced Folders](https://developer.hashicorp.com/vagrant/docs/synced-folders/basic_usage) by listing them under the `options` key:
 
 ```yaml
 folders:
@@ -483,7 +485,7 @@ sites:
       type: "statamic"
 ```
 
-The available site types are: `apache`, `apigility`, `expressive`, `laravel` (the default), `proxy`, `silverstripe`, `statamic`, `symfony2`, `symfony4`, and `zf`.
+The available site types are: `apache`, `apache-proxy`, `apigility`, `expressive`, `laravel` (the default), `proxy` (for nginx), `silverstripe`, `statamic`, `symfony2`, `symfony4`, and `zf`.
 
 <a name="site-parameters"></a>
 #### Site Parameters
@@ -714,6 +716,8 @@ After running the command, you will see an Ngrok screen appear which contains th
 share homestead.test -region=eu -subdomain=laravel
 ```
 
+If you need to share content over HTTPS rather than HTTP, using the `sshare` command instead of `share` will enable you to do so.
+
 > **Warning**  
 > Remember, Vagrant is inherently insecure and you are exposing your virtual machine to the Internet when running the `share` command.
 
@@ -780,7 +784,7 @@ networks:
       ip: "192.168.10.20"
 ```
 
-To enable a [bridged](https://www.vagrantup.com/docs/networking/public_network.html) interface, configure a `bridge` setting for the network and change the network type to `public_network`:
+To enable a [bridged](https://developer.hashicorp.com/vagrant/docs/networking/public_network) interface, configure a `bridge` setting for the network and change the network type to `public_network`:
 
 ```yaml
 networks:
@@ -789,12 +793,22 @@ networks:
       bridge: "en1: Wi-Fi (AirPort)"
 ```
 
-To enable [DHCP](https://www.vagrantup.com/docs/networking/public_network.html), just remove the `ip` option from your configuration:
+To enable [DHCP](https://developer.hashicorp.com/vagrant/docs/networking/public_network#dhcp), just remove the `ip` option from your configuration:
 
 ```yaml
 networks:
     - type: "public_network"
       bridge: "en1: Wi-Fi (AirPort)"
+```
+
+To update what device the network is using, you may add a `dev` option to the network's configuration. The default `dev` value is `eth0`:
+
+```yaml
+networks:
+    - type: "public_network"
+      ip: "192.168.10.20"
+      bridge: "en1: Wi-Fi (AirPort)"
+      dev: "enp2s0"
 ```
 
 <a name="extending-homestead"></a>
@@ -830,15 +844,4 @@ By default, Homestead configures the `natdnshostresolver` setting to `on`. This 
 ```yaml
 provider: virtualbox
 natdnshostresolver: 'off'
-```
-
-<a name="symbolic-links-on-windows"></a>
-#### Symbolic Links On Windows
-
-If symbolic links are not working properly on your Windows machine, you may need to add the following block to your `Vagrantfile`:
-
-```ruby
-config.vm.provider "virtualbox" do |v|
-    v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
-end
 ```

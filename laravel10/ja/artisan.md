@@ -1,48 +1,48 @@
-# Artisan Console
+# アーティザンコンソール
 
-- [Introduction](#introduction)
+- [はじめに](#introduction)
     - [Tinker (REPL)](#tinker)
-- [Writing Commands](#writing-commands)
-    - [Generating Commands](#generating-commands)
-    - [Command Structure](#command-structure)
-    - [Closure Commands](#closure-commands)
-    - [Isolatable Commands](#isolatable-commands)
-- [Defining Input Expectations](#defining-input-expectations)
-    - [Arguments](#arguments)
-    - [Options](#options)
-    - [Input Arrays](#input-arrays)
-    - [Input Descriptions](#input-descriptions)
-    - [Prompting For Missing Input](#prompting-for-missing-input)
-- [Command I/O](#command-io)
-    - [Retrieving Input](#retrieving-input)
-    - [Prompting For Input](#prompting-for-input)
-    - [Writing Output](#writing-output)
-- [Registering Commands](#registering-commands)
-- [Programmatically Executing Commands](#programmatically-executing-commands)
-    - [Calling Commands From Other Commands](#calling-commands-from-other-commands)
-- [Signal Handling](#signal-handling)
-- [Stub Customization](#stub-customization)
-- [Events](#events)
+- [コマンドの書き込み](#writing-commands)
+    - [コマンドの生成](#generating-commands)
+    - [コマンド構造](#command-structure)
+    - [クロージャコマンド](#closure-commands)
+    - [分離可能なコマンド](#isolatable-commands)
+- [入力期待値の定義](#defining-input-expectations)
+    - [引数](#arguments)
+    - [オプション](#options)
+    - [入力配列](#input-arrays)
+    - [入力の説明](#input-descriptions)
+    - [欠落入力のプロンプト](#prompting-for-missing-input)
+- [コマンド I/O](#command-io)
+    - [入力の取得](#retrieving-input)
+    - [入力のプロンプト](#prompting-for-input)
+    - [書き込み出力](#writing-output)
+- [コマンドの登録](#registering-commands)
+- [プログラムで実行するコマンド](#programmatically-executing-commands)
+    - [他のコマンドからコマンドを呼び出す](#calling-commands-from-other-commands)
+- [シグナル処理](#signal-handling)
+- [スタブカスタマイズ](#stub-customization)
+- [イベント](#events)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-Artisan is the command line interface included with Laravel. Artisan exists at the root of your application as the `artisan` script and provides a number of helpful commands that can assist you while you build your application. To view a list of all available Artisan commands, you may use the `list` command:
+Artisan は、Laravel に含まれるコマンドライン インターフェイスです。Artisan はアプリケーションのルートに「artisan」スクリプトとして存在し、アプリケーションの構築を支援する便利なコマンドを多数提供します。使用可能なすべての Artisan コマンドのリストを表示するには、「list」コマンドを使用します。
 
 ```shell
 php artisan list
 ```
 
-Every command also includes a "help" screen which displays and describes the command's available arguments and options. To view a help screen, precede the name of the command with `help`:
+すべてのコマンドには、コマンドで使用可能な引数とオプションを表示および説明する「ヘルプ」画面も含まれています。ヘルプ画面を表示するには、コマンド名の前に「help」を付けます。
 
 ```shell
 php artisan help migrate
 ```
 
 <a name="laravel-sail"></a>
-#### Laravel Sail
+#### Laravel セイル
 
-If you are using [Laravel Sail](/docs/{{version}}/sail) as your local development environment, remember to use the `sail` command line to invoke Artisan commands. Sail will execute your Artisan commands within your application's Docker containers:
+ローカル開発環境として [Laravel Sail](/docs/{{version}}/sail) を使用している場合は、必ず「sail」コマンドラインを使用して Artisan コマンドを呼び出してください。Sail は、アプリケーションの Docker コンテナ内で Artisan コマンドを実行します。
 
 ```shell
 ./vendor/bin/sail artisan list
@@ -51,584 +51,584 @@ If you are using [Laravel Sail](/docs/{{version}}/sail) as your local developmen
 <a name="tinker"></a>
 ### Tinker (REPL)
 
-Laravel Tinker is a powerful REPL for the Laravel framework, powered by the [PsySH](https://github.com/bobthecow/psysh) package.
+Laravel Tinker は、[PsySH](https://github.com/bobthecow/psysh) パッケージを利用した、Laravel フレームワーク用の強力な REPL です。
 
 <a name="installation"></a>
-#### Installation
+#### インストール
 
-All Laravel applications include Tinker by default. However, you may install Tinker using Composer if you have previously removed it from your application:
+すべての Laravel アプリケーションにはデフォルトで Tinker が含まれています。ただし、以前にアプリケーションから Tinker を削除した場合は、Composer を使用して Tinker をインストールできます。
 
 ```shell
 composer require laravel/tinker
 ```
 
-> **Note**  
-> Looking for a graphical UI for interacting with your Laravel application? Check out [Tinkerwell](https://tinkerwell.app)!
+> **Note**
+> Laravel アプリケーションと対話するためのグラフィカル UI をお探しですか? 【ティンカーウェル】(https://tinkerwell.app)をチェックしてみてください！
 
 <a name="usage"></a>
-#### Usage
+#### 使い方
 
-Tinker allows you to interact with your entire Laravel application on the command line, including your Eloquent models, jobs, events, and more. To enter the Tinker environment, run the `tinker` Artisan command:
+Tinker を使用すると、Eloquent モデル、ジョブ、イベントなどを含む Laravel アプリケーション全体をコマンドラインで操作できます。Tinker 環境に入るには、「tinker」 Artisan コマンドを実行します。
 
-```shell
-php artisan tinker
+```シェル
+php 職人のいじくり回し
 ```
 
-You can publish Tinker's configuration file using the `vendor:publish` command:
+`vendor:publish` コマンドを使用して、Tinker の設定ファイルを公開できます。
 
-```shell
-php artisan vendor:publish --provider="Laravel\Tinker\TinkerServiceProvider"
+```シェル
+php 職人ベンダー:publish --provider="Laravel\Tinker\TinkerServiceProvider"
 ```
 
-> **Warning**  
-> The `dispatch` helper function and `dispatch` method on the `Dispatchable` class depends on garbage collection to place the job on the queue. Therefore, when using tinker, you should use `Bus::dispatch` or `Queue::push` to dispatch jobs.
+> **警告**  
+> `Dispatchable` クラスの `dispatch` ヘルパー関数と `dispatch` メソッドは、ガベージ コレクションに依存してジョブをキューに配置します。したがって、tinker を使用する場合は、ジョブをディスパッチするために `Bus::dispatch` または `Queue::push` を使用する必要があります。
 
-<a name="command-allow-list"></a>
-#### Command Allow List
+<a name="コマンド許可リスト"></a>
+#### コマンド許可リスト
 
-Tinker utilizes an "allow" list to determine which Artisan commands are allowed to be run within its shell. By default, you may run the `clear-compiled`, `down`, `env`, `inspire`, `migrate`, `optimize`, and `up` commands. If you would like to allow more commands you may add them to the `commands` array in your `tinker.php` configuration file:
+Tinker は、「許可」リストを利用して、シェル内でどの Artisan コマンドの実行を許可するかを決定します。デフォルトでは、`clear-compiled`、`down`、`env`、`inspire`、`migrate`、`optimize`、および `up` コマンドを実行できます。さらに多くのコマンドを許可したい場合は、`tinker.php` 設定ファイルの `commands` 配列にコマンドを追加できます。
 
-    'commands' => [
+    'コマンド' => [
         // App\Console\Commands\ExampleCommand::class,
     ],
 
-<a name="classes-that-should-not-be-aliased"></a>
-#### Classes That Should Not Be Aliased
+<a name="クラスをエイリアス化すべきではない"></a>
+#### エイリアスを付けるべきではないクラス
 
-Typically, Tinker automatically aliases classes as you interact with them in Tinker. However, you may wish to never alias some classes. You may accomplish this by listing the classes in the `dont_alias` array of your `tinker.php` configuration file:
+通常、Tinker でクラスを操作すると、Tinker は自動的にクラスのエイリアスを作成します。ただし、クラスによっては別名を付けたくない場合もあります。これを行うには、`tinker.php` 設定ファイルの `dont_alias` 配列にクラスをリストします。
 
     'dont_alias' => [
-        App\Models\User::class,
+        アプリ\モデル\ユーザー::クラス、
     ],
 
-<a name="writing-commands"></a>
-## Writing Commands
+<a name="書き込みコマンド"></a>
+## コマンドの書き込み
 
-In addition to the commands provided with Artisan, you may build your own custom commands. Commands are typically stored in the `app/Console/Commands` directory; however, you are free to choose your own storage location as long as your commands can be loaded by Composer.
+Artisan で提供されるコマンドに加えて、独自のカスタム コマンドを作成できます。コマンドは通常、「app/Console/Commands」ディレクトリに保存されます。ただし、Composer によってコマンドをロードできる限り、独自の保存場所を自由に選択できます。
 
-<a name="generating-commands"></a>
-### Generating Commands
+<a name="コマンドの生成"></a>
+### コマンドの生成
 
-To create a new command, you may use the `make:command` Artisan command. This command will create a new command class in the `app/Console/Commands` directory. Don't worry if this directory does not exist in your application - it will be created the first time you run the `make:command` Artisan command:
+新しいコマンドを作成するには、「make:command」アーティザン コマンドを使用できます。このコマンドは、`app/Console/Commands` ディレクトリに新しいコマンド クラスを作成します。このディレクトリがアプリケーションに存在しなくても心配する必要はありません。このディレクトリは、「make:command」Artisan コマンドを初めて実行するときに作成されます。
 
-```shell
-php artisan make:command SendEmails
+```シェル
+php 職人 make:command SendEmails
 ```
 
-<a name="command-structure"></a>
-### Command Structure
+<a name="コマンド構造"></a>
+### コマンド構造
 
-After generating your command, you should define appropriate values for the `signature` and `description` properties of the class. These properties will be used when displaying your command on the `list` screen. The `signature` property also allows you to define [your command's input expectations](#defining-input-expectations). The `handle` method will be called when your command is executed. You may place your command logic in this method.
+コマンドを生成した後、クラスの「signature」プロパティと「description」プロパティに適切な値を定義する必要があります。これらのプロパティは、コマンドを「リスト」画面に表示するときに使用されます。`signature` プロパティを使用すると、[コマンドの入力期待値](#defining-input-expectations) を定義することもできます。コマンドが実行されると、`handle` メソッドが呼び出されます。コマンド ロジックをこのメソッドに配置できます。
 
-Let's take a look at an example command. Note that we are able to request any dependencies we need via the command's `handle` method. The Laravel [service container](/docs/{{version}}/container) will automatically inject all dependencies that are type-hinted in this method's signature:
+コマンドの例を見てみましょう。コマンドの `handle` メソッドを介して、必要な依存関係をリクエストできることに注意してください。Laravel [サービスコンテナ](/docs/{{version}}/container) は、このメソッドのシグネチャでタイプヒントされているすべての依存関係を自動的に挿入します。
 
     <?php
 
-    namespace App\Console\Commands;
+    名前空間 App\Console\Commands;
 
-    use App\Models\User;
-    use App\Support\DripEmailer;
-    use Illuminate\Console\Command;
+    App\Models\User を使用します。
+    App\Support\DripEmailer を使用します。
+    Illuminate\Console\Command を使用します。
 
-    class SendEmails extends Command
+    class SendEmails extends コマンド
     {
         /**
-         * The name and signature of the console command.
+         * コンソール コマンドの名前と署名。
          *
-         * @var string
+         * @var 文字列
          */
         protected $signature = 'mail:send {user}';
 
         /**
-         * The console command description.
+         ※コンソールコマンドの説明です。
          *
-         * @var string
+         * @var 文字列
          */
-        protected $description = 'Send a marketing email to a user';
+        protected $description = 'ユーザーにマーケティング電子メールを送信';
 
         /**
-         * Execute the console command.
+         ※コンソールコマンドを実行します。
          */
-        public function handle(DripEmailer $drip): void
+        パブリック関数ハンドル(DripEmailer $drip): void
         {
             $drip->send(User::find($this->argument('user')));
         }
     }
 
-> **Note**  
-> For greater code reuse, it is good practice to keep your console commands light and let them defer to application services to accomplish their tasks. In the example above, note that we inject a service class to do the "heavy lifting" of sending the e-mails.
+> **注意**  
+> コードをより再利用するには、コンソール コマンドを軽量にし、アプリケーション サービスに任せてタスクを実行することをお勧めします。上の例では、電子メールの送信という「重労働」を行うためにサービス クラスを挿入していることに注意してください。
 
 <a name="closure-commands"></a>
-### Closure Commands
+### 終了コマンド
 
-Closure based commands provide an alternative to defining console commands as classes. In the same way that route closures are an alternative to controllers, think of command closures as an alternative to command classes. Within the `commands` method of your `app/Console/Kernel.php` file, Laravel loads the `routes/console.php` file:
+クロージャ ベースのコマンドは、コンソール コマンドをクラスとして定義する代替手段を提供します。ルート クロージャがコントローラの代替であるのと同じように、コマンド クロージャはコマンド クラスの代替であると考えてください。`app/Console/Kernel.php` ファイルの `commands` メソッド内で、Laravel は `routes/console.php` ファイルを読み込みます。
 
     /**
-     * Register the closure based commands for the application.
+     * アプリケーションのクロージャベースのコマンドを登録します。
      */
-    protected function commands(): void
+    保護された関数コマンド(): void
     {
-        require base_path('routes/console.php');
+        requirebase_path('routes/console.php');
     }
 
-Even though this file does not define HTTP routes, it defines console based entry points (routes) into your application. Within this file, you may define all of your closure based console commands using the `Artisan::command` method. The `command` method accepts two arguments: the [command signature](#defining-input-expectations) and a closure which receives the command's arguments and options:
+このファイルは HTTP ルートを定義しませんが、アプリケーションへのコンソール ベースのエントリ ポイント (ルート) を定義します。このファイル内で、`Artisan::command` メソッドを使用して、クロージャ ベースのコンソール コマンドをすべて定義できます。`command` メソッドは 2 つの引数を受け入れます: [コマンド シグネチャ](#defining-input-expectations) と、コマンドの引数とオプションを受け取るクロージャです。
 
     Artisan::command('mail:send {user}', function (string $user) {
-        $this->info("Sending email to: {$user}!");
+        $this->info("メールの送信先: {$user}!");
     });
 
-The closure is bound to the underlying command instance, so you have full access to all of the helper methods you would typically be able to access on a full command class.
+クロージャは基礎となるコマンド インスタンスにバインドされているため、通常は完全なコマンド クラスでアクセスできるすべてのヘルパー メソッドに完全にアクセスできます。
 
-<a name="type-hinting-dependencies"></a>
-#### Type-Hinting Dependencies
+<a name="type-hinting-dependency"></a>
+#### タイプヒンティングの依存関係
 
-In addition to receiving your command's arguments and options, command closures may also type-hint additional dependencies that you would like resolved out of the [service container](/docs/{{version}}/container):
+コマンドの引数とオプションを受け取ることに加えて、コマンド クロージャは、[サービス コンテナ](/docs/{{version}}/container) から解決したい追加の依存関係をタイプヒントで指定することもできます。
 
-    use App\Models\User;
-    use App\Support\DripEmailer;
+    App\Models\User を使用します。
+    App\Support\DripEmailer を使用します。
 
     Artisan::command('mail:send {user}', function (DripEmailer $drip, string $user) {
-        $drip->send(User::find($user));
+        $drip->send(ユーザー::find($user));
     });
 
 <a name="closure-command-descriptions"></a>
-#### Closure Command Descriptions
+#### クロージャコマンドの説明
 
-When defining a closure based command, you may use the `purpose` method to add a description to the command. This description will be displayed when you run the `php artisan list` or `php artisan help` commands:
+クロージャベースのコマンドを定義する場合、「目的」メソッドを使用してコマンドに説明を追加できます。この説明は、`phpArtisanList`または`phpArtisanhelp`コマンドを実行すると表示されます。
 
     Artisan::command('mail:send {user}', function (string $user) {
         // ...
-    })->purpose('Send a marketing email to a user');
+    })->Purpose('ユーザーにマーケティング電子メールを送信');
 
 <a name="isolatable-commands"></a>
-### Isolatable Commands
+### 分離可能なコマンド
 
-> **Warning**
-> To utilize this feature, your application must be using the `memcached`, `redis`, `dynamodb`, `database`, `file`, or `array` cache driver as your application's default cache driver. In addition, all servers must be communicating with the same central cache server.
+> **警告**
+> この機能を利用するには、アプリケーションは `memcached`、`redis`、`dynamodb`、`database`、`file`、または `array` キャッシュ ドライバーをアプリケーションのデフォルト キャッシュ ドライバーとして使用する必要があります。さらに、すべてのサーバーが同じ中央キャッシュ サーバーと通信している必要があります。
 
-Sometimes you may wish to ensure that only one instance of a command can run at a time. To accomplish this, you may implement the `Illuminate\Contracts\Console\Isolatable` interface on your command class:
+場合によっては、コマンドのインスタンスを一度に 1 つだけ実行できるようにしたい場合があります。これを実現するには、コマンド クラスに `Illuminate\Contracts\Console\Isolatable` インターフェイスを実装します。
 
     <?php
 
-    namespace App\Console\Commands;
+    名前空間 App\Console\Commands;
 
-    use Illuminate\Console\Command;
-    use Illuminate\Contracts\Console\Isolatable;
+    Illuminate\Console\Command を使用します。
+    Illuminate\Contracts\Console\Isolatable を使用します。
 
-    class SendEmails extends Command implements Isolatable
+    class SendEmails extends コマンドは Isolatable を実装します
     {
         // ...
     }
 
-When a command is marked as `Isolatable`, Laravel will automatically add an `--isolated` option to the command. When the command is invoked with that option, Laravel will ensure that no other instances of that command are already running. Laravel accomplishes this by attempting to acquire an atomic lock using your application's default cache driver. If other instances of the command are running, the command will not execute; however, the command will still exit with a successful exit status code:
+コマンドが「分離可能」としてマークされている場合、Laravel は自動的にコマンドに「--isoulated」オプションを追加します。そのオプションを指定してコマンドが呼び出されると、Laravel はそのコマンドの他のインスタンスがすでに実行されていないことを確認します。Laravel は、アプリケーションのデフォルトのキャッシュドライバーを使用してアトミックロックの取得を試みることによってこれを実現します。コマンドの他のインスタンスが実行中の場合、コマンドは実行されません。ただし、コマンドは引き続き正常終了ステータス コードで終了します。
 
-```shell
-php artisan mail:send 1 --isolated
+```シェル
+php 職人メール:send 1 --isoulated
 ```
 
-If you would like to specify the exit status code that the command should return if it is not able to execute, you may provide the desired status code via the `isolated` option:
+コマンドが実行できない場合に返される終了ステータス コードを指定したい場合は、「isoulated」オプションを使用して目的のステータス コードを指定できます。
 
-```shell
-php artisan mail:send 1 --isolated=12
+```シェル
+php 職人メール:send 1 --isorated=12
 ```
 
-<a name="lock-id"></a>
-#### Lock ID
+<a name="ロックid"></a>
+#### ロック ID
 
-By default, Laravel will use the command's name to generate the string key that is used to acquire the atomic lock in your application's cache. However, you may customize this key by defining an `isolatableId` method on your Artisan command class, allowing you to integrate the command's arguments or options into the key:
+デフォルトでは、Laravel はコマンド名を使用して、アプリケーションのキャッシュ内のアトミック ロックを取得するために使用される文字列キーを生成します。ただし、Artisan コマンド クラスで `isolatableId` メソッドを定義することでこのキーをカスタマイズでき、コマンドの引数またはオプションをキーに統合できます。
 
 ```php
 /**
- * Get the isolatable ID for the command.
+ * コマンドの分離可能な ID を取得します。
  */
-public function isolatableId(): string
+パブリック関数 isolatableId(): 文字列
 {
     return $this->argument('user');
 }
 ```
 
-<a name="lock-expiration-time"></a>
-#### Lock Expiration Time
+<a name="ロック有効期限"></a>
+#### ロックの有効期限
 
-By default, isolation locks expire after the command is finished. Or, if the command is interrupted and unable to finish, the lock will expire after one hour. However, you may adjust the lock expiration time by defining a `isolationLockExpiresAt` method on your command:
+デフォルトでは、分離ロックはコマンドの終了後に期限切れになります。または、コマンドが中断されて完了できない場合、ロックは 1 時間後に期限切れになります。ただし、コマンドで `isolationLockExpiresAt` メソッドを定義することで、ロックの有効期限を調整できます。
 
 ```php
-use DateTimeInterface;
-use DateInterval;
+DateTimeInterface を使用します。
+DateInterval を使用します。
 
 /**
- * Determine when an isolation lock expires for the command.
+ * コマンドの分離ロックがいつ期限切れになるかを決定します。
  */
-public function isolationLockExpiresAt(): DateTimeInterface|DateInterval
+パブリック関数isolationLockExpiresAt(): DateTimeInterface|DateInterval
 {
     return now()->addMinutes(5);
 }
 ```
 
-<a name="defining-input-expectations"></a>
-## Defining Input Expectations
+<a name="定義入力期待値"></a>
+## 入力の期待値の定義
 
-When writing console commands, it is common to gather input from the user through arguments or options. Laravel makes it very convenient to define the input you expect from the user using the `signature` property on your commands. The `signature` property allows you to define the name, arguments, and options for the command in a single, expressive, route-like syntax.
+コンソール コマンドを作成するときは、引数またはオプションを通じてユーザーからの入力を収集するのが一般的です。Laravel では、コマンドの `signature` プロパティを使用して、ユーザーから期待する入力を定義するのが非常に便利です。「signature」プロパティを使用すると、コマンドの名前、引数、オプションを単一の表現力豊かなルートのような構文で定義できます。
 
 <a name="arguments"></a>
-### Arguments
+### 引数
 
-All user supplied arguments and options are wrapped in curly braces. In the following example, the command defines one required argument: `user`:
+ユーザーが指定したすべての引数とオプションは中括弧で囲まれます。次の例では、コマンドは 1 つの必須引数 `user` を定義します。
 
     /**
-     * The name and signature of the console command.
+     * コンソール コマンドの名前と署名。
      *
-     * @var string
+     * @var 文字列
      */
     protected $signature = 'mail:send {user}';
 
-You may also make arguments optional or define default values for arguments:
+引数をオプションにしたり、引数のデフォルト値を定義したりすることもできます。
 
-    // Optional argument...
-    'mail:send {user?}'
+    // オプションの引数...
+    'メール: {ユーザー?} を送信'
 
-    // Optional argument with default value...
+    // デフォルト値を持つオプションの引数...
     'mail:send {user=foo}'
 
-<a name="options"></a>
-### Options
+<a name="オプション"></a>
+### オプション
 
-Options, like arguments, are another form of user input. Options are prefixed by two hyphens (`--`) when they are provided via the command line. There are two types of options: those that receive a value and those that don't. Options that don't receive a value serve as a boolean "switch". Let's take a look at an example of this type of option:
+オプションは、引数と同様、ユーザー入力の別の形式です。コマンド ライン経由でオプションを指定する場合、オプションには 2 つのハイフン (「--」) が接頭辞として付けられます。オプションには、値を受け取るオプションと受け取らないオプションの 2 種類があります。値を受け取らないオプションは、ブール値の「スイッチ」として機能します。このタイプのオプションの例を見てみましょう。
 
     /**
-     * The name and signature of the console command.
+     * コンソール コマンドの名前と署名。
      *
-     * @var string
+     * @var 文字列
      */
     protected $signature = 'mail:send {user} {--queue}';
 
-In this example, the `--queue` switch may be specified when calling the Artisan command. If the `--queue` switch is passed, the value of the option will be `true`. Otherwise, the value will be `false`:
+この例では、Artisan コマンドを呼び出すときに「--queue」スイッチを指定できます。`--queue` スイッチが渡された場合、オプションの値は `true` になります。それ以外の場合、値は「false」になります。
 
-```shell
-php artisan mail:send 1 --queue
+```シェル
+php 職人メール:send 1 --queue
 ```
 
-<a name="options-with-values"></a>
-#### Options With Values
+<a name="オプション付き値"></a>
+#### 値を含むオプション
 
-Next, let's take a look at an option that expects a value. If the user must specify a value for an option, you should suffix the option name with a `=` sign:
+次に、値を期待するオプションを見てみましょう。ユーザーがオプションの値を指定する必要がある場合は、オプション名の末尾に「=」記号を付ける必要があります。
 
     /**
-     * The name and signature of the console command.
+     * コンソール コマンドの名前と署名。
      *
-     * @var string
+     * @var 文字列
      */
     protected $signature = 'mail:send {user} {--queue=}';
 
-In this example, the user may pass a value for the option like so. If the option is not specified when invoking the command, its value will be `null`:
+この例では、ユーザーは次のようにオプションの値を渡すことができます。コマンドを呼び出すときにオプションが指定されていない場合、その値は「null」になります。
 
-```shell
-php artisan mail:send 1 --queue=default
+```シェル
+php 職人メール:send 1 --queue=default
 ```
 
-You may assign default values to options by specifying the default value after the option name. If no option value is passed by the user, the default value will be used:
+オプション名の後にデフォルト値を指定することで、オプションにデフォルト値を割り当てることができます。ユーザーによってオプション値が渡されない場合は、デフォルト値が使用されます。
 
     'mail:send {user} {--queue=default}'
 
-<a name="option-shortcuts"></a>
-#### Option Shortcuts
+<a name="オプション-ショートカット"></a>
+#### オプションのショートカット
 
-To assign a shortcut when defining an option, you may specify it before the option name and use the `|` character as a delimiter to separate the shortcut from the full option name:
+オプションを定義するときにショートカットを割り当てるには、オプション名の前にショートカットを指定し、区切り文字として「|」文字を使用してショートカットと完全なオプション名を区切ります。
 
     'mail:send {user} {--Q|queue}'
 
-When invoking the command on your terminal, option shortcuts should be prefixed with a single hyphen and no `=` character should be included when specifying a value for the option:
+ターミナルでコマンドを呼び出すときは、オプションのショートカットの前に 1 つのハイフンを付ける必要があり、オプションの値を指定するときに「=」文字を含めないでください。
 
-```shell
-php artisan mail:send 1 -Qdefault
+```シェル
+php 職人メール:send 1 -Qdefault
 ```
 
 <a name="input-arrays"></a>
-### Input Arrays
+### 入力配列
 
-If you would like to define arguments or options to expect multiple input values, you may use the `*` character. First, let's take a look at an example that specifies such an argument:
+複数の入力値を想定する引数またはオプションを定義したい場合は、「*」文字を使用できます。まず、そのような引数を指定する例を見てみましょう。
 
-    'mail:send {user*}'
+    'メール: {ユーザー*} を送信'
 
-When calling this method, the `user` arguments may be passed in order to the command line. For example, the following command will set the value of `user` to an array with `1` and `2` as its values:
+このメソッドを呼び出すとき、「user」引数をコマンドラインに順番に渡すことができます。たとえば、次のコマンドは、`user` の値を、値として `1` と `2` を含む配列に設定します。
 
-```shell
-php artisan mail:send 1 2
+```シェル
+php 職人メール:送信 1 2
 ```
 
-This `*` character can be combined with an optional argument definition to allow zero or more instances of an argument:
+この `*` 文字をオプションの引数定義と組み合わせて、引数の 0 個以上のインスタンスを許可できます。
 
-    'mail:send {user?*}'
+    'メール: {ユーザー?*} を送信'
 
-<a name="option-arrays"></a>
-#### Option Arrays
+<a name="オプション配列"></a>
+#### オプション配列
 
-When defining an option that expects multiple input values, each option value passed to the command should be prefixed with the option name:
+複数の入力値を予期するオプションを定義する場合、コマンドに渡される各オプション値の先頭にオプション名を付ける必要があります。
 
-    'mail:send {--id=*}'
+    'メール:送信 {--id=*}'
 
-Such a command may be invoked by passing multiple `--id` arguments:
+このようなコマンドは、複数の `--id` 引数を渡すことによって呼び出すことができます。
 
-```shell
-php artisan mail:send --id=1 --id=2
+```シェル
+php 職人メール:send --id=1 --id=2
 ```
 
 <a name="input-descriptions"></a>
-### Input Descriptions
+### 入力の説明
 
-You may assign descriptions to input arguments and options by separating the argument name from the description using a colon. If you need a little extra room to define your command, feel free to spread the definition across multiple lines:
+コロンを使用して引数名と説明を区切ることにより、入力引数とオプションに説明を割り当てることができます。コマンドを定義するのに少し余裕が必要な場合は、自由に定義を複数行に分けて記述してください。
 
     /**
-     * The name and signature of the console command.
+     * コンソール コマンドの名前と署名。
      *
-     * @var string
+     * @var 文字列
      */
-    protected $signature = 'mail:send
-                            {user : The ID of the user}
-                            {--queue : Whether the job should be queued}';
+    protected $signature = 'メール:送信
+                            {user : ユーザーのID}
+                            {--queue : ジョブをキューに入れるかどうか}';
 
-<a name="prompting-for-missing-input"></a>
-### Prompting For Missing Input
+<a name="不足入力のプロンプト"></a>
+### 不足している入力のプロンプト
 
-If your command contains required arguments, the user will receive an error message when they are not provided. Alternatively, you may configure your command to automatically prompt the user when required arguments are missing by implementing the `PromptsForMissingInput` interface:
+コマンドに必須の引数が含まれている場合、それらが指定されていないと、ユーザーはエラー メッセージを受け取ります。あるいは、「PromptsForMissingInput」インターフェースを実装することで、必要な引数が欠落している場合にユーザーに自動的にプロンプ​​トを表示するようにコマンドを構成することもできます。
 
     <?php
 
-    namespace App\Console\Commands;
+    名前空間 App\Console\Commands;
 
-    use Illuminate\Console\Command;
-    use Illuminate\Contracts\Console\PromptsForMissingInput;
+    Illuminate\Console\Command を使用します。
+    Illuminate\Contracts\Console\PromptsForMissingInput を使用します。
 
-    class SendEmails extends Command implements PromptsForMissingInput
+    class SendEmails extends Command 実装 PromptsForMissingInput
     {
         /**
-         * The name and signature of the console command.
+         * コンソール コマンドの名前と署名。
          *
-         * @var string
+         * @var 文字列
          */
         protected $signature = 'mail:send {user}';
 
         // ...
     }
 
-If Laravel needs to gather a required argument from the user, it will automatically ask the user for the argument by intelligently phrasing the question using either the argument name or description. If you wish to customize the question used to gather the required argument, you may implement the `promptForMissingArgumentsUsing` method, returning an array of questions keyed by the argument names:
+Laravel がユーザーから必要な引数を収集する必要がある場合、引数の名前または説明を使用して質問をインテリジェントに表現することで、自動的にユーザーに引数を求めます。必要な引数を収集するために使用される質問をカスタマイズしたい場合は、引数名をキーとする質問の配列を返す `promptForMissingArgumentsUsing` メソッドを実装できます。
 
     /**
-     * Prompt for missing input arguments using the returned questions.
+     * 返された質問を使用して、入力引数が欠落しているかどうかを確認するプロンプトを表示します。
      *
-     * @return array
+     * @return 配列
      */
-    protected function promptForMissingArgumentsUsing()
+    保護された関数promptForMissingArgumentsUsing()
     {
-        return [
-            'user' => 'Which user ID should receive the mail?',
+        戻る [
+            'user' => 'どのユーザー ID がメールを受信する必要がありますか?',
         ];
     }
 
-You may also provide placeholder text by using a tuple containing the question and placeholder:
+質問とプレースホルダーを含むタプルを使用して、プレースホルダー テキストを提供することもできます。
 
-    return [
-        'user' => ['Which user ID should receive the mail?', 'E.g. 123'],
+    戻る [
+        'user' => ['どのユーザー ID がメールを受信しますか?', '例: 123'],
     ];
 
-If you would like complete control over the prompt, you may provide a closure that should prompt the user and return their answer:
+プロンプトを完全に制御したい場合は、ユーザーにプロンプ​​トを表示し、その回答を返すクロージャーを提供できます。
 
-    use App\Models\User;
-    use function Laravel\Prompts\search;
+    App\Models\User を使用します。
+    Laravel\Prompts\search 関数を使用します。
 
     // ...
 
-    return [
-        'user' => fn () => search(
-            label: 'Search for a user:',
-            placeholder: 'E.g. Taylor Otwell',
-            options: fn ($value) => strlen($value) > 0
+    戻る [
+        'ユーザー' => fn () => 検索(
+            ラベル: 'ユーザーの検索:',
+            プレースホルダー: 'テイラー・オトウェルなど',
+            オプション: fn ($value) => strlen($value) > 0
                 ? User::where('name', 'like', "%{$value}%")->pluck('name', 'id')
                 : []
         ),
     ];
 
-> **Note**  
-The comprehensive [Laravel Prompts](/docs/{{version}}/prompts) documentation includes additional information on the available prompts and their usage.
+> **注意**  
+包括的な [Laravel プロンプト](/docs/{{version}}/prompts) ドキュメントには、利用可能なプロンプトとその使用法に関する追加情報が含まれています。
 
-If you wish to prompt the user to select or enter [options](#options), you may include prompts in your command's `handle` method. However, if you only wish to prompt the user when they have also been automatically prompted for missing arguments, then you may implement the `afterPromptingForMissingArguments` method:
+ユーザーに [options](#options) の選択または入力を求めるプロンプトを表示したい場合は、コマンドの `handle` メソッドにプロンプ​​トを含めることができます。ただし、不足している引数についても自動的にプロンプ​​トが表示された場合にのみユーザーにプロンプ​​トを表示したい場合は、`afterPromptingForMissingArguments` メソッドを実装できます。
 
-    use Symfony\Component\Console\Input\InputInterface;
-    use Symfony\Component\Console\Output\OutputInterface;
-    use function Laravel\Prompts\confirm;
+    Symfony\Component\Console\Input\InputInterface を使用します。
+    Symfony\Component\Console\Output\OutputInterface を使用します。
+    Laravel\Prompts\confirm 関数を使用します。
 
     // ...
 
     /**
-     * Perform actions after the user was prompted for missing arguments.
+     * ユーザーに引数の不足を求めるプロンプトが表示された後でアクションを実行します。
      *
-     * @param  \Symfony\Component\Console\Input\InputInterface  $input
-     * @param  \Symfony\Component\Console\Output\OutputInterface  $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return void
      */
-    protected function afterPromptingForMissingArguments(InputInterface $input, OutputInterface $output)
+    保護された関数 afterPromptingForMissingArguments(InputInterface $input, OutputInterface $output)
     {
-        $input->setOption('queue', confirm(
-            label: 'Would you like to queue the mail?',
-            default: $this->option('queue')
+        $input->setOption('キュー',confirm(
+            ラベル: 'メールをキューに入れますか?',
+            デフォルト: $this->option('queue')
         ));
     }
 
 <a name="command-io"></a>
-## Command I/O
+## コマンド I/O
 
-<a name="retrieving-input"></a>
-### Retrieving Input
+<a name="入力の取得"></a>
+### 入力の取得
 
-While your command is executing, you will likely need to access the values for the arguments and options accepted by your command. To do so, you may use the `argument` and `option` methods. If an argument or option does not exist, `null` will be returned:
+コマンドの実行中に、コマンドで受け入れられる引数とオプションの値にアクセスする必要がある場合があります。これを行うには、「argument」メソッドと「option」メソッドを使用します。引数またはオプションが存在しない場合は、「null」が返されます。
 
     /**
-     * Execute the console command.
+     ※コンソールコマンドを実行します。
      */
-    public function handle(): void
+    パブリック関数ハンドル(): void
     {
         $userId = $this->argument('user');
     }
 
-If you need to retrieve all of the arguments as an `array`, call the `arguments` method:
+すべての引数を「配列」として取得する必要がある場合は、「arguments」メソッドを呼び出します。
 
     $arguments = $this->arguments();
 
-Options may be retrieved just as easily as arguments using the `option` method. To retrieve all of the options as an array, call the `options` method:
+オプションは、「option」メソッドを使用して引数と同じくらい簡単に取得できます。すべてのオプションを配列として取得するには、「options」メソッドを呼び出します。
 
-    // Retrieve a specific option...
+    // 特定のオプションを取得します...
     $queueName = $this->option('queue');
 
-    // Retrieve all options as an array...
+    // すべてのオプションを配列として取得します...
     $options = $this->options();
 
-<a name="prompting-for-input"></a>
-### Prompting For Input
+<a name="入力のプロンプト"></a>
+### 入力を求めるプロンプト
 
-> **Note**  
-> [Laravel Prompts](/docs/{{version}}/prompts) is a PHP package for adding beautiful and user-friendly forms to your command-line applications, with browser-like features including placeholder text and validation.
+> **注意**  
+> [Laravel Prompts](/docs/{{version}}/prompts) は、プレースホルダーテキストや検証などのブラウザーのような機能を備えた、美しくユーザーフレンドリーなフォームをコマンドラインアプリケーションに追加するための PHP パッケージです。
 
-In addition to displaying output, you may also ask the user to provide input during the execution of your command. The `ask` method will prompt the user with the given question, accept their input, and then return the user's input back to your command:
+出力を表示するだけでなく、コマンドの実行中にユーザーに入力を求めることもできます。「ask」メソッドは、指定された質問をユーザーに要求し、入力を受け入れてから、ユーザーの入力をコマンドに返します。
 
     /**
-     * Execute the console command.
+     ※コンソールコマンドを実行します。
      */
-    public function handle(): void
+    パブリック関数ハンドル(): void
     {
-        $name = $this->ask('What is your name?');
+        $name = $this->ask('あなたの名前は何ですか?');
 
         // ...
     }
 
-The `secret` method is similar to `ask`, but the user's input will not be visible to them as they type in the console. This method is useful when asking for sensitive information such as passwords:
+「secret」メソッドは「ask」に似ていますが、ユーザーがコンソールに入力するときにユーザーの入力は表示されません。この方法は、パスワードなどの機密情報を要求する場合に役立ちます。
 
-    $password = $this->secret('What is the password?');
+    $password = $this->secret('パスワードは何ですか?');
 
-<a name="asking-for-confirmation"></a>
-#### Asking For Confirmation
+<a name="確認を求める"></a>
+#### 確認を求める
 
-If you need to ask the user for a simple "yes or no" confirmation, you may use the `confirm` method. By default, this method will return `false`. However, if the user enters `y` or `yes` in response to the prompt, the method will return `true`.
+ユーザーに簡単な「はいまたはいいえ」の確認を求める必要がある場合は、`confirm` メソッドを使用できます。デフォルトでは、このメソッドは「false」を返します。ただし、ユーザーがプロンプトに対して「y」または「yes」を入力すると、メソッドは「true」を返します。
 
-    if ($this->confirm('Do you wish to continue?')) {
+    if ($this->confirm('続行しますか?')) {
         // ...
     }
 
-If necessary, you may specify that the confirmation prompt should return `true` by default by passing `true` as the second argument to the `confirm` method:
+必要に応じて、「confirm」メソッドの 2 番目の引数として「true」を渡すことで、確認プロンプトがデフォルトで「true」を返すように指定できます。
 
-    if ($this->confirm('Do you wish to continue?', true)) {
+    if ($this->confirm('続行しますか?', true)) {
         // ...
     }
 
-<a name="auto-completion"></a>
-#### Auto-Completion
+<a name="オートコンプリート"></a>
+#### 自動補完
 
-The `anticipate` method can be used to provide auto-completion for possible choices. The user can still provide any answer, regardless of the auto-completion hints:
+「anticipate」メソッドを使用すると、可能な選択肢を自動補完することができます。ユーザーは、オートコンプリートのヒントに関係なく、任意の回答を入力できます。
 
-    $name = $this->anticipate('What is your name?', ['Taylor', 'Dayle']);
+    $name = $this->anticipate('あなたの名前は何ですか?', ['テイラー', 'デイル']);
 
-Alternatively, you may pass a closure as the second argument to the `anticipate` method. The closure will be called each time the user types an input character. The closure should accept a string parameter containing the user's input so far, and return an array of options for auto-completion:
+あるいは、クロージャを 2 番目の引数として `anticipate` メソッドに渡すこともできます。クロージャは、ユーザーが入力文字を入力するたびに呼び出されます。クロージャは、これまでのユーザーの入力を含む文字列パラメータを受け入れ、オートコンプリートのオプションの配列を返す必要があります。
 
-    $name = $this->anticipate('What is your address?', function (string $input) {
-        // Return auto-completion options...
+    $name = $this->anticipate('住所は何ですか?', function (string $input) {
+        // オートコンプリート オプションを返します...
     });
 
-<a name="multiple-choice-questions"></a>
-#### Multiple Choice Questions
+<a name="複数選択の質問"></a>
+＃＃＃＃ 複数の選択肢の質問
 
-If you need to give the user a predefined set of choices when asking a question, you may use the `choice` method. You may set the array index of the default value to be returned if no option is chosen by passing the index as the third argument to the method:
+質問するときにユーザーに事前定義された一連の選択肢を提供する必要がある場合は、`choice` メソッドを使用できます。オプションが選択されていない場合に、メソッドの 3 番目の引数としてインデックスを渡すことにより、デフォルト値の配列インデックスが返されるように設定できます。
 
     $name = $this->choice(
-        'What is your name?',
-        ['Taylor', 'Dayle'],
+        'あなたの名前は何ですか？'、
+        ['テイラー'、'デイル']、
         $defaultIndex
     );
 
-In addition, the `choice` method accepts optional fourth and fifth arguments for determining the maximum number of attempts to select a valid response and whether multiple selections are permitted:
+さらに、`choice` メソッドは、有効な応答を選択する最大試行回数と複数の選択が許可されるかどうかを決定するためのオプションの 4 番目と 5 番目の引数を受け入れます。
 
     $name = $this->choice(
-        'What is your name?',
-        ['Taylor', 'Dayle'],
-        $defaultIndex,
-        $maxAttempts = null,
+        'あなたの名前は何ですか？'、
+        ['テイラー'、'デイル']、
+        $defaultIndex、
+        $maxAttempts = null、
         $allowMultipleSelections = false
     );
 
-<a name="writing-output"></a>
-### Writing Output
+<a name="書き込み出力"></a>
+### 出力の書き込み
 
-To send output to the console, you may use the `line`, `info`, `comment`, `question`, `warn`, and `error` methods. Each of these methods will use appropriate ANSI colors for their purpose. For example, let's display some general information to the user. Typically, the `info` method will display in the console as green colored text:
+出力をコンソールに送信するには、`line`、`info`、`comment`、`question`、`warn`、および `error` メソッドを使用できます。これらの各メソッドは、目的に応じて適切な ANSI カラーを使用します。たとえば、一般的な情報をユーザーに表示してみましょう。通常、「info」メソッドはコンソールに緑色のテキストとして表示されます。
 
     /**
-     * Execute the console command.
+     ※コンソールコマンドを実行します。
      */
-    public function handle(): void
+    パブリック関数ハンドル(): void
     {
         // ...
 
-        $this->info('The command was successful!');
+        $this->info('コマンドは成功しました!');
     }
 
-To display an error message, use the `error` method. Error message text is typically displayed in red:
+エラーメッセージを表示するには、`error` メソッドを使用します。通常、エラー メッセージ テキストは赤色で表示されます。
 
-    $this->error('Something went wrong!');
+    $this->error('何か問題が発生しました!');
 
-You may use the `line` method to display plain, uncolored text:
+`line` メソッドを使用すると、色の付いていないプレーンなテキストを表示できます。
 
-    $this->line('Display this on the screen');
+    $this->line('これを画面に表示します');
 
-You may use the `newLine` method to display a blank line:
+`newLine` メソッドを使用して空行を表示できます。
 
-    // Write a single blank line...
+    // 空白行を 1 行書きます...
     $this->newLine();
 
-    // Write three blank lines...
+    // 空白行を 3 行書きます...
     $this->newLine(3);
 
-<a name="tables"></a>
-#### Tables
+<a name="テーブル"></a>
+#### テーブル
 
-The `table` method makes it easy to correctly format multiple rows / columns of data. All you need to do is provide the column names and the data for the table and Laravel will
-automatically calculate the appropriate width and height of the table for you:
+「table」メソッドを使用すると、複数の行/列のデータを簡単に正しくフォーマットできます。テーブルの列名とデータを指定するだけで、Laravel が自動的に実行します。
+テーブルの適切な幅と高さを自動的に計算します。
 
-    use App\Models\User;
+    App\Models\User を使用します。
 
     $this->table(
-        ['Name', 'Email'],
-        User::all(['name', 'email'])->toArray()
+        ['名前', 'メールアドレス'],
+        ユーザー::all(['名前', '電子メール'])->toArray()
     );
 
 <a name="progress-bars"></a>
-#### Progress Bars
+#### プログレスバー
 
-For long running tasks, it can be helpful to show a progress bar that informs users how complete the task is. Using the `withProgressBar` method, Laravel will display a progress bar and advance its progress for each iteration over a given iterable value:
+長時間実行されるタスクの場合は、タスクの完了度をユーザーに知らせる進行状況バーを表示すると便利です。`withProgressBar` メソッドを使用すると、Laravel は進行状況バーを表示し、指定された反復可能な値を超えて反復ごとに進行状況を進めます。
 
-    use App\Models\User;
+    App\Models\User を使用します。
 
     $users = $this->withProgressBar(User::all(), function (User $user) {
         $this->performTask($user);
     });
 
-Sometimes, you may need more manual control over how a progress bar is advanced. First, define the total number of steps the process will iterate through. Then, advance the progress bar after processing each item:
+場合によっては、進行状況バーの進み方を手動で制御する必要がある場合があります。まず、プロセスが反復処理される合計ステップ数を定義します。次に、各項目を処理した後、進行状況バーを進めます。
 
     $users = App\Models\User::all();
 
@@ -636,7 +636,7 @@ Sometimes, you may need more manual control over how a progress bar is advanced.
 
     $bar->start();
 
-    foreach ($users as $user) {
+    foreach ($users として $user) {
         $this->performTask($user);
 
         $bar->advance();
@@ -644,56 +644,56 @@ Sometimes, you may need more manual control over how a progress bar is advanced.
 
     $bar->finish();
 
-> **Note**  
-> For more advanced options, check out the [Symfony Progress Bar component documentation](https://symfony.com/doc/current/components/console/helpers/progressbar.html).
+> **注意**  
+> より高度なオプションについては、[Symfony Progress Bar コンポーネントのドキュメント](https://symfony.com/doc/current/components/console/helpers/progressbar.html) を確認してください。
 
-<a name="registering-commands"></a>
-## Registering Commands
+<a name="コマンドの登録"></a>
+## コマンドの登録
 
-All of your console commands are registered within your application's `App\Console\Kernel` class, which is your application's "console kernel". Within the `commands` method of this class, you will see a call to the kernel's `load` method. The `load` method will scan the `app/Console/Commands` directory and automatically register each command it contains with Artisan. You are even free to make additional calls to the `load` method to scan other directories for Artisan commands:
+すべてのコンソール コマンドは、アプリケーションの「コンソール カーネル」であるアプリケーションの `App\Console\Kernel` クラス内に登録されます。このクラスの `commands` メソッド内に、カーネルの `load` メソッドの呼び出しが表示されます。「load」メソッドは「app/Console/Commands」ディレクトリをスキャンし、そこに含まれる各コマンドを Artisan に自動的に登録します。さらに、自由に「load」メソッドを追加呼び出しして、アーティザン コマンドの他のディレクトリをスキャンすることもできます。
 
     /**
-     * Register the commands for the application.
+     ※アプリケーションのコマンドを登録します。
      */
-    protected function commands(): void
+    保護された関数コマンド(): void
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__.'/コマンド');
         $this->load(__DIR__.'/../Domain/Orders/Commands');
 
         // ...
     }
 
-If necessary, you may manually register commands by adding the command's class name to a `$commands` property within your `App\Console\Kernel` class. If this property is not already defined on your kernel, you should define it manually. When Artisan boots, all the commands listed in this property will be resolved by the [service container](/docs/{{version}}/container) and registered with Artisan:
+必要に応じて、コマンドのクラス名を `App\Console\Kernel` クラス内の `$commands` プロパティに追加することで、コマンドを手動で登録できます。このプロパティがカーネルでまだ定義されていない場合は、手動で定義する必要があります。Artisan が起動すると、このプロパティにリストされているすべてのコマンドが [サービス コンテナ](/docs/{{version}}/container) によって解決され、Artisan に登録されます。
 
     protected $commands = [
-        Commands\SendEmails::class
+        コマンド\SendEmails::class
     ];
 
-<a name="programmatically-executing-commands"></a>
-## Programmatically Executing Commands
+<a name="プログラムによるコマンドの実行"></a>
+## プログラムによるコマンドの実行
 
-Sometimes you may wish to execute an Artisan command outside of the CLI. For example, you may wish to execute an Artisan command from a route or controller. You may use the `call` method on the `Artisan` facade to accomplish this. The `call` method accepts either the command's signature name or class name as its first argument, and an array of command parameters as the second argument. The exit code will be returned:
+場合によっては、CLI の外部で Artisan コマンドを実行したい場合があります。たとえば、ルートまたはコントローラーからアーティザン コマンドを実行したい場合があります。これを実現するには、「Artisan」ファサードで「call」メソッドを使用できます。`call` メソッドは、コマンドのシグネチャ名またはクラス名のいずれかを最初の引数として受け入れ、コマンド パラメータの配列を 2 番目の引数として受け入れます。終了コードが返されます。
 
-    use Illuminate\Support\Facades\Artisan;
+    Illuminate\Support\Facades\Artisan を使用します。
 
     Route::post('/user/{user}/mail', function (string $user) {
         $exitCode = Artisan::call('mail:send', [
-            'user' => $user, '--queue' => 'default'
+            'user' => $user、'--queue' => 'default'
         ]);
 
         // ...
     });
 
-Alternatively, you may pass the entire Artisan command to the `call` method as a string:
+あるいは、Artisan コマンド全体を文字列として `call` メソッドに渡すこともできます。
 
     Artisan::call('mail:send 1 --queue=default');
 
-<a name="passing-array-values"></a>
-#### Passing Array Values
+<a name="配列値の受け渡し"></a>
+#### 配列値の受け渡し
 
-If your command defines an option that accepts an array, you may pass an array of values to that option:
+コマンドが配列を受け入れるオプションを定義している場合は、そのオプションに値の配列を渡すことができます。
 
-    use Illuminate\Support\Facades\Artisan;
+    Illuminate\Support\Facades\Artisan を使用します。
 
     Route::post('/mail', function () {
         $exitCode = Artisan::call('mail:send', [
@@ -702,95 +702,95 @@ If your command defines an option that accepts an array, you may pass an array o
     });
 
 <a name="passing-boolean-values"></a>
-#### Passing Boolean Values
+#### ブール値を渡す
 
-If you need to specify the value of an option that does not accept string values, such as the `--force` flag on the `migrate:refresh` command, you should pass `true` or `false` as the value of the option:
+文字列値を受け入れないオプションの値を指定する必要がある場合 (たとえば、「移行:リフレッシュ」コマンドの「--force」フラグ)、その値として「true」または「false」を渡す必要があります。オプション：
 
-    $exitCode = Artisan::call('migrate:refresh', [
-        '--force' => true,
+    $exitCode = Artisan::call('移行:リフレッシュ', [
+        '--force' => true、
     ]);
 
 <a name="queueing-artisan-commands"></a>
-#### Queueing Artisan Commands
+#### アーティザン コマンドのキューイング
 
-Using the `queue` method on the `Artisan` facade, you may even queue Artisan commands so they are processed in the background by your [queue workers](/docs/{{version}}/queues). Before using this method, make sure you have configured your queue and are running a queue listener:
+「Artisan」ファサードの「queue」メソッドを使用すると、Artisan コマンドをキューに入れて、[キュー ワーカー](/docs/{{version}}/queues) によってバックグラウンドで処理されるようにすることもできます。この方法を使用する前に、キューを設定し、キュー リスナーを実行していることを確認してください。
 
-    use Illuminate\Support\Facades\Artisan;
+    Illuminate\Support\Facades\Artisan を使用します。
 
     Route::post('/user/{user}/mail', function (string $user) {
         Artisan::queue('mail:send', [
-            'user' => $user, '--queue' => 'default'
+            'user' => $user、'--queue' => 'default'
         ]);
 
         // ...
     });
 
-Using the `onConnection` and `onQueue` methods, you may specify the connection or queue the Artisan command should be dispatched to:
+`onConnection` メソッドと `onQueue` メソッドを使用すると、Artisan コマンドをディスパッチする接続またはキューを指定できます。
 
     Artisan::queue('mail:send', [
-        'user' => 1, '--queue' => 'default'
+        'ユーザー' => 1、'--キュー' => 'デフォルト'
     ])->onConnection('redis')->onQueue('commands');
 
-<a name="calling-commands-from-other-commands"></a>
-### Calling Commands From Other Commands
+<a name="その他のコマンドからのコマンドの呼び出し"></a>
+### 他のコマンドからのコマンドの呼び出し
 
-Sometimes you may wish to call other commands from an existing Artisan command. You may do so using the `call` method. This `call` method accepts the command name and an array of command arguments / options:
+場合によっては、既存の Artisan コマンドから他のコマンドを呼び出したい場合があります。`call` メソッドを使用してこれを行うことができます。この「call」メソッドは、コマンド名とコマンド引数/オプションの配列を受け入れます。
 
     /**
-     * Execute the console command.
+     ※コンソールコマンドを実行します。
      */
-    public function handle(): void
+    パブリック関数ハンドル(): void
     {
         $this->call('mail:send', [
-            'user' => 1, '--queue' => 'default'
+            'ユーザー' => 1、'--キュー' => 'デフォルト'
         ]);
 
         // ...
     }
 
-If you would like to call another console command and suppress all of its output, you may use the `callSilently` method. The `callSilently` method has the same signature as the `call` method:
+別のコンソール コマンドを呼び出してその出力をすべて抑制したい場合は、`callSilently` メソッドを使用できます。`callSilently` メソッドには、`call` メソッドと同じシグネチャがあります。
 
     $this->callSilently('mail:send', [
-        'user' => 1, '--queue' => 'default'
+        'ユーザー' => 1、'--キュー' => 'デフォルト'
     ]);
 
-<a name="signal-handling"></a>
-## Signal Handling
+<a name="信号処理"></a>
+## 信号処理
 
-As you may know, operating systems allow signals to be sent to running processes. For example, the `SIGTERM` signal is how operating systems ask a program to terminate. If you wish to listen for signals in your Artisan console commands and execute code when they occur, you may use the `trap` method:
+ご存知かもしれませんが、オペレーティング システムでは、実行中のプロセスにシグナルを送信できます。たとえば、「SIGTERM」シグナルは、オペレーティング システムがプログラムに終了を要求する方法です。Artisan コンソール コマンドでシグナルをリッスンし、シグナルが発生したときにコードを実行したい場合は、「trap」メソッドを使用できます。
 
     /**
-     * Execute the console command.
+     ※コンソールコマンドを実行します。
      */
-    public function handle(): void
+    パブリック関数ハンドル(): void
     {
-        $this->trap(SIGTERM, fn () => $this->shouldKeepRunning = false);
+        $this->trap(SIGTERM, fn () => $this-> shouldKeepRunning = false);
 
-        while ($this->shouldKeepRunning) {
+        while ($this-> shouldKeepRunning) {
             // ...
         }
     }
 
-To listen for multiple signals at once, you may provide an array of signals to the `trap` method:
+複数のシグナルを一度にリッスンするには、シグナルの配列を「trap」メソッドに提供します。
 
     $this->trap([SIGTERM, SIGQUIT], function (int $signal) {
-        $this->shouldKeepRunning = false;
+        $this-> shouldKeepRunning = false;
 
-        dump($signal); // SIGTERM / SIGQUIT
+        ダンプ($sign); // SIGTERM / SIGQUIT
     });
 
-<a name="stub-customization"></a>
-## Stub Customization
+<a name="スタブカスタマイズ"></a>
+## スタブのカスタマイズ
 
-The Artisan console's `make` commands are used to create a variety of classes, such as controllers, jobs, migrations, and tests. These classes are generated using "stub" files that are populated with values based on your input. However, you may want to make small changes to files generated by Artisan. To accomplish this, you may use the `stub:publish` command to publish the most common stubs to your application so that you can customize them:
+Artisan コンソールの「make」コマンドは、コントローラー、ジョブ、移行、テストなどのさまざまなクラスを作成するために使用されます。これらのクラスは、入力に基づいて値が設定される「スタブ」ファイルを使用して生成されます。ただし、Artisan によって生成されたファイルに小さな変更を加えたい場合があります。これを実現するには、`stub:publish` コマンドを使用して最も一般的なスタブをアプリケーションに公開し、カスタマイズできるようにします。
 
-```shell
-php artisan stub:publish
+```シェル
+php 職人スタブ:公開
 ```
 
-The published stubs will be located within a `stubs` directory in the root of your application. Any changes you make to these stubs will be reflected when you generate their corresponding classes using Artisan's `make` commands.
+公開されたスタブは、アプリケーションのルートの「stubs」ディレクトリ内に配置されます。これらのスタブに加えた変更は、Artisan の「make」コマンドを使用して対応するクラスを生成するときに反映されます。
 
-<a name="events"></a>
-## Events
+<a name="イベント"></a>
+## イベント
 
-Artisan dispatches three events when running commands: `Illuminate\Console\Events\ArtisanStarting`, `Illuminate\Console\Events\CommandStarting`, and `Illuminate\Console\Events\CommandFinished`. The `ArtisanStarting` event is dispatched immediately when Artisan starts running. Next, the `CommandStarting` event is dispatched immediately before a command runs. Finally, the `CommandFinished` event is dispatched once a command finishes executing.
+Artisan は、コマンドの実行時に 3 つのイベント (「Illuminate\Console\Events\ArtisanStarting」、「Illuminate\Console\Events\CommandStarting」、および「Illuminate\Console\Events\CommandFinished」) を送出します。ArtisanStarting イベントは、Artisan が実行を開始するとすぐに送出されます。次に、コマンドが実行される直前に `CommandStarting` イベントが送出されます。最後に、コマンドの実行が終了すると、「CommandFinished」イベントが送出されます。

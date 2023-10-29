@@ -82,7 +82,7 @@ You may configure additional symbolic links in your `filesystems` configuration 
 Before using the S3 driver, you will need to install the Flysystem S3 package via the Composer package manager:
 
 ```shell
-composer require league/flysystem-aws-s3-v3 "^3.0"
+composer require league/flysystem-aws-s3-v3 "^3.0" --with-all-dependencies
 ```
 
 The S3 driver configuration information is located in your `config/filesystems.php` configuration file. This file contains an example configuration array for an S3 driver. You are free to modify this array with your own S3 configuration and credentials. For convenience, these environment variables match the naming convention used by the AWS CLI.
@@ -136,7 +136,7 @@ Laravel's Flysystem integrations work great with SFTP; however, a sample configu
         'passphrase' => env('SFTP_PASSPHRASE'),
 
         // Settings for file / directory permissions...
-        'visibility' => 'private', // `private` = 0600, `public` = 0700
+        'visibility' => 'private', // `private` = 0600, `public` = 0644
         'directory_visibility' => 'private', // `private` = 0700, `public` = 0755
 
         // Optional SFTP Settings...

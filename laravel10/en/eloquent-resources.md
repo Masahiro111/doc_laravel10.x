@@ -199,7 +199,7 @@ For example, `UserCollection` will attempt to map the given user instances into 
 > **Note**  
 > If you have not read the [concept overview](#concept-overview), you are highly encouraged to do so before proceeding with this documentation.
 
-In essence, resources are simple. They only need to transform a given model into an array. So, each resource contains a `toArray` method which translates your model's attributes into an API friendly array that can be returned from your application's routes or controllers:
+Resources only need to transform a given model into an array. So, each resource contains a `toArray` method which translates your model's attributes into an API friendly array that can be returned from your application's routes or controllers:
 
     <?php
 
@@ -282,6 +282,7 @@ However, if you need to customize the meta data returned with the collection, it
 
     namespace App\Http\Resources;
 
+    use Illuminate\Http\Request;
     use Illuminate\Http\Resources\Json\ResourceCollection;
 
     class UserCollection extends ResourceCollection
@@ -634,6 +635,15 @@ The `whenCounted` method may be used to conditionally include a relationship's c
     }
 
 In this example, if the `posts` relationship's count has not been loaded, the `posts_count` key will be removed from the resource response before it is sent to the client.
+
+Other types of aggregates, such as `avg`, `sum`, `min`, and `max` may also be conditionally loaded using the `whenAggregated` method:
+
+```php
+'words_avg' => $this->whenAggregated('posts', 'words', 'avg'),
+'words_sum' => $this->whenAggregated('posts', 'words', 'sum'),
+'words_min' => $this->whenAggregated('posts', 'words', 'min'),
+'words_max' => $this->whenAggregated('posts', 'words', 'max'),
+```
 
 <a name="conditional-pivot-information"></a>
 #### Conditional Pivot Information

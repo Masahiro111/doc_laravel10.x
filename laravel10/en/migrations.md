@@ -194,6 +194,12 @@ You may roll back a specific "batch" of migrations by providing the `batch` opti
  php artisan migrate:rollback --batch=3
  ```
 
+If you would like to see the SQL statements that will be executed by the migrations without actually running them, you may provide the `--pretend` flag to the `migrate:rollback` command:
+
+```shell
+php artisan migrate:rollback --pretend
+```
+
 The `migrate:reset` command will roll back all of your application's migrations:
 
 ```shell
@@ -547,7 +553,7 @@ The `foreignId` method creates an `UNSIGNED BIGINT` equivalent column:
 <a name="column-method-foreignIdFor"></a>
 #### `foreignIdFor()` {.collection-method}
 
-The `foreignIdFor` method adds a `{column}_id UNSIGNED BIGINT` equivalent column for a given model class:
+The `foreignIdFor` method adds a `{column}_id` equivalent column for a given model class. The column type will be `UNSIGNED BIGINT`, `CHAR(36)`, or `CHAR(26)` depending on the model key type:
 
     $table->foreignIdFor(User::class);
 
@@ -668,7 +674,7 @@ The `mediumText` method creates a `MEDIUMTEXT` equivalent column:
 <a name="column-method-morphs"></a>
 #### `morphs()` {.collection-method}
 
-The `morphs` method is a convenience method that adds a `{column}_id` `UNSIGNED BIGINT` equivalent column and a `{column}_type` `VARCHAR` equivalent column.
+The `morphs` method is a convenience method that adds a `{column}_id` equivalent column and a `{column}_type` `VARCHAR` equivalent column. The column type for the `{column}_id` will be `UNSIGNED BIGINT`, `CHAR(36)`, or `CHAR(26)` depending on the model key type.
 
 This method is intended to be used when defining the columns necessary for a polymorphic [Eloquent relationship](/docs/{{version}}/eloquent-relationships). In the following example, `taggable_id` and `taggable_type` columns would be created:
 
@@ -1214,10 +1220,12 @@ Since this syntax is rather verbose, Laravel provides additional, terser methods
         $table->foreignId('user_id')->constrained();
     });
 
-The `foreignId` method creates an `UNSIGNED BIGINT` equivalent column, while the `constrained` method will use conventions to determine the table and column name being referenced. If your table name does not match Laravel's conventions, you may specify the table name by passing it as an argument to the `constrained` method:
+The `foreignId` method creates an `UNSIGNED BIGINT` equivalent column, while the `constrained` method will use conventions to determine the table and column being referenced. If your table name does not match Laravel's conventions, you may manually provide it to the `constrained` method. In addition, the name that should be assigned to the generated index may be specified as well:
 
     Schema::table('posts', function (Blueprint $table) {
-        $table->foreignId('user_id')->constrained('users');
+        $table->foreignId('user_id')->constrained(
+            table: 'users', indexName: 'posts_user_id'
+        );
     });
 
 You may also specify the desired action for the "on delete" and "on update" properties of the constraint:
