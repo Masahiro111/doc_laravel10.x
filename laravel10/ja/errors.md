@@ -62,10 +62,10 @@
 <a name="global-log-context"></a>
 #### グローバル ログ コンテキスト
 
-If available, Laravel automatically adds the current user's ID to every exception's log message as contextual data. You may define your own global contextual data by defining a `context` method on your application's `App\Exceptions\Handler` class. This information will be included in every exception's log message written by your application:
+利用可能な場合、Laravel は現在のユーザーの ID をコンテキストデータとして、すべて例外のログメッセージに自動的に追加します。アプリケーションの `App\Exceptions\Handler` クラスで `context` メソッドを定義することにより、独自のグローバルコンテキストデータを定義できます。この情報は、アプリケーションによって書き込まれるすべての例外のログメッセージに含まれます。
 
     /**
-     * Get the default context variables for logging.
+     * ロギング用のデフォルトのコンテキスト変数を取得
      *
      * @return array<string, mixed>
      */
@@ -77,9 +77,9 @@ If available, Laravel automatically adds the current user's ID to every exceptio
     }
 
 <a name="exception-log-context"></a>
-#### Exception Log Context
+#### 例外ログのコンテキスト
 
-While adding context to every log message can be useful, sometimes a particular exception may have unique context that you would like to include in your logs. By defining a `context` method on one of your application's exceptions, you may specify any data relevant to that exception that should be added to the exception's log entry:
+すべてのログメッセージにコンテキストを追加すると便利ですが、場合によっては、特定の例外にログに含めたい固有のコンテキストが含まれる場合があります。アプリケーションの例外の1つで `context` メソッドを定義すると、例外のログエントリに追加する必要がある、その例外に関連するデータを指定できます。
 
     <?php
 
@@ -92,7 +92,7 @@ While adding context to every log message can be useful, sometimes a particular 
         // ...
 
         /**
-         * Get the exception's context information.
+         * 例外のコンテキスト情報を取得
          *
          * @return array<string, mixed>
          */
@@ -103,7 +103,7 @@ While adding context to every log message can be useful, sometimes a particular 
     }
 
 <a name="the-report-helper"></a>
-#### The `report` Helper
+####  `レポート` ヘルパー
 
 Sometimes you may need to report an exception but continue handling the current request. The `report` helper function allows you to quickly report an exception via the exception handler without rendering an error page to the user:
 
