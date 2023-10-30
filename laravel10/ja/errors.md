@@ -25,19 +25,19 @@
 ローカルでの開発中は、`APP_DEBUG` 環境変数を `true` に設定する必要があります。**実稼働環境では、この値は常に `false` である必要があります。運用環境で値が `true` に設定されている場合、機密の構成値がアプリケーションのエンドユーザーに公開される危険があります。**
 
 <a name="the-exception-handler"></a>
-## The Exception Handler
+## 例外ハンドラ
 
 <a name="reporting-exceptions"></a>
-### Reporting Exceptions
+### 例外の報告
 
-All exceptions are handled by the `App\Exceptions\Handler` class. This class contains a `register` method where you may register custom exception reporting and rendering callbacks. We'll examine each of these concepts in detail. Exception reporting is used to log exceptions or send them to an external service like [Flare](https://flareapp.io), [Bugsnag](https://bugsnag.com), or [Sentry](https://github.com/getsentry/sentry-laravel). By default, exceptions will be logged based on your [logging](/docs/{{version}}/logging) configuration. However, you are free to log exceptions however you wish.
+すべての例外は `App\Exceptions\Handler` クラスによって処理されます。このクラスには、カスタム例外レポートとレンダリングコールバックを登録できる `register` メソッドが含まれています。これらの各概念を詳しく見ていきます。例外レポートは、例外を記録したり、[Flare](https://flareapp.io)、[Bugsnag](https://bugsnag.com)、[Sentry](https://github.com/getsentry/sentry-laravel) などの外部サービスに例外を送信したりするために使用されます。デフォルトでは、例外は [ログ](/docs/{{version}}/logging) 設定に基づいて記録されます。また、例外を自由にログに記録することもできます。
 
-If you need to report different types of exceptions in different ways, you may use the `reportable` method to register a closure that should be executed when an exception of a given type needs to be reported. Laravel will determine what type of exception the closure reports by examining the type-hint of the closure:
+さまざまなタイプの例外をさまざまな方法で報告する必要がある場合は、`reportable` メソッドを使用して、特定のタイプの例外を報告する必要があるときに実行されるクロージャを登録できます。Laravel は、クロージャのタイプヒントを調べることで、クロージャが報告する例外のタイプを判断します。
 
     use App\Exceptions\InvalidOrderException;
 
     /**
-     * Register the exception handling callbacks for the application.
+     * アプリケーションの例外処理コールバックを登録
      */
     public function register(): void
     {
@@ -46,7 +46,7 @@ If you need to report different types of exceptions in different ways, you may u
         });
     }
 
-When you register a custom exception reporting callback using the `reportable` method, Laravel will still log the exception using the default logging configuration for the application. If you wish to stop the propagation of the exception to the default logging stack, you may use the `stop` method when defining your reporting callback or return `false` from the callback:
+ `reportable` メソッドを使用してカスタム例外レポートコールバックを登録すると、Laravel はアプリケーションのデフォルトのログ設定を使用して例外をログに記録します。デフォルトのログスタックへの例外の伝播を停止したい場合は、レポートコールバックを定義するときに `stop` メソッドを使用するか、コールバックから `false` を返します。
 
     $this->reportable(function (InvalidOrderException $e) {
         // ...
@@ -57,10 +57,10 @@ When you register a custom exception reporting callback using the `reportable` m
     });
 
 > **Note**  
-> To customize the exception reporting for a given exception, you may also utilize [reportable exceptions](/docs/{{version}}/errors#renderable-exceptions).
+> 特定の例外の例外レポートをカスタマイズするには、[レポート可能な例外](/docs/{{version}}/errors#renderable-exceptions) を利用することもできます。
 
 <a name="global-log-context"></a>
-#### Global Log Context
+#### グローバル ログ コンテキスト
 
 If available, Laravel automatically adds the current user's ID to every exception's log message as contextual data. You may define your own global contextual data by defining a `context` method on your application's `App\Exceptions\Handler` class. This information will be included in every exception's log message written by your application:
 
