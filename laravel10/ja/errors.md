@@ -103,9 +103,9 @@
     }
 
 <a name="the-report-helper"></a>
-####  `レポート` ヘルパー
+####  `レポート` ヘルパ
 
-Sometimes you may need to report an exception but continue handling the current request. The `report` helper function allows you to quickly report an exception via the exception handler without rendering an error page to the user:
+場合によっては、例外を報告しても現在のリクエストの処理を続行する必要がある場合があります。`report` ヘルパ関数を使用すると、ユーザーにエラーページを表示せずに、例外ハンドラを介して例外を迅速に報告できます。
 
     public function isValid(string $value): bool
     {
@@ -119,11 +119,11 @@ Sometimes you may need to report an exception but continue handling the current 
     }
 
 <a name="deduplicating-reported-exceptions"></a>
-#### Deduplicating Reported Exceptions
+#### レポートされた例外の重複排除
 
-If you are using the `report` function throughout your application, you may occasionally report the same exception multiple times, creating duplicate entries in your logs.
+アプリケーション全体で `report` 関数を使用している場合、同じ例外を複数回報告することがあり、ログに重複したエントリが作成されることがあります。
 
-If you would like to ensure that a single instance of an exception is only ever reported once, you may set the `$withoutDuplicates` property to `true` within your application's `App\Exceptions\Handler` class:
+例外の単一インスタンスが一度だけ報告されるようにしたい場合は、アプリケーションの `App\Exceptions\Handler` クラス内で `$withoutDuplicates` プロパティを `true` に設定します。
 
 ```php
 namespace App\Exceptions;
@@ -133,7 +133,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 class Handler extends ExceptionHandler
 {
     /**
-     * Indicates that an exception instance should only be reported once.
+     * 例外インスタンスは一度だけ報告する必要があることを示す
      *
      * @var bool
      */
@@ -143,27 +143,27 @@ class Handler extends ExceptionHandler
 }
 ```
 
-Now, when the `report` helper is called with the same instance of an exception, only the first call will be reported:
+これで、同じ例外インスタンスで `report` ヘルパが呼び出された場合、最初の呼び出しのみが報告されます。
 
 ```php
 $original = new RuntimeException('Whoops!');
 
-report($original); // reported
+report($original); // レポートされる
 
 try {
     throw $original;
 } catch (Throwable $caught) {
-    report($caught); // ignored
+    report($caught); // 無視される
 }
 
-report($original); // ignored
-report($caught); // ignored
+report($original); // 無視される
+report($caught); // 無視される
 ```
 
 <a name="exception-log-levels"></a>
-### Exception Log Levels
+### 例外のログレベル
 
-When messages are written to your application's [logs](/docs/{{version}}/logging), the messages are written at a specified [log level](/docs/{{version}}/logging#log-levels), which indicates the severity or importance of the message being logged.
+メッセージがアプリケーションの [ログ](/docs/{{version}}/logging) に書き込まれる場合、そのメッセージは指定された [ログレベル](/docs/{{version}}/logging#log-levels) で書き込まれます。これはログに記録されるメッセージの重大度または重要性を表します。
 
 As noted above, even when you register a custom exception reporting callback using the `reportable` method, Laravel will still log the exception using the default logging configuration for the application; however, since the log level can sometimes influence the channels on which a message is logged, you may wish to configure the log level that certain exceptions are logged at.
 
