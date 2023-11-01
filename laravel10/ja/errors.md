@@ -231,13 +231,13 @@ report($caught); // 無視される
         });
     }
 
-You may also use the `renderable` method to override the rendering behavior for built-in Laravel or Symfony exceptions such as `NotFoundHttpException`. If the closure given to the `renderable` method does not return a value, Laravel's default exception rendering will be utilized:
+また、`renderable` メソッドを使用して、`NotFoundHttpException` などの Laravel や Symfony の組み込み例外のレンダリング動作をオーバーライドすることもできます。`renderable` メソッドに指定したクロージャが値を返さない場合、Laravel のデフォルトの例外レンダリングが利用されます。
 
     use Illuminate\Http\Request;
     use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
     /**
-     * Register the exception handling callbacks for the application.
+     * アプリケーションの例外処理コールバックを登録
      */
     public function register(): void
     {
@@ -251,9 +251,9 @@ You may also use the `renderable` method to override the rendering behavior for 
     }
 
 <a name="renderable-exceptions"></a>
-### Reportable & Renderable Exceptions
+### Reportable 例外と Renderable 例外
 
-Instead of defining custom reporting and rendering behavior in your exception handler's `register` method, you may define `report` and `render` methods directly on your application's exceptions. When these methods exist, they will automatically be called by the framework:
+例外ハンドラの `register` メソッドでカスタムレポートやレンダリング動作を定義する代わりに、アプリケーションの例外に `report` と `render` メソッドを直接定義できます。これらのメソッドが存在する場合、フレームワークによって自動的に呼び出されます。
 
     <?php
 
@@ -266,7 +266,7 @@ Instead of defining custom reporting and rendering behavior in your exception ha
     class InvalidOrderException extends Exception
     {
         /**
-         * Report the exception.
+         * 例外をレポート
          */
         public function report(): void
         {
@@ -274,7 +274,7 @@ Instead of defining custom reporting and rendering behavior in your exception ha
         }
 
         /**
-         * Render the exception into an HTTP response.
+         * 例外を HTTP レスポンスにレンダリング
          */
         public function render(Request $request): Response
         {
