@@ -318,9 +318,9 @@ Laravel や Symfony の組み込み例外など、すでにレンダリング可
 > `report` メソッドの必要な依存関係をタイプヒントで指定すると、それらはLaravelの [サービスコンテナ](/docs/{{version}}/container) によってメソッドに自動的に依存性注入されます。
 
 <a name="throttling-reported-exceptions"></a>
-### Throttling Reported Exceptions
+### レポートした例外の調節
 
-If your application reports a very large number of exceptions, you may want to throttle how many exceptions are actually logged or sent to your application's external error tracking service.
+アプリケーションが非常に多くの例外をレポートする場合、実際にログに記録される、またはアプリケーションの外部エラーを追跡するサービスに送信する例外の数量を調節することができます。
 
 To take a random sample rate of exceptions, you can return a `Lottery` instance from your exception handler's `throttle` method. If your `App\Exceptions\Handler` class does not contain this method, you may simply add it to the class:
 
