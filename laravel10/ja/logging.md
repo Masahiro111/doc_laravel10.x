@@ -1,4 +1,4 @@
-# Logging
+# ログ
 
 - [Introduction](#introduction)
 - [Configuration](#configuration)
@@ -19,16 +19,16 @@
     - [Filtering Logs](#pail-filtering-logs)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-To help you learn more about what's happening within your application, Laravel provides robust logging services that allow you to log messages to files, the system error log, and even to Slack to notify your entire team.
+アプリケーション内で何が起こっているかを詳しく知るために、Laravel はメッセージをファイル、システムエラーログ、さらには Slack に記録してチーム全体に通知できる堅牢なログサービスを提供します。
 
-Laravel logging is based on "channels". Each channel represents a specific way of writing log information. For example, the `single` channel writes log files to a single log file, while the `slack` channel sends log messages to Slack. Log messages may be written to multiple channels based on their severity.
+Laravelのログは「チャンネル」に基づいています。各チャンネルは、ログ情報を書き込む特定の方法を表します。たとえば、`single` チャンネルはログファイルを単一のログファイルに書き込みますが、`slack` チャンネルはログメッセージを Slack に送信します。ログメッセージは、重大度に基づいて複数のチャンネルに書き込まれる場合があります。
 
-Under the hood, Laravel utilizes the [Monolog](https://github.com/Seldaek/monolog) library, which provides support for a variety of powerful log handlers. Laravel makes it a cinch to configure these handlers, allowing you to mix and match them to customize your application's log handling.
+Laravel は内部的に、さまざまな強力なログハンドラのサポートを提供する [Monolog](https://github.com/Seldaek/monolog) ライブラリを利用しています。Laravel を使用すると、これらのハンドラの設定が簡単になり、それらを組み合わせてアプリケーションのログ処理をカスタマイズできるようになります。
 
 <a name="configuration"></a>
-## Configuration
+## 設定
 
 All of the configuration options for your application's logging behavior are housed in the `config/logging.php` configuration file. This file allows you to configure your application's log channels, so be sure to review each of the available channels and their options. We'll review a few common options below.
 
