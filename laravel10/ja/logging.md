@@ -1,22 +1,22 @@
 # ログ
 
-- [Introduction](#introduction)
-- [Configuration](#configuration)
-    - [Available Channel Drivers](#available-channel-drivers)
-    - [Channel Prerequisites](#channel-prerequisites)
-    - [Logging Deprecation Warnings](#logging-deprecation-warnings)
-- [Building Log Stacks](#building-log-stacks)
-- [Writing Log Messages](#writing-log-messages)
-    - [Contextual Information](#contextual-information)
-    - [Writing To Specific Channels](#writing-to-specific-channels)
-- [Monolog Channel Customization](#monolog-channel-customization)
-    - [Customizing Monolog For Channels](#customizing-monolog-for-channels)
-    - [Creating Monolog Handler Channels](#creating-monolog-handler-channels)
-    - [Creating Custom Channels Via Factories](#creating-custom-channels-via-factories)
-- [Tailing Log Messages Using Pail](#tailing-log-messages-using-pail)
-    - [Installation](#pail-installation)
-    - [Usage](#pail-usage)
-    - [Filtering Logs](#pail-filtering-logs)
+- [はじめに](#introduction)
+- [設定](#configuration)
+    - [利用可能なチャンネルドライバ](#available-channel-drivers)
+    - [チャンネルの前設定](#channel-prerequisites)
+    - [非推奨ワーニングのログ](#logging-deprecation-warnings)
+- [ログスタックの構築](#building-log-stacks)
+- [ログメッセージの書き込み](#writing-log-messages)
+    - [コンテキスト情報](#contextual-information)
+    - [特定チャンネルへの書き込み](#writing-to-specified-channels)
+- [Monolog チャンネルのカスタマイズ](#monolog-channel-customization)
+    - [チャンネル向け Monolog のカスタマイズ](#customizing-monolog-for-channels)
+    - [Monolog ハンドラチャンネルの作成](#creating-monolog-handler-channels)
+    - [ファクトリ経由でカスタムチャンネルを作成](#creating-custom-channels-via-factories)
+- [Pail を使用したログメッセージの追跡](#tailing-log-messages-using-pail)
+    - [インストール](#paill-installation)
+    - [使い方](#pail-usage)
+    - [ログのフィルタリング](#pail-filtering-logs)
 
 <a name="introduction"></a>
 ## はじめに
@@ -30,14 +30,14 @@ Laravel は内部的に、さまざまな強力なログハンドラのサポー
 <a name="configuration"></a>
 ## 設定
 
-All of the configuration options for your application's logging behavior are housed in the `config/logging.php` configuration file. This file allows you to configure your application's log channels, so be sure to review each of the available channels and their options. We'll review a few common options below.
+アプリケーションのログ動作の設定オプションはすべて `config/logging.php` 設定ファイルに格納されています。このファイルを使用すると、アプリケーションのログチャンネルを設定できるため、使用可能な各チャンネルとそのオプションを必ず確認してください。以下でいくつかの一般的なオプションを確認します。
 
-By default, Laravel will use the `stack` channel when logging messages. The `stack` channel is used to aggregate multiple log channels into a single channel. For more information on building stacks, check out the [documentation below](#building-log-stacks).
+デフォルトでは、Laravel はメッセージをログに記録するときに `stack` チャンネルを使用します。`stack` チャンネルは、複数のログチャンネルを1つのチャンネルに集約するために使用されます。スタックの構築の詳細については、[以下のドキュメント](#building-log-stacks) を参照してください。
 
 <a name="configuring-the-channel-name"></a>
-#### Configuring The Channel Name
+#### チャンネル名の設定
 
-By default, Monolog is instantiated with a "channel name" that matches the current environment, such as `production` or `local`. To change this value, add a `name` option to your channel's configuration:
+デフォルトで、Monolog は、`production` や `local` など、現在の環境に一致する「チャンネル名」でインスタンス化されます。この値を変更するには、チャンネル設定に `name` オプションを追加します。
 
     'stack' => [
         'driver' => 'stack',
@@ -46,13 +46,13 @@ By default, Monolog is instantiated with a "channel name" that matches the curre
     ],
 
 <a name="available-channel-drivers"></a>
-### Available Channel Drivers
+### 利用可能なチャンネルドライバ
 
-Each log channel is powered by a "driver". The driver determines how and where the log message is actually recorded. The following log channel drivers are available in every Laravel application. An entry for most of these drivers is already present in your application's `config/logging.php` configuration file, so be sure to review this file to become familiar with its contents:
+各ログチャンネルは「ドライバ」によって駆動されます。ドライバは、ログメッセージが実際にどのように、またどこに記録されるかを決定します。次のログチャンネルドライバは、すべての Laravel アプリケーションで利用できます。これらのドライバのほとんどのエントリはアプリケーションの `config/logging.php` 設定ファイルにすでに用意されているため、必ずこのファイルを確認して内容をよく理解してください。
 
 <div class="overflow-auto">
 
-Name | Description
+名前 | 説明
 ------------- | -------------
 `custom` | A driver that calls a specified factory to create a channel
 `daily` | A `RotatingFileHandler` based Monolog driver which rotates daily
