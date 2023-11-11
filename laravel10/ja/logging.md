@@ -12,7 +12,7 @@
 - [Monolog チャンネルのカスタマイズ](#monolog-channel-customization)
     - [チャンネル向け Monolog のカスタマイズ](#customizing-monolog-for-channels)
     - [Monolog ハンドラチャンネルの作成](#creating-monolog-handler-channels)
-    - [ファクトリ経由でカスタムチャンネルを作成](#creating-custom-channels-via-factories)
+    - [ファクトリ経由でカスタムチャンネル作成](#creating-custom-channels-via-factories)
 - [Pail を使用したログメッセージの追跡](#tailing-log-messages-using-pail)
     - [インストール](#paill-installation)
     - [使い方](#pail-usage)
@@ -54,20 +54,20 @@ Laravel は内部的に、さまざまな強力なログハンドラのサポー
 
 名前 | 説明
 ------------- | -------------
-`custom` | A driver that calls a specified factory to create a channel
-`daily` | A `RotatingFileHandler` based Monolog driver which rotates daily
-`errorlog` | An `ErrorLogHandler` based Monolog driver
-`monolog` | A Monolog factory driver that may use any supported Monolog handler
-`papertrail` | A `SyslogUdpHandler` based Monolog driver
-`single` | A single file or path based logger channel (`StreamHandler`)
-`slack` | A `SlackWebhookHandler` based Monolog driver
-`stack` | A wrapper to facilitate creating "multi-channel" channels
-`syslog` | A `SyslogHandler` based Monolog driver
+`custom` | 指定のファクトリを呼び出してチャンネルを作成するドライバ
+`daily` | 毎日ファイルが切り替わる `RotatingFileHandler` ベースの Monolog ドライバ
+`errorlog` | `ErrorLogHandler` ベースの Monolog ドライバ
+`monolog` | サポートされている Monolog ハンドラを使用できる Monolog ファクトリ ドライバ
+`papertrail` | `SyslogUdpHandler` ベースの Monolog ドライバ
+`single` | 単一のファイルまたはパスベースのロガーチャンネル (`StreamHandler`)
+'slack' | `SlackWebhookHandler` ベースの Monolog ドライバ
+`stack` | 「マルチチャンネル」チャンネルの作成を容易にするラッパ
+`syslog` | `SyslogHandler` ベースの Monolog ドライバ
 
 </div>
 
 > **Note**  
-> Check out the documentation on [advanced channel customization](#monolog-channel-customization) to learn more about the `monolog` and `custom` drivers.
+> `monolog` ドライバと`custom` ドライバの詳細については、[高度なチャンネルのカスタマイズ](#monolog-channel-customization) に関するドキュメントを参照してください。
 
 <a name="channel-prerequisites"></a>
 ### Channel Prerequisites
