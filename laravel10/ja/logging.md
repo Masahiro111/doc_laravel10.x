@@ -3,7 +3,7 @@
 - [はじめに](#introduction)
 - [設定](#configuration)
     - [利用可能なチャンネルドライバ](#available-channel-drivers)
-    - [チャンネルの前設定](#channel-prerequisites)
+    - [チャンネルの事前設定](#channel-prerequisites)
     - [非推奨ワーニングのログ](#logging-deprecation-warnings)
 - [ログスタックの構築](#building-log-stacks)
 - [ログメッセージの書き込み](#writing-log-messages)
@@ -70,12 +70,12 @@ Laravel は内部的に、さまざまな強力なログハンドラのサポー
 > `monolog` ドライバと`custom` ドライバの詳細については、[高度なチャンネルのカスタマイズ](#monolog-channel-customization) に関するドキュメントを参照してください。
 
 <a name="channel-prerequisites"></a>
-### Channel Prerequisites
+### チャンネルの事前設定
 
 <a name="configuring-the-single-and-daily-channels"></a>
-#### Configuring The Single and Daily Channels
+#### Single チャンネルと Daily チャンネルの設定
 
-The `single` and `daily` channels have three optional configuration options: `bubble`, `permission`, and `locking`.
+`single` チャンネルと `daily` チャンネルには、`bubble`、`permission`、`locking` の3オプションの設定オプションがあります。
 
 <div class="overflow-auto">
 
