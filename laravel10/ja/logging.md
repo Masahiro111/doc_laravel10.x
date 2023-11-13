@@ -79,7 +79,7 @@ Laravel は内部的に、さまざまな強力なログハンドラのサポー
 
 <div class="overflow-auto">
 
-Name | Description | Default
+名前 | 説明 | デフォルト
 ------------- | ------------- | -------------
 `bubble` | Indicates if messages should bubble up to other channels after being handled | `true`
 `locking` | Attempt to lock the log file before writing to it | `false`
