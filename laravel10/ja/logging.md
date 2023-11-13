@@ -81,33 +81,33 @@ Laravel は内部的に、さまざまな強力なログハンドラのサポー
 
 名前 | 説明 | デフォルト
 ------------- | ------------- | -------------
-`bubble` | Indicates if messages should bubble up to other channels after being handled | `true`
-`locking` | Attempt to lock the log file before writing to it | `false`
-`permission` | The log file's permissions | `0644`
+`bubble` | メッセージが処理された後に、他のチャンネルにバブルアップする必要があるか | `true`
+`locking` | ログファイルに書き込む前に、ログファイルのロックをするか | `false`
+`permission` | ログファイルのパーミッション | `0644`
 
 </div>
 
-Additionally, the retention policy for the `daily` channel can be configured via the `days` option:
+さらに、`daily` チャンネルの保持ポリシーは、`days` オプションを使用して設定できます。
 
 <div class="overflow-auto">
 
-Name | Description                                                       | Default
+名前 | 説明 | デフォルト
 ------------- |-------------------------------------------------------------------| -------------
-`days` | The number of days that daily log files should be retained | `7`
+`days` | デイリーログファイルを保持する日数 | `7`
 
 </div>
 
 <a name="configuring-the-papertrail-channel"></a>
-#### Configuring The Papertrail Channel
+#### Papertrail チャンネルの設定
 
-The `papertrail` channel requires the `host` and `port` configuration options. You can obtain these values from [Papertrail](https://help.papertrailapp.com/kb/configuration/configuring-centralized-logging-from-php-apps/#send-events-from-php-app).
+`papertrail` チャンネルには、`host` と `port` 設定オプションが必要です。これらの値は、[Papertrail](https://help.papertrailapp.com/kb/configuration/cconfiguring-centralized-logging-from-php-apps/#send-events-from-php-app) から取得できます。
 
 <a name="configuring-the-slack-channel"></a>
-#### Configuring The Slack Channel
+#### Slack チャンネルの設定
 
-The `slack` channel requires a `url` configuration option. This URL should match a URL for an [incoming webhook](https://slack.com/apps/A0F7XDUAZ-incoming-webhooks) that you have configured for your Slack team.
+`slack` チャンネルには `url` 構成オプションが必要です。この URL は、Slack チーム用に設定した [受信 Webhook](https://slack.com/apps/A0F7XDUAZ-incoming-webhooks) の URL と一致する必要があります。
 
-By default, Slack will only receive logs at the `critical` level and above; however, you can adjust this in your `config/logging.php` configuration file by modifying the `level` configuration option within your Slack log channel's configuration array.
+デフォルトでは、Slack は `critical` レベル以上のログのみを受信します。ただし `config/logging.php` 設定ファイルでSlack ログチャンネルの設定配列内の `level` 設定オプションを変更することで調整できます。
 
 <a name="logging-deprecation-warnings"></a>
 ### Logging Deprecation Warnings
