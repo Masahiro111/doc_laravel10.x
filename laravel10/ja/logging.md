@@ -110,9 +110,9 @@ Laravel は内部的に、さまざまな強力なログハンドラのサポー
 デフォルトでは、Slack は `critical` レベル以上のログのみを受信します。ただし `config/logging.php` 設定ファイルでSlack ログチャンネルの設定配列内の `level` 設定オプションを変更することで調整できます。
 
 <a name="logging-deprecation-warnings"></a>
-### Logging Deprecation Warnings
+### 非推奨ワーニングのログ
 
-PHP, Laravel, and other libraries often notify their users that some of their features have been deprecated and will be removed in a future version. If you would like to log these deprecation warnings, you may specify your preferred `deprecations` log channel in your application's `config/logging.php` configuration file:
+PHP、Laravel、およびその他のライブラリは、機能の一部が非推奨になり、将来のバージョンで削除されることをユーザーに通知することがよくあります。これらの非推奨の警告をログに記録したい場合は、アプリケーションの `config/logging.php` 設定ファイルで希望の `deprecations` ログチャンネルを指定できます。
 
     'deprecations' => env('LOG_DEPRECATIONS_CHANNEL', 'null'),
 
@@ -120,7 +120,7 @@ PHP, Laravel, and other libraries often notify their users that some of their fe
         ...
     ]
 
-Or, you may define a log channel named `deprecations`. If a log channel with this name exists, it will always be used to log deprecations:
+または、`deprecations` という名前のログチャンネルを定義することもできます。この名前のログチャンネルが存在する場合は、非推奨のログを記録するために常に使用されます。
 
     'channels' => [
         'deprecations' => [
@@ -130,7 +130,7 @@ Or, you may define a log channel named `deprecations`. If a log channel with thi
     ],
 
 <a name="building-log-stacks"></a>
-## Building Log Stacks
+## ログスタックの構築
 
 As mentioned previously, the `stack` driver allows you to combine multiple channels into a single log channel for convenience. To illustrate how to use log stacks, let's take a look at an example configuration that you might see in a production application:
 
