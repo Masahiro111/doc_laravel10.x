@@ -132,7 +132,7 @@ PHP、Laravel、およびその他のライブラリは、機能の一部が非�
 <a name="building-log-stacks"></a>
 ## ログスタックの構築
 
-As mentioned previously, the `stack` driver allows you to combine multiple channels into a single log channel for convenience. To illustrate how to use log stacks, let's take a look at an example configuration that you might see in a production application:
+前述したように、`stack` ドライバを使用すると、便宜上、複数のチャンネルを1つのログチャンネルに結合できます。ログスタックの使用方法を説明するために、本番の運用アプリケーションで見られる構成例を見てみましょう。
 
     'channels' => [
         'stack' => [
@@ -154,23 +154,23 @@ As mentioned previously, the `stack` driver allows you to combine multiple chann
         ],
     ],
 
-Let's dissect this configuration. First, notice our `stack` channel aggregates two other channels via its `channels` option: `syslog` and `slack`. So, when logging messages, both of these channels will have the opportunity to log the message. However, as we will see below, whether these channels actually log the message may be determined by the message's severity / "level".
+この構成を詳しく見てみましょう。まず、`stack` チャンネルが `channels` オプションを介して他の2つのチャンネル `syslog` と `slack` を集約していることに注目してください。したがって、メッセージをログに記録する場合、これらのチャンネルの両方にメッセージをログに記録する機会があります。ただし、以下で説明するように、これらのチャンネルが実際にメッセージをログに記録するかどうかは、メッセージの重大度/「レベル」によって決定される場合があります。
 
 <a name="log-levels"></a>
-#### Log Levels
+#### ログレベル
 
-Take note of the `level` configuration option present on the `syslog` and `slack` channel configurations in the example above. This option determines the minimum "level" a message must be in order to be logged by the channel. Monolog, which powers Laravel's logging services, offers all of the log levels defined in the [RFC 5424 specification](https://tools.ietf.org/html/rfc5424). In descending order of severity, these log levels are: **emergency**, **alert**, **critical**, **error**, **warning**, **notice**, **info**, and **debug**.
+上記の例の `syslog` および `slack` チャンネル設定に存在する `level` 設定オプションに注目してください。このオプションは、チャンネルによってログに記録されるメッセージの最小「レベル」を決定します。Laravel のログサービスを強化する Monolog は、[RFC5424 仕様](https://tools.ietf.org/html/rfc5424) で定義されているすべてのログレベルを提供します。ログレベルの重要度の高い順に **emergency**、**alert**、**critical**、**error**、**warning**、**notice**、**info**、**debug** となります。
 
-So, imagine we log a message using the `debug` method:
+では、`debug` メソッドを使用してメッセージをログに記録するとしましょう。
 
     Log::debug('An informational message.');
 
-Given our configuration, the `syslog` channel will write the message to the system log; however, since the error message is not `critical` or above, it will not be sent to Slack. However, if we log an `emergency` message, it will be sent to both the system log and Slack since the `emergency` level is above our minimum level threshold for both channels:
+この構成では、`syslog` チャンネルがメッセージをシステムログに書き込みます。ただし、エラーメッセージは`critical` 以上ではないため、Slack には送信されません。ただし、`emergency` メッセージをログに記録すると、`emergency` レベルが両方のチャンネルの最小レベルしきい値を超えているため、メッセージはシステムログと Slack の両方に送信されます。
 
     Log::emergency('The system is down!');
 
 <a name="writing-log-messages"></a>
-## Writing Log Messages
+## ログメッセージの書き込み
 
 You may write information to the logs using the `Log` [facade](/docs/{{version}}/facades). As previously mentioned, the logger provides the eight logging levels defined in the [RFC 5424 specification](https://tools.ietf.org/html/rfc5424): **emergency**, **alert**, **critical**, **error**, **warning**, **notice**, **info** and **debug**:
 
