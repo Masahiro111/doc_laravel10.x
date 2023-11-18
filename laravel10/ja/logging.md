@@ -220,7 +220,7 @@ PHP、Laravel、およびその他のライブラリは、機能の一部が非�
 
     Log::info('User {id} failed to login.', ['id' => $user->id]);
 
-Occasionally, you may wish to specify some contextual information that should be included with all subsequent log entries in a particular channel. For example, you may wish to log a request ID that is associated with each incoming request to your application. To accomplish this, you may call the `Log` facade's `withContext` method:
+場合によっては、特定チャンネルの後に続くすべてのログエントリに含める必要があるコンテキスト情報を指定したい場合があります。たとえば、アプリケーションへの各受信リクエストに関連付けられたリクエスト ID をログに記録したい場合があります。これを実現するには、`Log` ファサードの `withContext` メソッドを呼び出します。
 
     <?php
 
@@ -235,7 +235,7 @@ Occasionally, you may wish to specify some contextual information that should be
     class AssignRequestId
     {
         /**
-         * Handle an incoming request.
+         * 受信リクエストの処理
          *
          * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
          */
@@ -255,7 +255,7 @@ Occasionally, you may wish to specify some contextual information that should be
         }
     }
 
-If you would like to share contextual information across _all_ logging channels, you may call the `Log::shareContext()` method. This method will provide the contextual information to all created channels and any channels that are created subsequently. Typically, the `shareContext` method should be called from the `boot` method of an application service provider:
+すべてのログチャンネル間でコンテキスト情報を共有したい場合は、`Log::shareContext()` メソッドを呼び出します。このメソッドは、作成されたすべてのチャンネルと、その後に作成されるすべてのチャンネルにコンテキスト情報を提供します。通常、`shareContext` メソッドは、アプリケーションサービスプロバイダーの `boot` メソッドから呼び出す必要があります。
 
     use Illuminate\Support\Facades\Log;
     use Illuminate\Support\Str;
@@ -263,7 +263,7 @@ If you would like to share contextual information across _all_ logging channels,
     class AppServiceProvider
     {
         /**
-         * Bootstrap any application services.
+         * アプリケーションサービスの初期起動処理
          */
         public function boot(): void
         {
@@ -274,20 +274,20 @@ If you would like to share contextual information across _all_ logging channels,
     }
 
 <a name="writing-to-specific-channels"></a>
-### Writing To Specific Channels
+### 特定チャンネルへの書き込み
 
-Sometimes you may wish to log a message to a channel other than your application's default channel. You may use the `channel` method on the `Log` facade to retrieve and log to any channel defined in your configuration file:
+場合によっては、アプリケーションのデフォルトチャンネル以外のチャンネルにメッセージを記録したい場合があります。`Log` ファサードの `channel` メソッドを使用して、設定ファイルで定義されている任意のチャンネルを取得してログに記録できます。
 
     use Illuminate\Support\Facades\Log;
 
     Log::channel('slack')->info('Something happened!');
 
-If you would like to create an on-demand logging stack consisting of multiple channels, you may use the `stack` method:
+複数のチャンネルで構成されるログスタックを要求に応じて作成したい場合は、`stack` メソッドを使用します。
 
     Log::stack(['single', 'slack'])->info('Something happened!');
 
 <a name="on-demand-channels"></a>
-#### On-Demand Channels
+#### オンデマンドチャンネル
 
 It is also possible to create an on-demand channel by providing the configuration at runtime without that configuration being present in your application's `logging` configuration file. To accomplish this, you may pass a configuration array to the `Log` facade's `build` method:
 
