@@ -289,7 +289,7 @@ PHP、Laravel、およびその他のライブラリは、機能の一部が非�
 <a name="on-demand-channels"></a>
 #### オンデマンドチャンネル
 
-It is also possible to create an on-demand channel by providing the configuration at runtime without that configuration being present in your application's `logging` configuration file. To accomplish this, you may pass a configuration array to the `Log` facade's `build` method:
+アプリケーションの `logging` 設定ファイルに設定が存在しなくても、実行時に設定を提供することでオンデマンドチャンネルを作成することもできます。これを実現するには、設定の配列を `Log` ファサードの `build` メソッドに渡してください。
 
     use Illuminate\Support\Facades\Log;
 
@@ -298,7 +298,7 @@ It is also possible to create an on-demand channel by providing the configuratio
       'path' => storage_path('logs/custom.log'),
     ])->info('Something happened!');
 
-You may also wish to include an on-demand channel in an on-demand logging stack. This can be achieved by including your on-demand channel instance in the array passed to the `stack` method:
+オンデマンドログスタックにオンデマンドチャンネルを含めることもできます。これは、`stack` メソッドに渡す配列にオンデマンドチャンネルのインスタンスを含めることによって実現できます。
 
     use Illuminate\Support\Facades\Log;
 
@@ -310,10 +310,10 @@ You may also wish to include an on-demand channel in an on-demand logging stack.
     Log::stack(['slack', $channel])->info('Something happened!');
 
 <a name="monolog-channel-customization"></a>
-## Monolog Channel Customization
+## Monolog チャンネルのカスタマイズ
 
 <a name="customizing-monolog-for-channels"></a>
-### Customizing Monolog For Channels
+### チャンネル向けの Monolog のカスタマイズ
 
 Sometimes you may need complete control over how Monolog is configured for an existing channel. For example, you may want to configure a custom Monolog `FormatterInterface` implementation for Laravel's built-in `single` channel.
 
