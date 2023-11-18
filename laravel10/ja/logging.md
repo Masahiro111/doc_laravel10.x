@@ -172,7 +172,7 @@ PHP、Laravel、およびその他のライブラリは、機能の一部が非�
 <a name="writing-log-messages"></a>
 ## ログメッセージの書き込み
 
-You may write information to the logs using the `Log` [facade](/docs/{{version}}/facades). As previously mentioned, the logger provides the eight logging levels defined in the [RFC 5424 specification](https://tools.ietf.org/html/rfc5424): **emergency**, **alert**, **critical**, **error**, **warning**, **notice**, **info** and **debug**:
+`Log` [ファサード](/docs/{{version}}/facades) を使用して、ログに情報を書き込むことができます。前述したように、ロガーは [RFC5424 仕様](https://tools.ietf.org/html/rfc5424) で定義されている8つのログレベル（**emergency**、**alert**、**critical**、**error**、**warning**、**notice**、**info**、**debug**）を提供します。
 
     use Illuminate\Support\Facades\Log;
 
@@ -185,7 +185,7 @@ You may write information to the logs using the `Log` [facade](/docs/{{version}}
     Log::info($message);
     Log::debug($message);
 
-You may call any of these methods to log a message for the corresponding level. By default, the message will be written to the default log channel as configured by your `logging` configuration file:
+これらのメソッドのいずれかを呼び出して、対応するレベルのメッセージをログに記録できます。デフォルトでは、メッセージは `logging` 設定ファイルで設定されたデフォルトのログチャンネルに書き込まれます。
 
     <?php
 
@@ -199,7 +199,7 @@ You may call any of these methods to log a message for the corresponding level. 
     class UserController extends Controller
     {
         /**
-         * Show the profile for the given user.
+         * 指定ユーザーのプロフィールを表示
          */
         public function show(string $id): View
         {
@@ -212,9 +212,9 @@ You may call any of these methods to log a message for the corresponding level. 
     }
 
 <a name="contextual-information"></a>
-### Contextual Information
+### コンテキスト情報
 
-An array of contextual data may be passed to the log methods. This contextual data will be formatted and displayed with the log message:
+コンテキストデータの配列を log メソッドに渡すことができます。このコンテキストデータはフォーマットされて、ログメッセージとともに表示されます。
 
     use Illuminate\Support\Facades\Log;
 
