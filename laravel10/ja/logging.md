@@ -383,7 +383,7 @@ Monolog にはさまざまな [利用可能なハンドラ](https://github.com/S
         ],
     ],
 
-If you are using a Monolog handler that is capable of providing its own formatter, you may set the value of the `formatter` configuration option to `default`:
+独自のフォーマッタを提供できる Monolog ハンドラを使用している場合は、`formatter` 設定オプションの値を `default` に設定できます。
 
     'newrelic' => [
         'driver' => 'monolog',
@@ -393,11 +393,11 @@ If you are using a Monolog handler that is capable of providing its own formatte
 
 
  <a name="monolog-processors"></a>
- #### Monolog Processors
+ #### Monolog プロセッサ
 
- Monolog can also process messages before logging them. You can create your own processors or use the [existing processors offered by Monolog](https://github.com/Seldaek/monolog/tree/main/src/Monolog/Processor).
+ Monolog は、メッセージをログに記録する前にメッセージを処理することもできます。独自のプロセッサを作成することも、[Monolog が提供する既存のプロセッサ](https://github.com/Seldaek/monolog/tree/main/src/Monolog/Processor) を使用することもできます。
 
- If you would like to customize the processors for a `monolog` driver, add a `processors` configuration value to your channel's configuration:
+`monolog` ドライバのプロセッサをカスタマイズしたい場合は、`processors` 設定値をチャンネルの設定に追加します。
 
      'memory' => [
          'driver' => 'monolog',
@@ -406,10 +406,10 @@ If you are using a Monolog handler that is capable of providing its own formatte
              'stream' => 'php://stderr',
          ],
          'processors' => [
-             // Simple syntax...
+             // シンプルな構文
              Monolog\Processor\MemoryUsageProcessor::class,
 
-             // With options...
+             // オプションあり
              [
                 'processor' => Monolog\Processor\PsrLogMessageProcessor::class,
                 'with' => ['removeUsedContextFields' => true],
@@ -419,9 +419,9 @@ If you are using a Monolog handler that is capable of providing its own formatte
 
 
 <a name="creating-custom-channels-via-factories"></a>
-### Creating Custom Channels Via Factories
+### ファクトリ経由でカスタムチャンネル作成
 
-If you would like to define an entirely custom channel in which you have full control over Monolog's instantiation and configuration, you may specify a `custom` driver type in your `config/logging.php` configuration file. Your configuration should include a `via` option that contains the name of the factory class which will be invoked to create the Monolog instance:
+Monolog のインスタンス化と設定を完全に制御できる完全なカスタムチャンネルを定義したい場合は、`config/logging.php` 設定ファイルで `custom` ドライバタイプを指定します。設定には、Monolog インスタンスを作成するために呼び出されるファクトリクラスの名前を含む `via` オプションを含める必要があります。
 
     'channels' => [
         'example-custom-channel' => [
@@ -430,7 +430,7 @@ If you would like to define an entirely custom channel in which you have full co
         ],
     ],
 
-Once you have configured the `custom` driver channel, you're ready to define the class that will create your Monolog instance. This class only needs a single `__invoke` method which should return the Monolog logger instance. The method will receive the channels configuration array as its only argument:
+`custom` ドライバチャンネルを設定したら、Monolog インスタンスを作成するクラスを定義する準備が整います。このクラスには、Monolog ロガーインスタンスを返す単一の `__invoke` メソッドのみが必要です。このメソッドは、チャンネル設定配列を唯一の引数として受け取ります。
 
     <?php
 
@@ -441,7 +441,7 @@ Once you have configured the `custom` driver channel, you're ready to define the
     class CreateCustomLogger
     {
         /**
-         * Create a custom Monolog instance.
+         * カスタム Monolog インスタンスを作成
          */
         public function __invoke(array $config): Logger
         {
