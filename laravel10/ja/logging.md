@@ -315,9 +315,9 @@ PHP、Laravel、およびその他のライブラリは、機能の一部が非�
 <a name="customizing-monolog-for-channels"></a>
 ### チャンネル向けの Monolog のカスタマイズ
 
-Sometimes you may need complete control over how Monolog is configured for an existing channel. For example, you may want to configure a custom Monolog `FormatterInterface` implementation for Laravel's built-in `single` channel.
+場合によっては、既存のチャンネルに対して Monolog を設定する方法を完全に制御する必要があることもあります。たとえば、Laravel の組み込み `single` チャンネル用にカスタム Monolog `FormatterInterface` 実装を設定したい場合です。
 
-To get started, define a `tap` array on the channel's configuration. The `tap` array should contain a list of classes that should have an opportunity to customize (or "tap" into) the Monolog instance after it is created. There is no conventional location where these classes should be placed, so you are free to create a directory within your application to contain these classes:
+まず、チャンネルの設定で `tap` 配列を定義します。`tap` 配列には、Monolog インスタンスの作成後にカスタマイズする機会を持つクラスのリストが含まれている必要があります。これらのクラスを配置する規定の場所はないため、アプリケーション内にこれらのクラスを含むディレクトリを自由に作成できます。
 
     'single' => [
         'driver' => 'single',
