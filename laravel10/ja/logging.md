@@ -338,7 +338,7 @@ Once you have configured the `tap` option on your channel, you're ready to defin
     class CustomizeFormatter
     {
         /**
-         * Customize the given logger instance.
+         * 指定のロガーインスタンスをカスタマイズ
          */
         public function __invoke(Logger $logger): void
         {
@@ -351,14 +351,14 @@ Once you have configured the `tap` option on your channel, you're ready to defin
     }
 
 > **Note**  
-> All of your "tap" classes are resolved by the [service container](/docs/{{version}}/container), so any constructor dependencies they require will automatically be injected.
+> すべての「tap」クラスは [サービスコンテナ](/docs/{{version}}/container) によって解決されるため、必要なコンストラクタの依存関係は自動的に依存性注入されます。
 
 <a name="creating-monolog-handler-channels"></a>
-### Creating Monolog Handler Channels
+### Monolog ハンドラチャンネルの作成
 
-Monolog has a variety of [available handlers](https://github.com/Seldaek/monolog/tree/main/src/Monolog/Handler) and Laravel does not include a built-in channel for each one. In some cases, you may wish to create a custom channel that is merely an instance of a specific Monolog handler that does not have a corresponding Laravel log driver.  These channels can be easily created using the `monolog` driver.
+Monolog にはさまざまな [利用可能なハンドラ](https://github.com/Seldaek/monolog/tree/main/src/Monolog/Handler) があり、Laravel にはそれぞれのハンドラが組み込まれていません。場合によっては、対応する Laravel ログドライバを持たない特定の Monolog ハンドラのインスタンスにすぎないカスタムチャンネルを作成したい場合があります。これらのチャンネルは、`monolog` ドライバを使用して簡単に作成できます。
 
-When using the `monolog` driver, the `handler` configuration option is used to specify which handler will be instantiated. Optionally, any constructor parameters the handler needs may be specified using the `with` configuration option:
+`monolog` ドライバを使用する場合、`handler` 設定オプションを使用して、インスタンス化するハンドラを指定します。オプションで、ハンドラに必要なコンストラクタパラメータは、`with` 設定オプションを使用して指定できます。
 
     'logentries' => [
         'driver'  => 'monolog',
@@ -370,9 +370,9 @@ When using the `monolog` driver, the `handler` configuration option is used to s
     ],
 
 <a name="monolog-formatters"></a>
-#### Monolog Formatters
+#### Monolog フォーマッタ
 
-When using the `monolog` driver, the Monolog `LineFormatter` will be used as the default formatter. However, you may customize the type of formatter passed to the handler using the `formatter` and `formatter_with` configuration options:
+`monolog` ドライバを使用する場合、Monolog `LineFormatter` がデフォルトのフォーマッタとして使用されます。ただし、`formatter` および `formatter_with` 設定オプションを使用して、ハンドラに渡すフォーマッタのタイプをカスタマイズできます。
 
     'browser' => [
         'driver' => 'monolog',
