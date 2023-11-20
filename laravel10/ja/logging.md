@@ -326,7 +326,7 @@ PHP、Laravel、およびその他のライブラリは、機能の一部が非�
         'level' => 'debug',
     ],
 
-Once you have configured the `tap` option on your channel, you're ready to define the class that will customize your Monolog instance. This class only needs a single method: `__invoke`, which receives an `Illuminate\Log\Logger` instance. The `Illuminate\Log\Logger` instance proxies all method calls to the underlying Monolog instance:
+チャンネルで `tap` オプションを設定したら、Monolog インスタンスをカスタマイズするクラスを定義する準備が整います。このクラスに必要なのは、`Illuminate\Log\Logger` インスタンスを受け取る `__invoke` という1つのメソッドだけです。`Illuminate\Log\Logger` インスタンスは、基礎となっている Monolog インスタンスへの、全メソッド呼び出しをプロキシします。
 
     <?php
 
@@ -450,56 +450,56 @@ Monolog のインスタンス化と設定を完全に制御できる完全なカ
     }
 
 <a name="tailing-log-messages-using-pail"></a>
-## Tailing Log Messages Using Pail
+## Pail を使用したログメッセージの追跡
 
-Often you may need to tail your application's logs in real time. For example, when debugging an issue or when monitoring your application's logs for specific types of errors.
+多くの場合、アプリケーションのログをリアルタイムで追跡する必要がある場合があります。たとえば、問題をデバッグする場合や、アプリケーションのログで特定の種類のエラーを監視する場合などです。
 
-Laravel Pail is a package that allows you to easily dive into your Laravel application's log files directly from the command line. Unlike the standard `tail` command, Pail is designed to work with any log driver, including Sentry or Flare. In addition, Pail provides a set of useful filters to help you quickly find what you're looking for.
+Laravel Pail は、コマンドラインから直接 Laravel アプリケーションのログファイルに簡単にアクセスできるパッケージです。標準の `tail` コマンドとは異なり、Pail は Sentry や Flare を含むあらゆるログドライバで動作するように設計されています。さらに Pail は探しているログをすばやく見つけるのに役立つ一連の便利なフィルターを提供します。
 
 <img src="https://laravel.com/img/docs/pail-example.png">
 
 <a name="pail-installation"></a>
-### Installation
+### インストール
 
 > **Warning**
-> Laravel Pail requires [PHP 8.2+](https://php.net/releases/) and the [PCNTL](https://www.php.net/manual/en/book.pcntl.php) extension.
+> Laravel Pail には [PHP 8.2 以上](https://php.net/releases/) と [PCNTL](https://www.php.net/manual/en/book.pcntl.php) 拡張機能が必要です。
 
-To get started, install Pail into your project using the Composer package manager:
+まず、Composer パッケージマネージャーを使用して Pail をプロジェクトにインストールします。
 
 ```bash
 composer require laravel/pail
 ```
 
 <a name="pail-usage"></a>
-### Usage
+### 使用方法
 
-To start tailing logs, run the `pail` command:
+ログの追跡を開始するには、`pail` コマンドを実行します。
 
 ```bash
 php artisan pail
 ```
 
-To increase the verbosity of the output and avoid truncation (…), use the `-v` option:
+出力の冗長性を高め、切り捨て (…) を避けるには、`-v` オプションを使用します。
 
 ```bash
 php artisan pail -v
 ```
 
-For maximum verbosity and to display exception stack traces, use the `-vv` option:
+冗長性を最大限に高め、例外スタックトレースを表示するには、`-vv` オプションを使用します。
 
 ```bash
 php artisan pail -vv
 ```
 
-To stop tailing logs, press `Ctrl+C` at any time.
+ログの追跡を停止するには、`Ctrl+C` を押してください。
 
 <a name="pail-filtering-logs"></a>
-### Filtering Logs
+### ログのフィルタリング
 
 <a name="pail-filtering-logs-filter-option"></a>
 #### `--filter`
 
-You may use the `--filter` option to filter logs by their type, file, message, and stack trace content:
+`--filter` オプションを使用すると、タイプ、ファイル、メッセージ、スタックトレースの内容によってログをフィルタリングできます。
 
 ```bash
 php artisan pail --filter="QueryException"
@@ -508,7 +508,7 @@ php artisan pail --filter="QueryException"
 <a name="pail-filtering-logs-message-option"></a>
 #### `--message`
 
-To filter logs by only their message, you may use the `--message` option:
+ログのメッセージのみをフィルタリングするには、`--message` オプションを使用します。
 
 ```bash
 php artisan pail --message="User created"
@@ -517,7 +517,7 @@ php artisan pail --message="User created"
 <a name="pail-filtering-logs-level-option"></a>
 #### `--level`
 
-The `--level` option may be used to filter logs by their [log level](#log-levels):
+`--level` オプションは、[log レベル](#log-levels) によってログをフィルタリングするために使用します。
 
 ```bash
 php artisan pail --level=error
@@ -526,7 +526,7 @@ php artisan pail --level=error
 <a name="pail-filtering-logs-user-option"></a>
 #### `--user`
 
-To only display logs that were written while a given user was authenticated, you may provide the user's ID to the `--user` option:
+特定のユーザーが認証されている間に書き込まれたログのみを表示するには、ユーザーの ID を `--user` オプションに指定します。
 
 ```bash
 php artisan pail --user=1
