@@ -1,8 +1,8 @@
-# Artisan Console
+# Artisan コンソール
 
-- [Introduction](#introduction)
+- [はじめに](#introduction)
     - [Tinker (REPL)](#tinker)
-- [Writing Commands](#writing-commands)
+- [コマンドの記述](#writing-commands)
     - [Generating Commands](#generating-commands)
     - [Command Structure](#command-structure)
     - [Closure Commands](#closure-commands)
@@ -54,7 +54,7 @@ If you are using [Laravel Sail](/docs/{{version}}/sail) as your local developmen
 Laravel Tinker is a powerful REPL for the Laravel framework, powered by the [PsySH](https://github.com/bobthecow/psysh) package.
 
 <a name="installation"></a>
-#### Installation
+#### インストール
 
 All Laravel applications include Tinker by default. However, you may install Tinker using Composer if you have previously removed it from your application:
 
@@ -66,7 +66,7 @@ composer require laravel/tinker
 > Looking for a graphical UI for interacting with your Laravel application? Check out [Tinkerwell](https://tinkerwell.app)!
 
 <a name="usage"></a>
-#### Usage
+#### 使用方法
 
 Tinker allows you to interact with your entire Laravel application on the command line, including your Eloquent models, jobs, events, and more. To enter the Tinker environment, run the `tinker` Artisan command:
 
@@ -84,7 +84,7 @@ php artisan vendor:publish --provider="Laravel\Tinker\TinkerServiceProvider"
 > The `dispatch` helper function and `dispatch` method on the `Dispatchable` class depends on garbage collection to place the job on the queue. Therefore, when using tinker, you should use `Bus::dispatch` or `Queue::push` to dispatch jobs.
 
 <a name="command-allow-list"></a>
-#### Command Allow List
+#### コマンド許可リスト
 
 Tinker utilizes an "allow" list to determine which Artisan commands are allowed to be run within its shell. By default, you may run the `clear-compiled`, `down`, `env`, `inspire`, `migrate`, `optimize`, and `up` commands. If you would like to allow more commands you may add them to the `commands` array in your `tinker.php` configuration file:
 
@@ -93,7 +93,7 @@ Tinker utilizes an "allow" list to determine which Artisan commands are allowed 
     ],
 
 <a name="classes-that-should-not-be-aliased"></a>
-#### Classes That Should Not Be Aliased
+#### エイリアスを付けるべきではないクラス
 
 Typically, Tinker automatically aliases classes as you interact with them in Tinker. However, you may wish to never alias some classes. You may accomplish this by listing the classes in the `dont_alias` array of your `tinker.php` configuration file:
 
@@ -102,12 +102,12 @@ Typically, Tinker automatically aliases classes as you interact with them in Tin
     ],
 
 <a name="writing-commands"></a>
-## Writing Commands
+## コマンドの記述
 
 In addition to the commands provided with Artisan, you may build your own custom commands. Commands are typically stored in the `app/Console/Commands` directory; however, you are free to choose your own storage location as long as your commands can be loaded by Composer.
 
 <a name="generating-commands"></a>
-### Generating Commands
+### コマンドの生成
 
 To create a new command, you may use the `make:command` Artisan command. This command will create a new command class in the `app/Console/Commands` directory. Don't worry if this directory does not exist in your application - it will be created the first time you run the `make:command` Artisan command:
 
@@ -116,7 +116,7 @@ php artisan make:command SendEmails
 ```
 
 <a name="command-structure"></a>
-### Command Structure
+### コマンド構造
 
 After generating your command, you should define appropriate values for the `signature` and `description` properties of the class. These properties will be used when displaying your command on the `list` screen. The `signature` property also allows you to define [your command's input expectations](#defining-input-expectations). The `handle` method will be called when your command is executed. You may place your command logic in this method.
 
@@ -159,12 +159,12 @@ Let's take a look at an example command. Note that we are able to request any de
 > For greater code reuse, it is good practice to keep your console commands light and let them defer to application services to accomplish their tasks. In the example above, note that we inject a service class to do the "heavy lifting" of sending the e-mails.
 
 <a name="closure-commands"></a>
-### Closure Commands
+### クロージャコマンド
 
 Closure based commands provide an alternative to defining console commands as classes. In the same way that route closures are an alternative to controllers, think of command closures as an alternative to command classes. Within the `commands` method of your `app/Console/Kernel.php` file, Laravel loads the `routes/console.php` file:
 
     /**
-     * Register the closure based commands for the application.
+     * アプリケーションのクロージャベースのコマンドを登録
      */
     protected function commands(): void
     {
