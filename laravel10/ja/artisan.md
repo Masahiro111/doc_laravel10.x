@@ -25,15 +25,15 @@
 - [Events](#events)
 
 <a name="introduction"></a>
-## Introduction
+## はじめに
 
-Artisan is the command line interface included with Laravel. Artisan exists at the root of your application as the `artisan` script and provides a number of helpful commands that can assist you while you build your application. To view a list of all available Artisan commands, you may use the `list` command:
+Artisan は、Laravel に含まれるコマンドラインインターフェイスです。Artisan はアプリケーションのルートに `artisan` スクリプトとして存在し、アプリケーションの構築を支援する便利なコマンドを多数提供します。使用可能なすべての Artisan コマンドのリストを表示するには、`list` コマンドを使用します。
 
 ```shell
 php artisan list
 ```
 
-Every command also includes a "help" screen which displays and describes the command's available arguments and options. To view a help screen, precede the name of the command with `help`:
+すべてのコマンドには、コマンドで使用可能な引数とオプションを表示および説明する 「ヘルプ」画面も含まれています。ヘルプ画面を表示するには、コマンド名の前に `help` を付けます。
 
 ```shell
 php artisan help migrate
