@@ -42,7 +42,7 @@ php artisan help migrate
 <a name="laravel-sail"></a>
 #### Laravel Sail
 
-If you are using [Laravel Sail](/docs/{{version}}/sail) as your local development environment, remember to use the `sail` command line to invoke Artisan commands. Sail will execute your Artisan commands within your application's Docker containers:
+ローカル開発環境として [Laravel Sail](/docs/{{version}}/sail) を使用している場合は、必ず `sail` コマンドラインを使用して Artisan コマンドを呼び出してください。Sail は、アプリケーションの Docker コンテナ内で Artisan コマンドを実行します。
 
 ```shell
 ./vendor/bin/sail artisan list
@@ -51,37 +51,37 @@ If you are using [Laravel Sail](/docs/{{version}}/sail) as your local developmen
 <a name="tinker"></a>
 ### Tinker (REPL)
 
-Laravel Tinker is a powerful REPL for the Laravel framework, powered by the [PsySH](https://github.com/bobthecow/psysh) package.
+Laravel Tinker は、[PsySH](https://github.com/bobthecow/psysh) パッケージを利用した、Laravel フレームワーク用の強力な REPL です。
 
 <a name="installation"></a>
 #### インストール
 
-All Laravel applications include Tinker by default. However, you may install Tinker using Composer if you have previously removed it from your application:
+すべての Laravel アプリケーションにはデフォルトで Tinker が含まれています。ただし、以前にアプリケーションから Tinker を削除した場合は、Composer を使用して Tinker をインストールできます。
 
 ```shell
 composer require laravel/tinker
 ```
 
 > **Note**  
-> Looking for a graphical UI for interacting with your Laravel application? Check out [Tinkerwell](https://tinkerwell.app)!
+> Laravel アプリケーションと対話するためのグラフィカル UI をお探しですか？[Tinkerwell](https://tinkerwell.app) をチェックしてみてください！
 
 <a name="usage"></a>
 #### 使用方法
 
-Tinker allows you to interact with your entire Laravel application on the command line, including your Eloquent models, jobs, events, and more. To enter the Tinker environment, run the `tinker` Artisan command:
+Tinker を使用すると、Eloquent モデル、ジョブ、イベントなどを含む Laravel アプリケーション全体をコマンドラインで操作できます。Tinker 環境に入るには、 `tinker` Artisan コマンドを実行します。
 
 ```shell
 php artisan tinker
 ```
 
-You can publish Tinker's configuration file using the `vendor:publish` command:
+`vendor:publish` コマンドを使用して、Tinker の設定ファイルを公開できます。
 
 ```shell
 php artisan vendor:publish --provider="Laravel\Tinker\TinkerServiceProvider"
 ```
 
 > **Warning**  
-> The `dispatch` helper function and `dispatch` method on the `Dispatchable` class depends on garbage collection to place the job on the queue. Therefore, when using tinker, you should use `Bus::dispatch` or `Queue::push` to dispatch jobs.
+> `Dispatchable` クラスの `dispatch` ヘルパ関数と `dispatch` メソッドは、ガベージコレクションに依存して、ジョブをキューに配置します。したがって、tinker を使用する場合は、ジョブをディスパッチするために `Bus::dispatch` または `Queue::push` を使用する必要があります。
 
 <a name="command-allow-list"></a>
 #### コマンド許可リスト
