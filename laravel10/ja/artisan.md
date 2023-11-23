@@ -86,7 +86,7 @@ php artisan vendor:publish --provider="Laravel\Tinker\TinkerServiceProvider"
 <a name="command-allow-list"></a>
 #### コマンド許可リスト
 
-Tinker utilizes an "allow" list to determine which Artisan commands are allowed to be run within its shell. By default, you may run the `clear-compiled`, `down`, `env`, `inspire`, `migrate`, `optimize`, and `up` commands. If you would like to allow more commands you may add them to the `commands` array in your `tinker.php` configuration file:
+Tinker は「許可」リストを利用して、シェル内でどの Artisan コマンドの実行を許可するかを決定します。デフォルトでは、`clear-compiled`、`down`、`env`、`inspire`、`migrate`、`optimize`、`up` コマンドを実行できます。さらに多くのコマンドを許可したい場合は、`tinker.php` 設定ファイルの `commands` 配列に追加の記述をします。
 
     'commands' => [
         // App\Console\Commands\ExampleCommand::class,
@@ -95,7 +95,7 @@ Tinker utilizes an "allow" list to determine which Artisan commands are allowed 
 <a name="classes-that-should-not-be-aliased"></a>
 #### エイリアスを付けるべきではないクラス
 
-Typically, Tinker automatically aliases classes as you interact with them in Tinker. However, you may wish to never alias some classes. You may accomplish this by listing the classes in the `dont_alias` array of your `tinker.php` configuration file:
+通常、Tinker でクラスを操作すると、Tinker は自動的にクラスのエイリアスを作成します。ただし、クラスによってはエイリアスを付けたくない場合もあります。その際は `tinker.php` 設定ファイルの `dont_alias` 配列にクラスをリストします。
 
     'dont_alias' => [
         App\Models\User::class,
