@@ -104,12 +104,12 @@ Tinker は「許可」リストを利用して、シェル内でどの Artisan �
 <a name="writing-commands"></a>
 ## コマンドの記述
 
-In addition to the commands provided with Artisan, you may build your own custom commands. Commands are typically stored in the `app/Console/Commands` directory; however, you are free to choose your own storage location as long as your commands can be loaded by Composer.
+Artisan で提供されるコマンドに加えて、独自のカスタムコマンドを作成できます。コマンドは通常、`app/Console/Commands` ディレクトリに保存されます。ただし、Composer によってコマンドをロードできる限り、独自の保存場所を自由に選択できます。
 
 <a name="generating-commands"></a>
 ### コマンドの生成
 
-To create a new command, you may use the `make:command` Artisan command. This command will create a new command class in the `app/Console/Commands` directory. Don't worry if this directory does not exist in your application - it will be created the first time you run the `make:command` Artisan command:
+新しいコマンドを作成するには、`make:command` Artisan コマンドを使用できます。このコマンドは、`app/Console/Commands` ディレクトリに新しいコマンドクラスを作成します。このディレクトリがアプリケーションに存在しなくても心配する必要はありません。このディレクトリは、`make:command` Artisan コマンドを初めて実行するときに作成されます。
 
 ```shell
 php artisan make:command SendEmails
@@ -118,9 +118,9 @@ php artisan make:command SendEmails
 <a name="command-structure"></a>
 ### コマンド構造
 
-After generating your command, you should define appropriate values for the `signature` and `description` properties of the class. These properties will be used when displaying your command on the `list` screen. The `signature` property also allows you to define [your command's input expectations](#defining-input-expectations). The `handle` method will be called when your command is executed. You may place your command logic in this method.
+コマンドを生成した後、クラスの `signature` プロパティと `description` プロパティに適切な値を定義する必要があります。これらのプロパティは、コマンドを `list` 画面に表示するときに使用されます。`signature` プロパティを使用すると、[コマンドの入力期待値](#defining-input-expectations) を定義することもできます。コマンドが実行されると、`handle` メソッドが呼び出されます。コマンドロジックをこのメソッドに配置できます。
 
-Let's take a look at an example command. Note that we are able to request any dependencies we need via the command's `handle` method. The Laravel [service container](/docs/{{version}}/container) will automatically inject all dependencies that are type-hinted in this method's signature:
+コマンドの例を見てみましょう。コマンドの `handle` メソッドを介して、必要な依存関係をリクエストできることに注意してください。Laravel [サービスコンテナ](/docs/{{version}}/container) は、このメソッドのシグネチャでタイプヒントされているすべての依存関係を自動的に挿入します。
 
     <?php
 
